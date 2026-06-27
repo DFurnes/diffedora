@@ -400,32 +400,33 @@ def main():
 
             if release:
                 if not release.get("summary") and api_key:
-                    diff = release_to_diff(release)
-                    security = release_to_security(release)
-                    release["summary"] = summarize_release(diff, security, release_to_notes(release), api_key)
-                    if release["summary"]:
+                    release["summary"] = summarize_release(
+                        release_to_diff(release), release_to_security(release),
+                        release_to_notes(release), api_key)
+                    if release["summary"] and cache_dir:
                         save_release(cache_dir, release)
                         toc[toc_key] = toc_entry(release)
                         save_toc(cache_dir, toc)
-                diff = release_to_diff(release)
-                security = release_to_security(release)
-                notes = release_to_notes(release) if args.changelogs else None
-                summary = release.get("summary")
             else:
                 print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
                 diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
-                security, bodhi_notes = (set(), {}) if args.no_security else get_security_packages(diff)
-                koji_notes = get_changelogs(diff)
-                all_notes = {**koji_notes, **bodhi_notes}
-                notes = all_notes if args.changelogs else None
+                security, bodhi_notes = get_security_packages(diff)
+                all_notes = {**get_changelogs(diff), **bodhi_notes}
                 summary = summarize_release(diff, security, all_notes, api_key)
+                release = build_release(old_c["version"], new_c["version"], diff, security, all_notes, summary)
                 if cache_dir:
-                    release = build_release(old_c["version"], new_c["version"], diff, security, all_notes, summary)
                     save_release(cache_dir, release)
                     toc[toc_key] = toc_entry(release)
                     save_toc(cache_dir, toc)
 
-            print(format_markdown(old_c["version"], new_c["version"], diff, security, summary, notes))
+            # Render phase: flags only affect output, not what was fetched/cached
+            print(format_markdown(
+                old_c["version"], new_c["version"],
+                release_to_diff(release),
+                release_to_security(release) if not args.no_security else set(),
+                release.get("summary"),
+                release_to_notes(release) if args.changelogs else None,
+            ))
 
 
 if __name__ == "__main__":
