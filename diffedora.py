@@ -18,6 +18,15 @@ from pathlib import Path
 
 COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
 
+# ANSI escape codes
+_R  = "\033[0m"   # reset
+_B  = "\033[1m"   # bold
+_D  = "\033[2m"   # dim
+_I  = "\033[3m"   # italic
+_RD = "\033[31m"  # red
+_GN = "\033[32m"  # green
+_CY = "\033[36m"  # cyan
+
 _SUMMARY_PROMPT = """\
 You are summarizing a Fedora Silverblue OS update for end users.
 Write a single short sentence (under 15 words) summarizing the theme of these changes.
@@ -348,6 +357,46 @@ def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, 
     return "\n".join(lines)
 
 
+def format_ansi(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None):
+    total = sum(len(v) for v in diff.values())
+    label = "change" if total == 1 else "changes"
+    lines = [f"{_B}{_CY}{old_ver} → {new_ver}{_R}  {_D}({total} {label}){_R}"]
+    if summary:
+        lines.append(f"{_I}{summary}{_R}")
+    lines.append("")
+
+    if not any(diff.values()):
+        lines.append(f"  {_D}No package changes.{_R}\n")
+        return "\n".join(lines)
+
+    def append_note(name):
+        if notes and name in notes:
+            for note_line in notes[name].splitlines():
+                if note_line.strip():
+                    lines.append(f"    {_D}{note_line.strip()}{_R}")
+
+    for pkg in diff["upgraded"]:
+        parts = pkg.split(" -> ", 1)
+        if len(parts) == 2:
+            old_parts = parts[0].rsplit(" ", 1)
+            name = old_parts[0] if len(old_parts) == 2 else parts[0]
+            old_evr = old_parts[1] if len(old_parts) == 2 else ""
+            sec = f"{_B}{_RD}[!]{_R} " if name in security else ""
+            lines.append(f"  {sec}{_B}{name}{_R}  {_D}{old_evr} → {parts[1]}{_R}")
+            append_note(name)
+
+    for pkg in diff["added"]:
+        name, _, evr = pkg.rpartition(" ")
+        lines.append(f"  {_GN}[New!]{_R} {_B}{name}{_R}  {_D}{evr}{_R}")
+
+    for pkg in diff["removed"]:
+        name = pkg.rsplit(" ", 1)[0]
+        lines.append(f"  {_D}[Removed] {name}{_R}")
+
+    lines.append("")
+    return "\n".join(lines)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Diff Fedora Silverblue releases",
@@ -364,6 +413,9 @@ def main():
                         help="show Bodhi notes and Koji changelogs per package")
     parser.add_argument("--cache-dir", metavar="PATH",
                         help="directory for persistent summary cache")
+    parser.add_argument("--output", choices=["markdown", "ansi"],
+                        default="ansi" if sys.stdout.isatty() else "markdown",
+                        help="output format (default: ansi if terminal, markdown if piped)")
     args = parser.parse_args()
 
     n = args.releases
@@ -384,7 +436,11 @@ def main():
 
         actual = min(n, len(commits) - 1)
         variant_label = args.variant.capitalize()
-        print(f"\n# Fedora {variant_label} {args.arch} — Last {actual} Releases\n")
+        formatter = format_ansi if args.output == "ansi" else format_markdown
+        if args.output == "ansi":
+            print(f"\n{_B}Fedora {variant_label} {args.arch} — Last {actual} Releases{_R}\n")
+        else:
+            print(f"\n# Fedora {variant_label} {args.arch} — Last {actual} Releases\n")
 
         api_key = os.environ.get("ANTHROPIC_API_KEY")
         cache_dir = args.cache_dir
@@ -420,7 +476,7 @@ def main():
                     save_toc(cache_dir, toc)
 
             # Render phase: flags only affect output, not what was fetched/cached
-            print(format_markdown(
+            print(formatter(
                 old_c["version"], new_c["version"],
                 release_to_diff(release),
                 release_to_security(release) if not args.no_security else set(),
