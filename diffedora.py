@@ -13,6 +13,7 @@ import tempfile
 import urllib.request
 import xmlrpc.client
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
 COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
 
@@ -260,6 +261,8 @@ def main():
                         help="skip Bodhi security annotations")
     parser.add_argument("--changelogs", action="store_true",
                         help="show Bodhi notes and Koji changelogs per package")
+    parser.add_argument("--cache-dir", metavar="PATH",
+                        help="directory for persistent summary cache")
     args = parser.parse_args()
 
     n = args.releases
@@ -283,6 +286,8 @@ def main():
         print(f"\n# Fedora {variant_label} {args.arch} — Last {actual} Releases\n")
 
         api_key = os.environ.get("ANTHROPIC_API_KEY")
+        cache_path = Path(args.cache_dir) / "summaries.json" if args.cache_dir else None
+        cache = json.loads(cache_path.read_text()) if cache_path and cache_path.exists() else {}
 
         for i in range(actual):
             new_c = commits[i]
@@ -292,7 +297,14 @@ def main():
             security, bodhi_notes = (set(), {}) if args.no_security else get_security_packages(diff)
             koji_notes = get_changelogs(diff) if args.changelogs else {}
             notes = {**koji_notes, **bodhi_notes} if args.changelogs else None
-            summary = summarize_release(diff, security, api_key)
+            cache_key = f"{old_c['version']}→{new_c['version']}"
+            if cache_key in cache:
+                summary = cache[cache_key]
+            else:
+                summary = summarize_release(diff, security, api_key)
+                if summary and cache_path:
+                    cache[cache_key] = summary
+                    cache_path.write_text(json.dumps(cache, indent=2))
             print(format_markdown(old_c["version"], new_c["version"], diff, security, summary, notes))
 
 
