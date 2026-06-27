@@ -50,6 +50,7 @@ jobs:
           mkdir _site
           cp index.html _site/
           cp -r data _site/
+          touch _site/.nojekyll
 
       - name: Deploy to gh-pages
         run: |
