@@ -97,21 +97,24 @@ def format_markdown(old_ver, new_ver, diff):
         lines.append("*No package changes.*\n")
         return "\n".join(lines)
 
+    def link(name):
+        return f"[**{name}**](https://packages.fedoraproject.org/pkgs/{name}/)"
+
     for pkg in diff["upgraded"]:
         parts = pkg.split(" -> ", 1)
         if len(parts) == 2:
             old_parts = parts[0].rsplit(" ", 1)
             name = old_parts[0] if len(old_parts) == 2 else parts[0]
             old_evr = old_parts[1] if len(old_parts) == 2 else ""
-            lines.append(f"- **{name}** ({old_evr} → {parts[1]})")
+            lines.append(f"- {link(name)} ({old_evr} → {parts[1]})")
 
     for pkg in diff["added"]:
         name, _, evr = pkg.rpartition(" ")
-        lines.append(f"- [New!] **{name}** ({evr})")
+        lines.append(f"- [New!] {link(name)} ({evr})")
 
     for pkg in diff["removed"]:
         name = pkg.rsplit(" ", 1)[0]
-        lines.append(f"- [Removed] **{name}**")
+        lines.append(f"- [Removed] {link(name)}")
 
     lines.append("")
     return "\n".join(lines)
