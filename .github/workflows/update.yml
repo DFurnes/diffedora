@@ -23,7 +23,7 @@ jobs:
           git checkout origin/gh-pages -- data 2>/dev/null || true
 
       - name: Build diffedora image
-        run: docker build -t diffedora . -q
+        run: docker build -f Containerfile -t diffedora . -q
 
       - name: Fetch Silverblue releases
         env:
