@@ -42,7 +42,7 @@ jobs:
           docker run --rm \
             -e ANTHROPIC_API_KEY \
             -v "$PWD/data:/cache" \
-            diffedora --cache-dir /cache --releases 20 --variant coreos \
+            diffedora --cache-dir /cache --releases 5 --variant coreos \
             > /dev/null
 
       - name: Prepare site
