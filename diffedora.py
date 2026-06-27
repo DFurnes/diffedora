@@ -13,6 +13,7 @@ import tempfile
 import urllib.request
 import xmlrpc.client
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
 from pathlib import Path
 
 COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
@@ -129,6 +130,104 @@ def _get_koji_changelog(name, new_evr):
         return entries[0]["text"].strip() if entries else None
     except Exception:
         return None
+
+
+def load_toc(cache_dir):
+    p = Path(cache_dir) / "summary.json"
+    return json.loads(p.read_text()) if p.exists() else {}
+
+
+def save_toc(cache_dir, toc):
+    (Path(cache_dir) / "summary.json").write_text(json.dumps(toc, indent=2))
+
+
+def load_release(cache_dir, release_id):
+    p = Path(cache_dir) / "releases" / f"{release_id}.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
+def save_release(cache_dir, release):
+    d = Path(cache_dir) / "releases"
+    d.mkdir(exist_ok=True)
+    (d / f"{release['id']}.json").write_text(json.dumps(release, indent=2))
+
+
+def build_release(old_ver, new_ver, diff, security, notes, summary):
+    changes = []
+    for pkg in diff["upgraded"]:
+        parts = pkg.split(" -> ", 1)
+        if len(parts) == 2:
+            old_parts = parts[0].rsplit(" ", 1)
+            name = old_parts[0] if len(old_parts) == 2 else parts[0]
+            from_evr = old_parts[1] if len(old_parts) == 2 else ""
+            changes.append({
+                "type": "upgrade",
+                "package": name,
+                "url": f"https://packages.fedoraproject.org/pkgs/{name}/",
+                "from": from_evr,
+                "to": parts[1],
+                "security": name in security,
+                "note": notes.get(name) if notes else None,
+            })
+    for pkg in diff["added"]:
+        name, _, ver = pkg.rpartition(" ")
+        changes.append({
+            "type": "added",
+            "package": name,
+            "url": f"https://packages.fedoraproject.org/pkgs/{name}/",
+            "from": None,
+            "to": ver,
+        })
+    for pkg in diff["removed"]:
+        name, _, ver = pkg.rpartition(" ")
+        changes.append({
+            "type": "removed",
+            "package": name,
+            "url": f"https://packages.fedoraproject.org/pkgs/{name}/",
+            "from": ver,
+            "to": None,
+        })
+    release_id = f"{old_ver}-{new_ver}"
+    return {
+        "id": release_id,
+        "old_version": old_ver,
+        "new_version": new_ver,
+        "summary": summary,
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "changes": changes,
+    }
+
+
+def toc_entry(release):
+    return {
+        "id": release["id"],
+        "old_version": release["old_version"],
+        "new_version": release["new_version"],
+        "summary": release["summary"],
+        "total_changes": len(release["changes"]),
+        "critical": any(c.get("security") for c in release["changes"]),
+        "fetched_at": release["fetched_at"],
+    }
+
+
+def release_to_diff(release):
+    diff = {"upgraded": [], "added": [], "removed": []}
+    for c in release["changes"]:
+        if c["type"] == "upgrade":
+            diff["upgraded"].append(f"{c['package']} {c['from']} -> {c['to']}")
+        elif c["type"] == "added":
+            diff["added"].append(f"{c['package']} {c['to']}")
+        elif c["type"] == "removed":
+            diff["removed"].append(f"{c['package']} {c['from']}")
+    return diff
+
+
+def release_to_security(release):
+    return {c["package"] for c in release["changes"] if c.get("security")}
+
+
+def release_to_notes(release):
+    return {c["package"]: c["note"] for c in release["changes"] if c.get("note")}
 
 
 def summarize_release(diff, security, api_key):
@@ -286,25 +385,44 @@ def main():
         print(f"\n# Fedora {variant_label} {args.arch} — Last {actual} Releases\n")
 
         api_key = os.environ.get("ANTHROPIC_API_KEY")
-        cache_path = Path(args.cache_dir) / "summaries.json" if args.cache_dir else None
-        cache = json.loads(cache_path.read_text()) if cache_path and cache_path.exists() else {}
+        cache_dir = args.cache_dir
+        toc = load_toc(cache_dir) if cache_dir else {}
 
         for i in range(actual):
             new_c = commits[i]
             old_c = commits[i + 1]
-            print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
-            diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
-            security, bodhi_notes = (set(), {}) if args.no_security else get_security_packages(diff)
-            koji_notes = get_changelogs(diff) if args.changelogs else {}
-            notes = {**koji_notes, **bodhi_notes} if args.changelogs else None
-            cache_key = f"{old_c['version']}→{new_c['version']}"
-            if cache_key in cache:
-                summary = cache[cache_key]
+            toc_key = f"{old_c['version']}→{new_c['version']}"
+            release_id = f"{old_c['version']}-{new_c['version']}"
+
+            release = load_release(cache_dir, release_id) if cache_dir else None
+
+            if release:
+                if not release.get("summary") and api_key:
+                    diff = release_to_diff(release)
+                    security = release_to_security(release)
+                    release["summary"] = summarize_release(diff, security, api_key)
+                    if release["summary"]:
+                        save_release(cache_dir, release)
+                        toc[toc_key] = toc_entry(release)
+                        save_toc(cache_dir, toc)
+                diff = release_to_diff(release)
+                security = release_to_security(release)
+                notes = release_to_notes(release) if args.changelogs else None
+                summary = release.get("summary")
             else:
+                print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
+                diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
+                security, bodhi_notes = (set(), {}) if args.no_security else get_security_packages(diff)
+                koji_notes = get_changelogs(diff) if args.changelogs else {}
+                all_notes = {**koji_notes, **bodhi_notes}
+                notes = all_notes if args.changelogs else None
                 summary = summarize_release(diff, security, api_key)
-                if summary and cache_path:
-                    cache[cache_key] = summary
-                    cache_path.write_text(json.dumps(cache, indent=2))
+                if cache_dir:
+                    release = build_release(old_c["version"], new_c["version"], diff, security, all_notes, summary)
+                    save_release(cache_dir, release)
+                    toc[toc_key] = toc_entry(release)
+                    save_toc(cache_dir, toc)
+
             print(format_markdown(old_c["version"], new_c["version"], diff, security, summary, notes))
 
 
