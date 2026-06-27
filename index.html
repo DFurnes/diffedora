@@ -198,7 +198,7 @@
     }
 
     function trimEvrPair(oldEvr, newEvr) {
-      const fcRe = /(\\.fc\d+)$/;
+      const fcRe = /(\.fc\d+)$/;
       function split(evr) {
         const idx = evr.lastIndexOf('-');
         if (idx === -1) return { v: evr, r: null, fc: null };
