@@ -4,11 +4,13 @@ diffedora — show package diffs between Fedora Silverblue releases
 """
 
 import argparse
+import json
 import re
 import subprocess
 import sys
 import tempfile
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
 
@@ -88,7 +90,41 @@ def parse_diff(output):
     return sections
 
 
-def format_markdown(old_ver, new_ver, diff):
+def _strip_epoch(evr):
+    return evr.split(":", 1)[1] if ":" in evr else evr
+
+
+def _is_security(name, new_evr):
+    nvr = f"{name}-{_strip_epoch(new_evr)}"
+    url = f"https://bodhi.fedoraproject.org/updates/?builds={nvr}&rows_per_page=1"
+    try:
+        req = urllib.request.Request(url, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            data = json.load(r)
+        updates = data.get("updates", [])
+        return bool(updates) and updates[0].get("type") == "security"
+    except Exception:
+        return False
+
+
+def get_security_packages(diff):
+    candidates = []
+    for pkg in diff["upgraded"]:
+        parts = pkg.split(" -> ", 1)
+        if len(parts) == 2:
+            old_parts = parts[0].rsplit(" ", 1)
+            if len(old_parts) == 2:
+                candidates.append((old_parts[0], parts[1]))
+    security = set()
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(_is_security, name, evr): name for name, evr in candidates}
+        for f in as_completed(futures):
+            if f.result():
+                security.add(futures[f])
+    return security
+
+
+def format_markdown(old_ver, new_ver, diff, security=frozenset()):
     total = sum(len(v) for v in diff.values())
     label = "change" if total == 1 else "changes"
     lines = [f"## {old_ver} → {new_ver} ({total} {label})\n"]
@@ -106,7 +142,8 @@ def format_markdown(old_ver, new_ver, diff):
             old_parts = parts[0].rsplit(" ", 1)
             name = old_parts[0] if len(old_parts) == 2 else parts[0]
             old_evr = old_parts[1] if len(old_parts) == 2 else ""
-            lines.append(f"- {link(name)} ({old_evr} → {parts[1]})")
+            sec = "[!] " if name in security else ""
+            lines.append(f"- {sec}{link(name)} ({old_evr} → {parts[1]})")
 
     for pkg in diff["added"]:
         name, _, evr = pkg.rpartition(" ")
@@ -130,6 +167,8 @@ def main():
     parser.add_argument("--version", default="44", help="Fedora version")
     parser.add_argument("--arch", default="x86_64", help="architecture")
     parser.add_argument("--variant", default="silverblue", help="OS variant")
+    parser.add_argument("--no-security", action="store_true",
+                        help="skip Bodhi security annotations")
     args = parser.parse_args()
 
     n = args.releases
@@ -157,7 +196,8 @@ def main():
             old_c = commits[i + 1]
             print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
             diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
-            print(format_markdown(old_c["version"], new_c["version"], diff))
+            security = set() if args.no_security else get_security_packages(diff)
+            print(format_markdown(old_c["version"], new_c["version"], diff, security))
 
 
 if __name__ == "__main__":
