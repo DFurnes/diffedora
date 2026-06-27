@@ -18,6 +18,11 @@ from pathlib import Path
 
 COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
 
+VARIANTS = {
+    "silverblue": ("fedora/{version}/{arch}/silverblue", "Silverblue"),
+    "coreos":     ("fedora/{arch}/coreos/stable",        "CoreOS"),
+}
+
 # ANSI escape codes
 _R  = "\033[0m"   # reset
 _B  = "\033[1m"   # bold
@@ -48,7 +53,11 @@ def setup_repo(repo_dir):
 
 
 def resolve_ref(version, arch, variant):
-    url = f"{COMPOSE_REPO}refs/heads/fedora/{version}/{arch}/{variant}"
+    if variant not in VARIANTS:
+        sys.exit(f"error: unknown variant '{variant}' (known: {', '.join(VARIANTS)})")
+    ref_template, _ = VARIANTS[variant]
+    ref = ref_template.format(version=version, arch=arch)
+    url = f"{COMPOSE_REPO}refs/heads/{ref}"
     try:
         with urllib.request.urlopen(url) as r:
             return r.read().decode().strip()
@@ -406,7 +415,8 @@ def main():
                         help="number of release pairs to show")
     parser.add_argument("--version", default="44", help="Fedora version")
     parser.add_argument("--arch", default="x86_64", help="architecture")
-    parser.add_argument("--variant", default="silverblue", help="OS variant")
+    parser.add_argument("--variant", default="silverblue",
+                        help=f"OS variant ({', '.join(VARIANTS)})")
     parser.add_argument("--no-security", action="store_true",
                         help="skip Bodhi security annotations")
     parser.add_argument("--changelogs", action="store_true",
@@ -435,7 +445,7 @@ def main():
             sys.exit("error: fewer than 2 commits found in history")
 
         actual = min(n, len(commits) - 1)
-        variant_label = args.variant.capitalize()
+        _, variant_label = VARIANTS[args.variant]
         formatter = format_ansi if args.output == "ansi" else format_markdown
         if args.output == "ansi":
             print(f"\n{_B}Fedora {variant_label} {args.arch} — Last {actual} Releases{_R}\n")
