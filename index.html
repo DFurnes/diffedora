@@ -31,10 +31,28 @@
     }
 
     .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
       font-size: 1.05em;
       font-weight: bold;
       margin-bottom: 2rem;
     }
+
+    .switcher { font-weight: normal; font-size: 0.95em; }
+
+    .variant-btn {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      color: var(--dim);
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .variant-btn.active { color: var(--fg); font-weight: bold; cursor: default; }
+    .variant-btn:not(.active):hover { color: var(--cyan); }
 
     .release {
       margin-bottom: 1.75rem;
@@ -85,44 +103,61 @@
 <body>
   <div id="app">Loading…</div>
   <script>
-    async function load() {
+    const LABELS = { silverblue: 'Silverblue', coreos: 'CoreOS' };
+    let toc = null;
+
+    async function init() {
       const app = document.getElementById('app');
       try {
-        const toc = await fetch('.cache/summary.json').then(r => {
+        toc = await fetch('.cache/summary.json').then(r => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
         });
-
-        const entries = Object.values(toc)
-          .filter(e => e.id.startsWith('silverblue-'))
-          .sort((a, b) => b.new_version.localeCompare(a.new_version));
-
-        if (entries.length === 0) {
-          app.textContent = 'No Silverblue releases cached. Run ./run.sh to populate the cache.';
-          return;
-        }
-
-        const releases = await Promise.all(
-          entries.map(e =>
-            fetch(`.cache/releases/${e.id}.json`).then(r => r.json())
-          )
-        );
-
-        app.innerHTML = '';
-
-        const hdr = document.createElement('div');
-        hdr.className = 'page-header';
-        const arch = releases[0].arch;
-        hdr.innerHTML =
-          `Fedora Silverblue ${arch} — Release History ` +
-          `<span class="dim">(${releases.length} releases)</span>`;
-        app.appendChild(hdr);
-
-        for (const release of releases) {
-          app.appendChild(renderRelease(release));
-        }
+        await render('silverblue');
       } catch (e) {
         app.innerHTML = `<div class="error">Error loading cache: ${e.message}</div>`;
+      }
+    }
+
+    async function render(variant) {
+      const app = document.getElementById('app');
+      app.innerHTML = '<span class="dim">Loading…</span>';
+
+      const entries = Object.values(toc)
+        .filter(e => e.id.startsWith(variant + '-'))
+        .sort((a, b) => b.new_version.localeCompare(a.new_version));
+
+      app.innerHTML = '';
+
+      const switcher = Object.keys(LABELS)
+        .map(v => `<button class="variant-btn${v === variant ? ' active' : ''}" onclick="render('${v}')">${LABELS[v]}</button>`)
+        .join(' · ');
+
+      const hdr = document.createElement('div');
+      hdr.className = 'page-header';
+
+      if (entries.length === 0) {
+        hdr.innerHTML = `<span>Fedora ${LABELS[variant]} — Release History</span><span class="switcher">${switcher}</span>`;
+        app.appendChild(hdr);
+        const msg = document.createElement('div');
+        msg.className = 'dim';
+        msg.textContent = `No ${LABELS[variant]} releases cached. Run ./run.sh --variant=${variant} to populate.`;
+        app.appendChild(msg);
+        return;
+      }
+
+      const releases = await Promise.all(
+        entries.map(e => fetch(`.cache/releases/${e.id}.json`).then(r => r.json()))
+      );
+
+      const arch = releases[0].arch;
+      hdr.innerHTML =
+        `<span>Fedora ${LABELS[variant]} ${arch} — Release History <span class="dim">(${releases.length} releases)</span></span>` +
+        `<span class="switcher">${switcher}</span>`;
+      app.appendChild(hdr);
+
+      for (const release of releases) {
+        app.appendChild(renderRelease(release));
       }
     }
 
@@ -183,7 +218,7 @@
       return row;
     }
 
-    load();
+    init();
   </script>
 </body>
 </html>
