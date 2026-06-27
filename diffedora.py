@@ -97,31 +97,23 @@ def format_markdown(old_ver, new_ver, diff):
         lines.append("*No package changes.*\n")
         return "\n".join(lines)
 
-    if diff["upgraded"]:
-        lines.append("**Upgraded:**\n")
-        lines.append("| Package | Old | New |")
-        lines.append("|---------|-----|-----|")
-        for pkg in diff["upgraded"]:
-            parts = pkg.split(" -> ", 1)
-            if len(parts) == 2:
-                old_parts = parts[0].rsplit(" ", 1)
-                name = old_parts[0] if len(old_parts) == 2 else parts[0]
-                old_evr = old_parts[1] if len(old_parts) == 2 else ""
-                lines.append(f"| {name} | {old_evr} | {parts[1]} |")
-        lines.append("")
+    for pkg in diff["upgraded"]:
+        parts = pkg.split(" -> ", 1)
+        if len(parts) == 2:
+            old_parts = parts[0].rsplit(" ", 1)
+            name = old_parts[0] if len(old_parts) == 2 else parts[0]
+            old_evr = old_parts[1] if len(old_parts) == 2 else ""
+            lines.append(f"- **{name}** ({old_evr} → {parts[1]})")
 
-    if diff["added"]:
-        lines.append("**Added:**\n")
-        for pkg in diff["added"]:
-            lines.append(f"- `{pkg}`")
-        lines.append("")
+    for pkg in diff["added"]:
+        name, _, evr = pkg.rpartition(" ")
+        lines.append(f"- [New!] **{name}** ({evr})")
 
-    if diff["removed"]:
-        lines.append("**Removed:**\n")
-        for pkg in diff["removed"]:
-            lines.append(f"- `{pkg}`")
-        lines.append("")
+    for pkg in diff["removed"]:
+        name = pkg.rsplit(" ", 1)[0]
+        lines.append(f"- [Removed] **{name}**")
 
+    lines.append("")
     return "\n".join(lines)
 
 
