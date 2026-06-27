@@ -2,16 +2,10 @@
 
 Shows package diffs between Fedora Silverblue daily releases, printed as Markdown.
 
-## Build
-
-```
-podman build -t diffedora .
-```
-
 ## Usage
 
 ```
-podman run --rm diffedora [options]
+podman build -t diffedora . && podman run --rm diffedora [options]
 ```
 
 **Options:**
@@ -27,19 +21,19 @@ podman run --rm diffedora [options]
 
 ```
 # Last 20 Silverblue releases (default)
-podman run --rm diffedora
+podman build -t diffedora . && podman run --rm diffedora
 
 # Last 5 releases
-podman run --rm diffedora --releases 5
+podman build -t diffedora . && podman run --rm diffedora --releases 5
 
 # Kinoite instead of Silverblue
-podman run --rm diffedora --variant kinoite
+podman build -t diffedora . && podman run --rm diffedora --variant kinoite
 
 # Fedora 43
-podman run --rm diffedora --version 43
+podman build -t diffedora . && podman run --rm diffedora --version 43
 
 # Save to a file
-podman run --rm diffedora > releases.md
+podman build -t diffedora . && podman run --rm diffedora > releases.md
 ```
 
 ## Sample output
@@ -49,12 +43,10 @@ podman run --rm diffedora > releases.md
 
 ## 44.20260626.0 → 44.20260627.0 (14 changes)
 
-**Upgraded:**
-
-| Package | Old | New |
-|---------|-----|-----|
-| kernel | 7.0.12-201.fc44 | 7.0.13-200.fc44 |
-| gnome-control-center | 50.2-1.fc44 | 50.3-1.fc44 |
+- **kernel** (7.0.12-201.fc44 → 7.0.13-200.fc44)
+- **gnome-control-center** (50.2-1.fc44 → 50.3-1.fc44)
+- [New!] **some-new-pkg** (1.0-1.fc44)
+- [Removed] **old-pkg**
 ...
 
 ## 44.20260625.0 → 44.20260626.0 (3 changes)
