@@ -396,7 +396,8 @@ def _trim_evr_pair(old_evr, new_evr):
     nv, nr, nfc = split(new_evr)
     if ofc is not None and ofc == nfc:
         ofc = nfc = None
-    if or_ is not None and or_ == nr:
+    # Keep release only when version is unchanged but release differs (e.g. 3.26.4-2 → 3.26.4-6)
+    if not (ov == nv and or_ != nr):
         or_ = nr = None
 
     def fmt(v, r, fc):

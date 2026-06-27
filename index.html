@@ -209,7 +209,7 @@
       let { v: ov, r: or_, fc: ofc } = split(oldEvr);
       let { v: nv, r: nr, fc: nfc } = split(newEvr);
       if (ofc !== null && ofc === nfc) { ofc = null; nfc = null; }
-      if (or_ !== null && or_ === nr) { or_ = null; nr = null; }
+      if (!(ov === nv && or_ !== nr)) { or_ = null; nr = null; }
       const fmt = (v, r, fc) => v + (r !== null ? `-${r}` : '') + (fc !== null ? fc : '');
       return [fmt(ov, or_, ofc), fmt(nv, nr, nfc)];
     }
