@@ -230,7 +230,7 @@ def release_to_notes(release):
     return {c["package"]: c["note"] for c in release["changes"] if c.get("note")}
 
 
-def summarize_release(diff, security, api_key):
+def summarize_release(diff, security, notes, api_key):
     if not api_key:
         return None
     lines = []
@@ -239,6 +239,8 @@ def summarize_release(diff, security, api_key):
         name = parts[0].rsplit(" ", 1)[0] if len(parts) == 2 else pkg.split()[0]
         sec = "[security] " if name in security else ""
         lines.append(f"  - {sec}upgraded: {pkg}")
+        if notes and name in notes:
+            lines.append(f"    note: {notes[name]}")
     for pkg in diff.get("added", []):
         lines.append(f"  - added: {pkg}")
     for pkg in diff.get("removed", []):
@@ -400,7 +402,7 @@ def main():
                 if not release.get("summary") and api_key:
                     diff = release_to_diff(release)
                     security = release_to_security(release)
-                    release["summary"] = summarize_release(diff, security, api_key)
+                    release["summary"] = summarize_release(diff, security, release_to_notes(release), api_key)
                     if release["summary"]:
                         save_release(cache_dir, release)
                         toc[toc_key] = toc_entry(release)
@@ -413,10 +415,10 @@ def main():
                 print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
                 diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
                 security, bodhi_notes = (set(), {}) if args.no_security else get_security_packages(diff)
-                koji_notes = get_changelogs(diff) if args.changelogs else {}
+                koji_notes = get_changelogs(diff)
                 all_notes = {**koji_notes, **bodhi_notes}
                 notes = all_notes if args.changelogs else None
-                summary = summarize_release(diff, security, api_key)
+                summary = summarize_release(diff, security, all_notes, api_key)
                 if cache_dir:
                     release = build_release(old_c["version"], new_c["version"], diff, security, all_notes, summary)
                     save_release(cache_dir, release)
