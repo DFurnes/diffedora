@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>diffedora</title>
+  <style>
+    :root {
+      --bg:    #1a1a1a;
+      --fg:    #cccccc;
+      --cyan:  #4ec9b0;
+      --red:   #f14c4c;
+      --green: #4ec94e;
+      --dim:   #666666;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 2.5rem 2rem;
+    }
+
+    #app {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      font-size: 1.05em;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+
+    .release {
+      margin-bottom: 1.75rem;
+    }
+
+    .release-header {
+      margin-bottom: 0.2rem;
+    }
+
+    .version {
+      color: var(--cyan);
+      font-weight: bold;
+    }
+
+    .summary {
+      font-style: italic;
+      margin-bottom: 0.6rem;
+    }
+
+    .packages {
+      padding-left: 2ch;
+    }
+
+    .pkg {
+      line-height: 1.5;
+    }
+
+    .sec-marker {
+      color: var(--red);
+      font-weight: bold;
+    }
+
+    .pkg-name {
+      color: var(--fg);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .pkg-name:hover { text-decoration: underline; }
+
+    .new-marker { color: var(--green); }
+
+    .dim { color: var(--dim); }
+
+    .error { color: var(--red); margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <div id="app">Loading…</div>
+  <script>
+    async function load() {
+      const app = document.getElementById('app');
+      try {
+        const toc = await fetch('.cache/summary.json').then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        });
+
+        const entries = Object.values(toc)
+          .filter(e => e.id.startsWith('silverblue-'))
+          .sort((a, b) => b.new_version.localeCompare(a.new_version));
+
+        if (entries.length === 0) {
+          app.textContent = 'No Silverblue releases cached. Run ./run.sh to populate the cache.';
+          return;
+        }
+
+        const releases = await Promise.all(
+          entries.map(e =>
+            fetch(`.cache/releases/${e.id}.json`).then(r => r.json())
+          )
+        );
+
+        app.innerHTML = '';
+
+        const hdr = document.createElement('div');
+        hdr.className = 'page-header';
+        const arch = releases[0].arch;
+        hdr.innerHTML =
+          `Fedora Silverblue ${arch} — Release History ` +
+          `<span class="dim">(${releases.length} releases)</span>`;
+        app.appendChild(hdr);
+
+        for (const release of releases) {
+          app.appendChild(renderRelease(release));
+        }
+      } catch (e) {
+        app.innerHTML = `<div class="error">Error loading cache: ${e.message}</div>`;
+      }
+    }
+
+    function renderRelease(release) {
+      const wrap = document.createElement('div');
+      wrap.className = 'release';
+
+      const total = release.changes.length;
+      const label = total === 1 ? 'change' : 'changes';
+
+      const hdr = document.createElement('div');
+      hdr.className = 'release-header';
+      hdr.innerHTML =
+        `<span class="version">${release.old_version} → ${release.new_version}</span>` +
+        `  <span class="dim">(${total} ${label})</span>`;
+      wrap.appendChild(hdr);
+
+      if (release.summary) {
+        const sum = document.createElement('div');
+        sum.className = 'summary';
+        sum.textContent = release.summary;
+        wrap.appendChild(sum);
+      }
+
+      if (release.changes.length > 0) {
+        const pkgs = document.createElement('div');
+        pkgs.className = 'packages';
+        for (const change of release.changes) {
+          pkgs.appendChild(renderChange(change));
+        }
+        wrap.appendChild(pkgs);
+      }
+
+      return wrap;
+    }
+
+    function renderChange(change) {
+      const row = document.createElement('div');
+      row.className = 'pkg';
+
+      if (change.type === 'upgrade') {
+        const sec = change.security
+          ? '<span class="sec-marker">[!]</span> '
+          : '';
+        const name = `<a class="pkg-name" href="${change.url}">${change.package}</a>`;
+        const ver = `<span class="dim">${change.from} → ${change.to}</span>`;
+        row.innerHTML = `${sec}${name}  ${ver}`;
+
+      } else if (change.type === 'added') {
+        const name = `<a class="pkg-name" href="${change.url}">${change.package}</a>`;
+        const ver = `<span class="dim">${change.to}</span>`;
+        row.innerHTML = `<span class="new-marker">[New!]</span> ${name}  ${ver}`;
+
+      } else {
+        row.innerHTML = `<span class="dim">[Removed] ${change.package}</span>`;
+      }
+
+      return row;
+    }
+
+    load();
+  </script>
+</body>
+</html>
