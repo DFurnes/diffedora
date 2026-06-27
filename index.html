@@ -136,8 +136,10 @@
       const hdr = document.createElement('div');
       hdr.className = 'page-header';
 
+      const title = `<span class="cyan">diff</span>edora`;
+
       if (entries.length === 0) {
-        hdr.innerHTML = `<span>Fedora ${LABELS[variant]} — Release History</span><span class="switcher">${switcher}</span>`;
+        hdr.innerHTML = `<span>${title}</span><span class="switcher">${switcher}</span>`;
         app.appendChild(hdr);
         const msg = document.createElement('div');
         msg.className = 'dim';
@@ -152,7 +154,7 @@
 
       const arch = releases[0].arch;
       hdr.innerHTML =
-        `<span>Fedora ${LABELS[variant]} ${arch} — Release History <span class="dim">(${releases.length} releases)</span></span>` +
+        `<span>${title}</span>` +
         `<span class="switcher">${switcher}</span>`;
       app.appendChild(hdr);
 
