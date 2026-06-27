@@ -5,7 +5,7 @@ Shows package diffs between Fedora Silverblue daily releases, printed as Markdow
 ## Usage
 
 ```
-podman build -t diffedora . && podman run --rm diffedora [options]
+./run.sh [options]
 ```
 
 **Options:**
@@ -21,19 +21,19 @@ podman build -t diffedora . && podman run --rm diffedora [options]
 
 ```
 # Last 20 Silverblue releases (default)
-podman build -t diffedora . && podman run --rm diffedora
+./run.sh
 
 # Last 5 releases
-podman build -t diffedora . && podman run --rm diffedora --releases 5
+./run.sh --releases 5
 
 # Kinoite instead of Silverblue
-podman build -t diffedora . && podman run --rm diffedora --variant kinoite
+./run.sh --variant kinoite
 
 # Fedora 43
-podman build -t diffedora . && podman run --rm diffedora --version 43
+./run.sh --version 43
 
 # Save to a file
-podman build -t diffedora . && podman run --rm diffedora > releases.md
+./run.sh > releases.md
 ```
 
 ## Sample output
