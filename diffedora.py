@@ -11,6 +11,7 @@ import subprocess
 import sys
 import tempfile
 import urllib.request
+import xmlrpc.client
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
@@ -102,7 +103,7 @@ def _strip_epoch(evr):
     return evr.split(":", 1)[1] if ":" in evr else evr
 
 
-def _is_security(name, new_evr):
+def _get_bodhi_update(name, new_evr):
     nvr = f"{name}-{_strip_epoch(new_evr)}"
     url = f"https://bodhi.fedoraproject.org/updates/?builds={nvr}&rows_per_page=1"
     try:
@@ -110,9 +111,23 @@ def _is_security(name, new_evr):
         with urllib.request.urlopen(req, timeout=10) as r:
             data = json.load(r)
         updates = data.get("updates", [])
-        return bool(updates) and updates[0].get("type") == "security"
+        if not updates:
+            return False, None
+        update = updates[0]
+        notes = update.get("notes", "").strip() or None
+        return update.get("type") == "security", notes
     except Exception:
-        return False
+        return False, None
+
+
+def _get_koji_changelog(name, new_evr):
+    nvr = f"{name}-{_strip_epoch(new_evr)}"
+    try:
+        proxy = xmlrpc.client.ServerProxy("https://koji.fedoraproject.org/kojihub")
+        entries = proxy.getChangelogEntries(build=nvr)
+        return entries[0]["text"].strip() if entries else None
+    except Exception:
+        return None
 
 
 def summarize_release(diff, security, api_key):
@@ -151,24 +166,44 @@ def summarize_release(diff, security, api_key):
         return None
 
 
-def get_security_packages(diff):
-    candidates = []
+def _upgraded_candidates(diff):
     for pkg in diff["upgraded"]:
         parts = pkg.split(" -> ", 1)
         if len(parts) == 2:
             old_parts = parts[0].rsplit(" ", 1)
             if len(old_parts) == 2:
-                candidates.append((old_parts[0], parts[1]))
+                yield old_parts[0], parts[1]
+
+
+def get_security_packages(diff):
     security = set()
+    bodhi_notes = {}
     with ThreadPoolExecutor(max_workers=8) as pool:
-        futures = {pool.submit(_is_security, name, evr): name for name, evr in candidates}
+        futures = {pool.submit(_get_bodhi_update, name, evr): name
+                   for name, evr in _upgraded_candidates(diff)}
         for f in as_completed(futures):
-            if f.result():
-                security.add(futures[f])
-    return security
+            is_sec, notes = f.result()
+            name = futures[f]
+            if is_sec:
+                security.add(name)
+            if notes:
+                bodhi_notes[name] = notes
+    return security, bodhi_notes
 
 
-def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None):
+def get_changelogs(diff):
+    changelogs = {}
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(_get_koji_changelog, name, evr): name
+                   for name, evr in _upgraded_candidates(diff)}
+        for f in as_completed(futures):
+            result = f.result()
+            if result:
+                changelogs[futures[f]] = result
+    return changelogs
+
+
+def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None):
     total = sum(len(v) for v in diff.values())
     label = "change" if total == 1 else "changes"
     lines = [f"## {old_ver} → {new_ver} ({total} {label})"]
@@ -183,6 +218,12 @@ def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None):
     def link(name):
         return f"[**{name}**](https://packages.fedoraproject.org/pkgs/{name}/)"
 
+    def append_note(name):
+        if notes and name in notes:
+            for note_line in notes[name].splitlines():
+                if note_line.strip():
+                    lines.append(f"  {note_line.strip()}")
+
     for pkg in diff["upgraded"]:
         parts = pkg.split(" -> ", 1)
         if len(parts) == 2:
@@ -191,6 +232,7 @@ def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None):
             old_evr = old_parts[1] if len(old_parts) == 2 else ""
             sec = "[!] " if name in security else ""
             lines.append(f"- {sec}{link(name)} ({old_evr} → {parts[1]})")
+            append_note(name)
 
     for pkg in diff["added"]:
         name, _, evr = pkg.rpartition(" ")
@@ -216,6 +258,8 @@ def main():
     parser.add_argument("--variant", default="silverblue", help="OS variant")
     parser.add_argument("--no-security", action="store_true",
                         help="skip Bodhi security annotations")
+    parser.add_argument("--changelogs", action="store_true",
+                        help="show Bodhi notes and Koji changelogs per package")
     args = parser.parse_args()
 
     n = args.releases
@@ -245,9 +289,11 @@ def main():
             old_c = commits[i + 1]
             print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
             diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
-            security = set() if args.no_security else get_security_packages(diff)
+            security, bodhi_notes = (set(), {}) if args.no_security else get_security_packages(diff)
+            koji_notes = get_changelogs(diff) if args.changelogs else {}
+            notes = {**koji_notes, **bodhi_notes} if args.changelogs else None
             summary = summarize_release(diff, security, api_key)
-            print(format_markdown(old_c["version"], new_c["version"], diff, security, summary))
+            print(format_markdown(old_c["version"], new_c["version"], diff, security, summary, notes))
 
 
 if __name__ == "__main__":
