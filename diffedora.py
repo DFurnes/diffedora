@@ -4,6 +4,7 @@ diffedora — show package diffs between Fedora Silverblue releases
 """
 
 import argparse
+import contextlib
 import json
 import os
 import re
@@ -17,10 +18,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
+COREOS_BUILDS_BASE = "https://builds.coreos.fedoraproject.org/prod/streams"
 
 VARIANTS = {
-    "silverblue": ("fedora/{version}/{arch}/silverblue", "Silverblue"),
-    "coreos":     ("fedora/{arch}/coreos/stable",        "CoreOS"),
+    "silverblue": {"type": "ostree", "label": "Silverblue", "ref": "fedora/{version}/{arch}/silverblue"},
+    "coreos":     {"type": "coreos", "label": "CoreOS",     "stream": "stable"},
 }
 
 # ANSI escape codes
@@ -33,10 +35,15 @@ _GN = "\033[32m"  # green
 _CY = "\033[36m"  # cyan
 
 _SUMMARY_PROMPT = """\
-You are summarizing a Fedora Silverblue OS update for end users.
-Write a single short sentence (under 15 words) summarizing the theme of these changes.
-Focus on notable packages like the kernel, GNOME components, Firefox, systemd, etc.
-If there are security updates, mention that. Be concise and plain — no markdown, no leading label.\
+You are summarizing a Fedora OS update for end users.
+Write a single short sentence (under 20 words) summarizing the theme of these changes.
+Name specific packages — prefer "curl, glibc, and bind" over "core libraries" or "library updates".
+If there are security updates, name the affected packages specifically.
+Avoid vague filler like "important fixes", "various improvements", "and more", or "across the system".
+Be concise and plain — no markdown, no leading label.
+Start directly with the main topic. Never begin with "This update", "This Fedora update", or similar preambles.
+Good: "Kernel 7.0.13, curl, and bind security fixes with GNOME Control Center update."
+Bad: "Kernel and library security updates with important bug fixes."\
 """
 
 
@@ -53,10 +60,7 @@ def setup_repo(repo_dir):
 
 
 def resolve_ref(version, arch, variant):
-    if variant not in VARIANTS:
-        sys.exit(f"error: unknown variant '{variant}' (known: {', '.join(VARIANTS)})")
-    ref_template, _ = VARIANTS[variant]
-    ref = ref_template.format(version=version, arch=arch)
+    ref = VARIANTS[variant]["ref"].format(version=version, arch=arch)
     url = f"{COMPOSE_REPO}refs/heads/{ref}"
     try:
         with urllib.request.urlopen(url) as r:
@@ -117,6 +121,42 @@ def parse_diff(output):
         elif current and line.startswith("  "):
             sections[current].append(stripped)
     return sections
+
+
+def get_coreos_builds(n, arch, stream="stable"):
+    url = f"{COREOS_BUILDS_BASE}/{stream}/builds/builds.json"
+    try:
+        with urllib.request.urlopen(url, timeout=30) as r:
+            data = json.load(r)
+    except Exception as e:
+        sys.exit(f"error: could not fetch CoreOS build list: {e}")
+    builds = [b for b in data["builds"] if arch in b.get("arches", [])]
+    if len(builds) < 2:
+        sys.exit(f"error: fewer than 2 CoreOS {stream} builds found for arch {arch}")
+    return builds[:n]
+
+
+def diff_coreos(new_ver, arch, stream="stable"):
+    url = f"{COREOS_BUILDS_BASE}/{stream}/builds/{new_ver}/{arch}/meta.json"
+    try:
+        with urllib.request.urlopen(url, timeout=30) as r:
+            meta = json.load(r)
+    except Exception as e:
+        sys.exit(f"error: could not fetch CoreOS metadata for {new_ver}: {e}")
+    diff = {"upgraded": [], "added": [], "removed": []}
+    for entry in meta.get("pkgdiff", []):
+        name, change_type, details = entry[0], entry[1], entry[2]
+        if change_type == 2:  # upgrade
+            prev_ver = details["PreviousPackage"][1]
+            new_pkg_ver = details["NewPackage"][1]
+            diff["upgraded"].append(f"{name} {prev_ver} -> {new_pkg_ver}")
+        elif change_type == 0:  # addition
+            new_pkg_ver = details["NewPackage"][1]
+            diff["added"].append(f"{name} {new_pkg_ver}")
+        elif change_type == 1:  # removal
+            prev_ver = details["PreviousPackage"][1]
+            diff["removed"].append(f"{name} {prev_ver}")
+    return diff
 
 
 def _strip_epoch(evr):
@@ -253,18 +293,33 @@ def release_to_notes(release):
 def summarize_release(diff, security, notes, api_key):
     if not api_key:
         return None
-    lines = []
+
+    # Collect all entries; sort security packages first so they survive any cap
+    entries = []
     for pkg in diff.get("upgraded", []):
         parts = pkg.split(" -> ", 1)
         name = parts[0].rsplit(" ", 1)[0] if len(parts) == 2 else pkg.split()[0]
-        sec = "[security] " if name in security else ""
-        lines.append(f"  - {sec}upgraded: {pkg}")
-        if notes and name in notes:
-            lines.append(f"    note: {notes[name]}")
+        entries.append((name not in security, "upgraded", name, pkg))
     for pkg in diff.get("added", []):
-        lines.append(f"  - added: {pkg}")
+        name = pkg.rsplit(" ", 1)[0]
+        entries.append((name not in security, "added", name, pkg))
     for pkg in diff.get("removed", []):
-        lines.append(f"  - removed: {pkg}")
+        name = pkg.rsplit(" ", 1)[0]
+        entries.append((name not in security, "removed", name, pkg))
+    entries.sort(key=lambda e: e[0])  # False (security) sorts before True
+
+    cap = 40
+    shown = entries[:cap]
+    extra = len(entries) - len(shown)
+
+    lines = []
+    for _, kind, name, pkg in shown:
+        sec = "[security] " if name in security else ""
+        lines.append(f"  - {sec}{kind}: {pkg}")
+        if kind == "upgraded" and notes and name in notes:
+            lines.append(f"    note: {notes[name]}")
+    if extra:
+        lines.append(f"  (... and {extra} more package changes)")
     body = json.dumps({
         "model": "claude-haiku-4-5-20251001",
         "max_tokens": 80,
@@ -325,13 +380,16 @@ def get_changelogs(diff):
     return changelogs
 
 
-def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None):
+def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None, verbose=False):
     total = sum(len(v) for v in diff.values())
     label = "change" if total == 1 else "changes"
     lines = [f"## {old_ver} → {new_ver} ({total} {label})"]
     if summary:
         lines.append(summary)
     lines.append("")
+
+    if not verbose:
+        return "\n".join(lines)
 
     if not any(diff.values()):
         lines.append("*No package changes.*\n")
@@ -368,13 +426,16 @@ def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, 
     return "\n".join(lines)
 
 
-def format_ansi(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None):
+def format_ansi(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None, verbose=False):
     total = sum(len(v) for v in diff.values())
     label = "change" if total == 1 else "changes"
     lines = [f"{_B}{_CY}{old_ver} → {new_ver}{_R}  {_D}({total} {label}){_R}"]
     if summary:
         lines.append(f"{_I}{summary}{_R}")
     lines.append("")
+
+    if not verbose:
+        return "\n".join(lines)
 
     if not any(diff.values()):
         lines.append(f"  {_D}No package changes.{_R}\n")
@@ -410,15 +471,18 @@ def format_ansi(old_ver, new_ver, diff, security=frozenset(), summary=None, note
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Diff Fedora Silverblue releases",
+        description="Diff Fedora Silverblue/CoreOS releases",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--releases", type=int, default=20, metavar="N",
                         help="number of release pairs to show")
-    parser.add_argument("--version", default="44", help="Fedora version")
+    parser.add_argument("--version", default="44",
+                        help="Fedora version (Silverblue only)")
     parser.add_argument("--arch", default="x86_64", help="architecture")
     parser.add_argument("--variant", default="silverblue",
                         help=f"OS variant ({', '.join(VARIANTS)})")
+    parser.add_argument("--verbose", action="store_true",
+                        help="show full package list for each release")
     parser.add_argument("--no-security", action="store_true",
                         help="skip Bodhi security annotations")
     parser.add_argument("--changelogs", action="store_true",
@@ -430,39 +494,59 @@ def main():
                         help="output format (default: ansi if terminal, markdown if piped)")
     args = parser.parse_args()
 
+    variant_info = VARIANTS.get(args.variant)
+    if not variant_info:
+        sys.exit(f"error: unknown variant '{args.variant}' (known: {', '.join(VARIANTS)})")
+
     n = args.releases
+    variant_label = variant_info["label"]
+    variant_type = variant_info["type"]
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    cache_dir = args.cache_dir
+    toc = load_toc(cache_dir) if cache_dir else {}
+    formatter = format_ansi if args.output == "ansi" else format_markdown
 
-    print(f"Resolving {args.variant} {args.version}/{args.arch}...", file=sys.stderr)
-    head_commit = resolve_ref(args.version, args.arch, args.variant)
-    print(f"HEAD: {head_commit[:12]}...", file=sys.stderr)
+    if variant_type == "ostree":
+        print(f"Resolving {args.variant} {args.version}/{args.arch}...", file=sys.stderr)
+        head_commit = resolve_ref(args.version, args.arch, args.variant)
+        print(f"HEAD: {head_commit[:12]}...", file=sys.stderr)
 
-    with tempfile.TemporaryDirectory() as repo_dir:
-        setup_repo(repo_dir)
+    ctx = tempfile.TemporaryDirectory() if variant_type == "ostree" else contextlib.nullcontext()
+    with ctx as repo_dir:
+        if variant_type == "ostree":
+            setup_repo(repo_dir)
+            print(f"Fetching {n + 2} commits of history...", file=sys.stderr)
+            pull_history(repo_dir, head_commit, n + 2)
+            commits = get_commits(repo_dir, head_commit, n + 1)
+            if len(commits) < 2:
+                sys.exit("error: fewer than 2 commits found in history")
+            actual = min(n, len(commits) - 1)
+            pairs = [(commits[i + 1]["version"], commits[i]["version"]) for i in range(actual)]
+            hashes = {c["version"]: c["hash"] for c in commits}
 
-        print(f"Fetching {n + 2} commits of history...", file=sys.stderr)
-        pull_history(repo_dir, head_commit, n + 2)
+            def get_diff(old_ver, new_ver):
+                print(f"Diffing {old_ver} → {new_ver}...", file=sys.stderr)
+                return diff_commits(repo_dir, hashes[old_ver], hashes[new_ver])
 
-        commits = get_commits(repo_dir, head_commit, n + 1)
-        if len(commits) < 2:
-            sys.exit("error: fewer than 2 commits found in history")
+        else:  # coreos
+            stream = variant_info["stream"]
+            print(f"Fetching CoreOS {stream} build list...", file=sys.stderr)
+            builds = get_coreos_builds(n + 1, args.arch, stream)
+            actual = min(n, len(builds) - 1)
+            pairs = [(builds[i + 1]["id"], builds[i]["id"]) for i in range(actual)]
 
-        actual = min(n, len(commits) - 1)
-        _, variant_label = VARIANTS[args.variant]
-        formatter = format_ansi if args.output == "ansi" else format_markdown
+            def get_diff(old_ver, new_ver):
+                print(f"Fetching {new_ver} metadata...", file=sys.stderr)
+                return diff_coreos(new_ver, args.arch, stream)
+
         if args.output == "ansi":
             print(f"\n{_B}Fedora {variant_label} {args.arch} — Last {actual} Releases{_R}\n")
         else:
             print(f"\n# Fedora {variant_label} {args.arch} — Last {actual} Releases\n")
 
-        api_key = os.environ.get("ANTHROPIC_API_KEY")
-        cache_dir = args.cache_dir
-        toc = load_toc(cache_dir) if cache_dir else {}
-
-        for i in range(actual):
-            new_c = commits[i]
-            old_c = commits[i + 1]
-            toc_key = f"{args.variant}-{args.arch}-{old_c['version']}→{new_c['version']}"
-            release_id = f"{args.variant}-{args.arch}-{old_c['version']}-{new_c['version']}"
+        for old_ver, new_ver in pairs:
+            toc_key = f"{args.variant}-{args.arch}-{old_ver}→{new_ver}"
+            release_id = f"{args.variant}-{args.arch}-{old_ver}-{new_ver}"
 
             release = load_release(cache_dir, release_id) if cache_dir else None
 
@@ -476,12 +560,11 @@ def main():
                         toc[toc_key] = toc_entry(release)
                         save_toc(cache_dir, toc)
             else:
-                print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
-                diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
+                diff = get_diff(old_ver, new_ver)
                 security, bodhi_notes = get_security_packages(diff)
                 all_notes = {**get_changelogs(diff), **bodhi_notes}
                 summary = summarize_release(diff, security, all_notes, api_key)
-                release = build_release(old_c["version"], new_c["version"], diff, security, all_notes, summary, args.variant, args.arch)
+                release = build_release(old_ver, new_ver, diff, security, all_notes, summary, args.variant, args.arch)
                 if cache_dir:
                     save_release(cache_dir, release)
                     toc[toc_key] = toc_entry(release)
@@ -489,11 +572,12 @@ def main():
 
             # Render phase: flags only affect output, not what was fetched/cached
             print(formatter(
-                old_c["version"], new_c["version"],
+                old_ver, new_ver,
                 release_to_diff(release),
                 release_to_security(release) if not args.no_security else set(),
                 release.get("summary"),
                 release_to_notes(release) if args.changelogs else None,
+                verbose=args.verbose,
             ))
 
 
