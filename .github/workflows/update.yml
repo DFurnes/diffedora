@@ -1,0 +1,65 @@
+name: Update
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Restore cache from gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: _pages
+        continue-on-error: true
+
+      - name: Copy existing cache
+        run: |
+          mkdir -p data/releases
+          cp -r _pages/data/. data/ 2>/dev/null || true
+
+      - name: Build diffedora image
+        run: docker build -t diffedora . -q
+
+      - name: Fetch Silverblue releases
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          docker run --rm \
+            -e ANTHROPIC_API_KEY \
+            -v "$PWD/data:/cache" \
+            diffedora --cache-dir /cache --releases 20 --variant silverblue \
+            > /dev/null
+
+      - name: Fetch CoreOS releases
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          docker run --rm \
+            -e ANTHROPIC_API_KEY \
+            -v "$PWD/data:/cache" \
+            diffedora --cache-dir /cache --releases 20 --variant coreos \
+            > /dev/null
+
+      - name: Prepare site
+        run: |
+          mkdir _site
+          cp index.html _site/
+          cp -r data _site/
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _site
+          publish_branch: gh-pages

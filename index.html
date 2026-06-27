@@ -110,7 +110,7 @@
     async function init() {
       const app = document.getElementById('app');
       try {
-        toc = await fetch('.cache/summary.json').then(r => {
+        toc = await fetch('data/summary.json').then(r => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
         });
@@ -150,7 +150,7 @@
       }
 
       const releases = await Promise.all(
-        entries.map(e => fetch(`.cache/releases/${e.id}.json`).then(r => r.json()))
+        entries.map(e => fetch(`data/releases/${e.id}.json`).then(r => r.json()))
       );
 
       const arch = releases[0].arch;
