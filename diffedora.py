@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+"""
+diffedora — show package diffs between Fedora Silverblue releases
+"""
+
+import argparse
+import re
+import subprocess
+import sys
+import tempfile
+import urllib.request
+
+COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
+
+
+def run(cmd, **kwargs):
+    return subprocess.run(cmd, check=True, **kwargs)
+
+
+def setup_repo(repo_dir):
+    run(["ostree", "init", "--repo", repo_dir, "--mode=archive"],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    run(["ostree", "remote", "add", "--no-gpg-verify", "compose", COMPOSE_REPO,
+         "--repo", repo_dir],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def resolve_ref(version, arch, variant):
+    url = f"{COMPOSE_REPO}refs/heads/fedora/{version}/{arch}/{variant}"
+    try:
+        with urllib.request.urlopen(url) as r:
+            return r.read().decode().strip()
+    except Exception as e:
+        sys.exit(f"error: could not resolve ref at {url}: {e}")
+
+
+def pull_history(repo_dir, commit, depth):
+    result = subprocess.run(
+        ["ostree", "pull", "--commit-metadata-only", f"--depth={depth}",
+         "compose", commit, "--repo", repo_dir],
+        capture_output=True, text=True
+    )
+    if result.returncode != 0:
+        sys.exit(f"error: ostree pull failed:\n{result.stderr}")
+
+
+def get_commits(repo_dir, head_commit, n):
+    result = subprocess.run(
+        ["ostree", "log", head_commit, "--repo", repo_dir],
+        capture_output=True, text=True, check=True
+    )
+    commits = []
+    current_hash = None
+    for line in result.stdout.splitlines():
+        m = re.match(r'^commit ([0-9a-f]{64})$', line.strip())
+        if m:
+            current_hash = m.group(1)
+        elif current_hash and line.strip().startswith("Version:"):
+            version = line.split(":", 1)[1].strip()
+            commits.append({"hash": current_hash, "version": version})
+            current_hash = None
+    return commits[:n]
+
+
+def diff_commits(repo_dir, old_hash, new_hash):
+    result = subprocess.run(
+        ["rpm-ostree", "db", "diff", f"--repo={repo_dir}", old_hash, new_hash],
+        capture_output=True, text=True
+    )
+    return parse_diff(result.stdout)
+
+
+def parse_diff(output):
+    sections = {"upgraded": [], "added": [], "removed": []}
+    current = None
+    for line in output.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped == "Upgraded:":
+            current = "upgraded"
+        elif stripped == "Added:":
+            current = "added"
+        elif stripped == "Removed:":
+            current = "removed"
+        elif current and line.startswith("  "):
+            sections[current].append(stripped)
+    return sections
+
+
+def format_markdown(old_ver, new_ver, diff):
+    total = sum(len(v) for v in diff.values())
+    label = "change" if total == 1 else "changes"
+    lines = [f"## {old_ver} → {new_ver} ({total} {label})\n"]
+
+    if not any(diff.values()):
+        lines.append("*No package changes.*\n")
+        return "\n".join(lines)
+
+    if diff["upgraded"]:
+        lines.append("**Upgraded:**\n")
+        lines.append("| Package | Old | New |")
+        lines.append("|---------|-----|-----|")
+        for pkg in diff["upgraded"]:
+            parts = pkg.split(" -> ", 1)
+            if len(parts) == 2:
+                old_parts = parts[0].rsplit(" ", 1)
+                name = old_parts[0] if len(old_parts) == 2 else parts[0]
+                old_evr = old_parts[1] if len(old_parts) == 2 else ""
+                lines.append(f"| {name} | {old_evr} | {parts[1]} |")
+        lines.append("")
+
+    if diff["added"]:
+        lines.append("**Added:**\n")
+        for pkg in diff["added"]:
+            lines.append(f"- `{pkg}`")
+        lines.append("")
+
+    if diff["removed"]:
+        lines.append("**Removed:**\n")
+        for pkg in diff["removed"]:
+            lines.append(f"- `{pkg}`")
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Diff Fedora Silverblue releases",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("--releases", type=int, default=20, metavar="N",
+                        help="number of release pairs to show")
+    parser.add_argument("--version", default="44", help="Fedora version")
+    parser.add_argument("--arch", default="x86_64", help="architecture")
+    parser.add_argument("--variant", default="silverblue", help="OS variant")
+    args = parser.parse_args()
+
+    n = args.releases
+
+    print(f"Resolving {args.variant} {args.version}/{args.arch}...", file=sys.stderr)
+    head_commit = resolve_ref(args.version, args.arch, args.variant)
+    print(f"HEAD: {head_commit[:12]}...", file=sys.stderr)
+
+    with tempfile.TemporaryDirectory() as repo_dir:
+        setup_repo(repo_dir)
+
+        print(f"Fetching {n + 2} commits of history...", file=sys.stderr)
+        pull_history(repo_dir, head_commit, n + 2)
+
+        commits = get_commits(repo_dir, head_commit, n + 1)
+        if len(commits) < 2:
+            sys.exit("error: fewer than 2 commits found in history")
+
+        actual = min(n, len(commits) - 1)
+        variant_label = args.variant.capitalize()
+        print(f"\n# Fedora {variant_label} {args.arch} — Last {actual} Releases\n")
+
+        for i in range(actual):
+            new_c = commits[i]
+            old_c = commits[i + 1]
+            print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
+            diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
+            print(format_markdown(old_c["version"], new_c["version"], diff))
+
+
+if __name__ == "__main__":
+    main()
