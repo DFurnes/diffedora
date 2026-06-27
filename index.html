@@ -197,6 +197,23 @@
       return wrap;
     }
 
+    function trimEvrPair(oldEvr, newEvr) {
+      const fcRe = /(\\.fc\d+)$/;
+      function split(evr) {
+        const idx = evr.lastIndexOf('-');
+        if (idx === -1) return { v: evr, r: null, fc: null };
+        const ver = evr.slice(0, idx), rel = evr.slice(idx + 1);
+        const m = fcRe.exec(rel);
+        return { v: ver, r: m ? rel.slice(0, m.index) : rel, fc: m ? m[1] : null };
+      }
+      let { v: ov, r: or_, fc: ofc } = split(oldEvr);
+      let { v: nv, r: nr, fc: nfc } = split(newEvr);
+      if (ofc !== null && ofc === nfc) { ofc = null; nfc = null; }
+      if (or_ !== null && or_ === nr) { or_ = null; nr = null; }
+      const fmt = (v, r, fc) => v + (r !== null ? `-${r}` : '') + (fc !== null ? fc : '');
+      return [fmt(ov, or_, ofc), fmt(nv, nr, nfc)];
+    }
+
     function renderChange(change) {
       const row = document.createElement('div');
       row.className = 'pkg';
@@ -206,7 +223,8 @@
           ? '<span class="sec-marker">[!]</span> '
           : '';
         const name = `<a class="pkg-name" href="${change.url}">${change.package}</a>`;
-        const ver = `<span class="dim">${change.from} → ${change.to}</span>`;
+        const [fromDisp, toDisp] = trimEvrPair(change.from, change.to);
+        const ver = `<span class="dim">${fromDisp} → ${toDisp}</span>`;
         row.innerHTML = `${sec}${name}  ${ver}`;
 
       } else if (change.type === 'added') {

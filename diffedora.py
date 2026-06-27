@@ -380,6 +380,31 @@ def get_changelogs(diff):
     return changelogs
 
 
+_FC_RE = re.compile(r'(\.fc\d+)$')
+
+
+def _trim_evr_pair(old_evr, new_evr):
+    def split(evr):
+        idx = evr.rfind('-')
+        if idx == -1:
+            return evr, None, None
+        ver, rel = evr[:idx], evr[idx + 1:]
+        m = _FC_RE.search(rel)
+        return ver, rel[:m.start()] if m else rel, m.group(1) if m else None
+
+    ov, or_, ofc = split(old_evr)
+    nv, nr, nfc = split(new_evr)
+    if ofc is not None and ofc == nfc:
+        ofc = nfc = None
+    if or_ is not None and or_ == nr:
+        or_ = nr = None
+
+    def fmt(v, r, fc):
+        return v + (f'-{r}' if r is not None else '') + (fc if fc is not None else '')
+
+    return fmt(ov, or_, ofc), fmt(nv, nr, nfc)
+
+
 def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None, verbose=False):
     total = sum(len(v) for v in diff.values())
     label = "change" if total == 1 else "changes"
@@ -411,7 +436,8 @@ def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, 
             name = old_parts[0] if len(old_parts) == 2 else parts[0]
             old_evr = old_parts[1] if len(old_parts) == 2 else ""
             sec = "[!] " if name in security else ""
-            lines.append(f"- {sec}{link(name)} ({old_evr} → {parts[1]})")
+            old_disp, new_disp = _trim_evr_pair(old_evr, parts[1])
+            lines.append(f"- {sec}{link(name)} ({old_disp} → {new_disp})")
             append_note(name)
 
     for pkg in diff["added"]:
@@ -454,7 +480,8 @@ def format_ansi(old_ver, new_ver, diff, security=frozenset(), summary=None, note
             name = old_parts[0] if len(old_parts) == 2 else parts[0]
             old_evr = old_parts[1] if len(old_parts) == 2 else ""
             sec = f"{_B}{_RD}[!]{_R} " if name in security else ""
-            lines.append(f"  {sec}{_B}{name}{_R}  {_D}{old_evr} → {parts[1]}{_R}")
+            old_disp, new_disp = _trim_evr_pair(old_evr, parts[1])
+            lines.append(f"  {sec}{_B}{name}{_R}  {_D}{old_disp} → {new_disp}{_R}")
             append_note(name)
 
     for pkg in diff["added"]:
