@@ -170,7 +170,7 @@ def save_release(cache_dir, release):
     (d / f"{release['id']}.json").write_text(json.dumps(release, indent=2))
 
 
-def build_release(old_ver, new_ver, diff, security, notes, summary):
+def build_release(old_ver, new_ver, diff, security, notes, summary, variant, arch):
     changes = []
     for pkg in diff["upgraded"]:
         parts = pkg.split(" -> ", 1)
@@ -205,9 +205,11 @@ def build_release(old_ver, new_ver, diff, security, notes, summary):
             "from": ver,
             "to": None,
         })
-    release_id = f"{old_ver}-{new_ver}"
+    release_id = f"{variant}-{arch}-{old_ver}-{new_ver}"
     return {
         "id": release_id,
+        "variant": variant,
+        "arch": arch,
         "old_version": old_ver,
         "new_version": new_ver,
         "summary": summary,
@@ -459,8 +461,8 @@ def main():
         for i in range(actual):
             new_c = commits[i]
             old_c = commits[i + 1]
-            toc_key = f"{old_c['version']}→{new_c['version']}"
-            release_id = f"{old_c['version']}-{new_c['version']}"
+            toc_key = f"{args.variant}-{args.arch}-{old_c['version']}→{new_c['version']}"
+            release_id = f"{args.variant}-{args.arch}-{old_c['version']}-{new_c['version']}"
 
             release = load_release(cache_dir, release_id) if cache_dir else None
 
@@ -479,7 +481,7 @@ def main():
                 security, bodhi_notes = get_security_packages(diff)
                 all_notes = {**get_changelogs(diff), **bodhi_notes}
                 summary = summarize_release(diff, security, all_notes, api_key)
-                release = build_release(old_c["version"], new_c["version"], diff, security, all_notes, summary)
+                release = build_release(old_c["version"], new_c["version"], diff, security, all_notes, summary, args.variant, args.arch)
                 if cache_dir:
                     save_release(cache_dir, release)
                     toc[toc_key] = toc_entry(release)
