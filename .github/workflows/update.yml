@@ -17,16 +17,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Restore cache from gh-pages
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: _pages
-        continue-on-error: true
-
-      - name: Copy existing cache
         run: |
           mkdir -p data/releases
-          cp -r _pages/data/. data/ 2>/dev/null || true
+          git fetch origin gh-pages 2>/dev/null || true
+          git checkout origin/gh-pages -- data 2>/dev/null || true
 
       - name: Build diffedora image
         run: docker build -t diffedora . -q
