@@ -5,6 +5,7 @@ diffedora — show package diffs between Fedora Silverblue releases
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -13,6 +14,13 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 COMPOSE_REPO = "https://kojipkgs.fedoraproject.org/compose/ostree/repo/"
+
+_SUMMARY_PROMPT = """\
+You are summarizing a Fedora Silverblue OS update for end users.
+Write a single short sentence (under 15 words) summarizing the theme of these changes.
+Focus on notable packages like the kernel, GNOME components, Firefox, systemd, etc.
+If there are security updates, mention that. Be concise and plain — no markdown, no leading label.\
+"""
 
 
 def run(cmd, **kwargs):
@@ -107,6 +115,42 @@ def _is_security(name, new_evr):
         return False
 
 
+def summarize_release(diff, security, api_key):
+    if not api_key:
+        return None
+    lines = []
+    for pkg in diff.get("upgraded", []):
+        parts = pkg.split(" -> ", 1)
+        name = parts[0].rsplit(" ", 1)[0] if len(parts) == 2 else pkg.split()[0]
+        sec = "[security] " if name in security else ""
+        lines.append(f"  - {sec}upgraded: {pkg}")
+    for pkg in diff.get("added", []):
+        lines.append(f"  - added: {pkg}")
+    for pkg in diff.get("removed", []):
+        lines.append(f"  - removed: {pkg}")
+    body = json.dumps({
+        "model": "claude-haiku-4-5-20251001",
+        "max_tokens": 80,
+        "system": _SUMMARY_PROMPT,
+        "messages": [{"role": "user", "content": "\n".join(lines)}],
+    }).encode()
+    req = urllib.request.Request(
+        "https://api.anthropic.com/v1/messages",
+        data=body,
+        headers={
+            "x-api-key": api_key,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return json.load(r)["content"][0]["text"].strip()
+    except Exception as e:
+        print(f"warning: summary generation failed: {e}", file=sys.stderr)
+        return None
+
+
 def get_security_packages(diff):
     candidates = []
     for pkg in diff["upgraded"]:
@@ -124,10 +168,13 @@ def get_security_packages(diff):
     return security
 
 
-def format_markdown(old_ver, new_ver, diff, security=frozenset()):
+def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None):
     total = sum(len(v) for v in diff.values())
     label = "change" if total == 1 else "changes"
-    lines = [f"## {old_ver} → {new_ver} ({total} {label})\n"]
+    lines = [f"## {old_ver} → {new_ver} ({total} {label})"]
+    if summary:
+        lines.append(summary)
+    lines.append("")
 
     if not any(diff.values()):
         lines.append("*No package changes.*\n")
@@ -191,13 +238,16 @@ def main():
         variant_label = args.variant.capitalize()
         print(f"\n# Fedora {variant_label} {args.arch} — Last {actual} Releases\n")
 
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+
         for i in range(actual):
             new_c = commits[i]
             old_c = commits[i + 1]
             print(f"Diffing {old_c['version']} → {new_c['version']}...", file=sys.stderr)
             diff = diff_commits(repo_dir, old_c["hash"], new_c["hash"])
             security = set() if args.no_security else get_security_packages(diff)
-            print(format_markdown(old_c["version"], new_c["version"], diff, security))
+            summary = summarize_release(diff, security, api_key)
+            print(format_markdown(old_c["version"], new_c["version"], diff, security, summary))
 
 
 if __name__ == "__main__":
