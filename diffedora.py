@@ -383,7 +383,7 @@ def get_changelogs(diff):
 def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None, verbose=False):
     total = sum(len(v) for v in diff.values())
     label = "change" if total == 1 else "changes"
-    lines = [f"## {old_ver} → {new_ver} ({total} {label})"]
+    lines = [f"## {new_ver} ({total} {label})"]
     if summary:
         lines.append(summary)
     lines.append("")
@@ -429,7 +429,7 @@ def format_markdown(old_ver, new_ver, diff, security=frozenset(), summary=None, 
 def format_ansi(old_ver, new_ver, diff, security=frozenset(), summary=None, notes=None, verbose=False):
     total = sum(len(v) for v in diff.values())
     label = "change" if total == 1 else "changes"
-    lines = [f"{_B}{_CY}{old_ver} → {new_ver}{_R}  {_D}({total} {label}){_R}"]
+    lines = [f"{_B}{_CY}{new_ver}{_R}  {_D}({total} {label}){_R}"]
     if summary:
         lines.append(f"{_I}{summary}{_R}")
     lines.append("")
