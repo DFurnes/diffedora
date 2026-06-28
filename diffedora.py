@@ -689,7 +689,7 @@ def format_html(variant, arch, releases):
       line-height: 1.6;
       padding: 2.5rem 2rem;
     }}
-    main    {{ max-width: 640px; margin: 0 auto; }}
+    main    {{ max-width: 480px; margin: 0 auto; }}
     header  {{ display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }}
     h1      {{ font-size: 1.05em; }}
     nav     {{ font-size: 0.95em; }}
