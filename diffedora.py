@@ -173,12 +173,25 @@ def _get_bodhi_update(name, new_evr):
             data = json.load(r)
         updates = data.get("updates", [])
         if not updates:
-            return False, None
+            return None, None, None, None
         update = updates[0]
         notes = update.get("notes", "").strip() or None
-        return update.get("type") == "security", notes
+        update_type = update.get("type") or None
+        severity = update.get("severity") or None
+        cves = [c["cve_id"] for c in update.get("cves", []) if c.get("cve_id")] or None
+        return update_type, severity, notes, cves
     except Exception:
-        return False, None
+        return None, None, None, None
+
+
+def _get_package_summary(name):
+    url = f"https://mdapi.fedoraproject.org/rawhide/pkg/{name}"
+    try:
+        req = urllib.request.Request(url, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return json.load(r).get("summary")
+    except Exception:
+        return None
 
 
 def _get_koji_changelog(name, new_evr):
@@ -207,11 +220,11 @@ def load_release(cache_dir, release_id):
 
 def save_release(cache_dir, release):
     d = Path(cache_dir) / "releases"
-    d.mkdir(exist_ok=True)
+    d.mkdir(parents=True, exist_ok=True)
     (d / f"{release['id']}.json").write_text(json.dumps(release, indent=2))
 
 
-def build_release(old_ver, new_ver, diff, security, notes, summary, variant, arch):
+def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descriptions, summary, variant, arch):
     changes = []
     for pkg in diff["upgraded"]:
         parts = pkg.split(" -> ", 1)
@@ -219,6 +232,7 @@ def build_release(old_ver, new_ver, diff, security, notes, summary, variant, arc
             old_parts = parts[0].rsplit(" ", 1)
             name = old_parts[0] if len(old_parts) == 2 else parts[0]
             from_evr = old_parts[1] if len(old_parts) == 2 else ""
+            bd = bodhi_data.get(name, {}) if bodhi_data else {}
             changes.append({
                 "type": "upgrade",
                 "package": name,
@@ -226,6 +240,10 @@ def build_release(old_ver, new_ver, diff, security, notes, summary, variant, arc
                 "from": from_evr,
                 "to": parts[1],
                 "security": name in security,
+                "update_type": bd.get("type"),
+                "severity": bd.get("severity"),
+                "cves": bd.get("cves"),
+                "description": descriptions.get(name) if descriptions else None,
                 "note": notes.get(name) if notes else None,
             })
     for pkg in diff["added"]:
@@ -293,32 +311,108 @@ def release_to_notes(release):
     return {c["package"]: c["note"] for c in release["changes"] if c.get("note")}
 
 
-def summarize_release(diff, security, notes, api_key):
+def release_to_bodhi_data(release):
+    return {c["package"]: {"type": c.get("update_type"), "severity": c.get("severity"),
+                            "cves": c.get("cves"), "notes": c.get("note")}
+            for c in release["changes"]
+            if any([c.get("update_type"), c.get("severity"), c.get("cves")])}
+
+
+def release_to_descriptions(release):
+    return {c["package"]: c["description"]
+            for c in release["changes"] if c.get("description")}
+
+
+def _bodhi_tag(name, bodhi_data):
+    """Return a bracketed tag like [security/high|CVE-2024-1] or [bugfix] for the summary prompt."""
+    bd = bodhi_data.get(name, {}) if bodhi_data else {}
+    update_type = bd.get("type")
+    if not update_type:
+        return ""
+    if update_type == "security":
+        parts = ["security"]
+        severity = bd.get("severity")
+        if severity and severity != "unspecified":
+            parts[0] = f"security/{severity}"
+        cves = bd.get("cves")
+        if cves:
+            parts.append(",".join(cves[:3]))  # cap at 3 CVEs to avoid very long lines
+        return f"[{'|'.join(parts)}] "
+    return f"[{update_type}] "
+
+
+def _group_entries(entries):
+    """Collapse sub-packages (e.g. kernel-core) under their primary package.
+
+    A package B is a sub-package of A when B.name starts with A.name + '-' and
+    they share the exact same version transition string.
+    """
+    def vpair(pkg_str):
+        parts = pkg_str.split(" -> ", 1)
+        if len(parts) == 2:
+            fp = parts[0].rsplit(" ", 1)
+            return (fp[1] if len(fp) == 2 else "", parts[1])
+        return ("", "")
+
+    vmap = {name: vpair(pkg) for _, _, name, pkg in entries}
+    assigned = set()
+    result = []
+    for sort_key, kind, name, pkg in sorted(entries, key=lambda e: len(e[2])):
+        if name in assigned:
+            continue
+        subs = sorted(
+            other for _, _, other, _ in entries
+            if other != name and other.startswith(name + "-") and vmap.get(other) == vmap[name]
+        )
+        for s in subs:
+            assigned.add(s)
+        assigned.add(name)
+        result.append((sort_key, kind, name, pkg, subs))
+    result.sort(key=lambda e: e[0])
+    return result
+
+
+def summarize_release(diff, bodhi_data, notes, descriptions, api_key):
     if not api_key:
         return None
 
-    # Collect all entries; sort security packages first so they survive any cap
+    # Sort: security first, then bugfix, then others; within each group preserve order
+    _type_order = {"security": 0, "bugfix": 1, "enhancement": 2, "newpackage": 3}
+
+    def _sort_key(name):
+        bd = (bodhi_data or {}).get(name, {})
+        return _type_order.get(bd.get("type"), 4)
+
     entries = []
     for pkg in diff.get("upgraded", []):
         parts = pkg.split(" -> ", 1)
         name = parts[0].rsplit(" ", 1)[0] if len(parts) == 2 else pkg.split()[0]
-        entries.append((name not in security, "upgraded", name, pkg))
+        entries.append((_sort_key(name), "upgraded", name, pkg))
     for pkg in diff.get("added", []):
         name = pkg.rsplit(" ", 1)[0]
-        entries.append((name not in security, "added", name, pkg))
+        entries.append((_sort_key(name), "added", name, pkg))
     for pkg in diff.get("removed", []):
         name = pkg.rsplit(" ", 1)[0]
-        entries.append((name not in security, "removed", name, pkg))
-    entries.sort(key=lambda e: e[0])  # False (security) sorts before True
+        entries.append((_sort_key(name), "removed", name, pkg))
+
+    grouped = _group_entries(entries)
 
     cap = 40
-    shown = entries[:cap]
-    extra = len(entries) - len(shown)
+    shown = grouped[:cap]
+    extra = len(grouped) - len(shown)
 
     lines = []
-    for _, kind, name, pkg in shown:
-        sec = "[security] " if name in security else ""
-        lines.append(f"  - {sec}{kind}: {pkg}")
+    for _, kind, name, pkg, subs in shown:
+        tag = _bodhi_tag(name, bodhi_data)
+        desc = f" ({descriptions[name]})" if descriptions and name in descriptions else ""
+        if subs:
+            shown_subs = subs[:3]
+            rest = len(subs) - len(shown_subs)
+            sub_str = ", ".join(shown_subs) + (f", +{rest} more" if rest else "")
+            sub_note = f" (also: {sub_str})"
+        else:
+            sub_note = ""
+        lines.append(f"  - {tag}{kind}: {name}{desc}{sub_note} {pkg.split(' ', 1)[1] if ' ' in pkg else pkg}")
         if kind == "upgraded" and notes and name in notes:
             lines.append(f"    note: {notes[name]}")
     if extra:
@@ -355,20 +449,19 @@ def _upgraded_candidates(diff):
                 yield old_parts[0], parts[1]
 
 
-def get_security_packages(diff):
-    security = set()
-    bodhi_notes = {}
+def get_bodhi_metadata(diff):
+    bodhi_data = {}
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(_get_bodhi_update, name, evr): name
                    for name, evr in _upgraded_candidates(diff)}
         for f in as_completed(futures):
-            is_sec, notes = f.result()
+            update_type, severity, notes, cves = f.result()
             name = futures[f]
-            if is_sec:
-                security.add(name)
-            if notes:
-                bodhi_notes[name] = notes
-    return security, bodhi_notes
+            if any([update_type, severity, notes, cves]):
+                bodhi_data[name] = {"type": update_type, "severity": severity,
+                                    "notes": notes, "cves": cves}
+    security = {name for name, d in bodhi_data.items() if d.get("type") == "security"}
+    return security, bodhi_data
 
 
 def get_changelogs(diff):
@@ -381,6 +474,18 @@ def get_changelogs(diff):
             if result:
                 changelogs[futures[f]] = result
     return changelogs
+
+
+def get_package_descriptions(diff):
+    descriptions = {}
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(_get_package_summary, name): name
+                   for name, _ in _upgraded_candidates(diff)}
+        for f in as_completed(futures):
+            result = f.result()
+            if result:
+                descriptions[futures[f]] = result
+    return descriptions
 
 
 _FC_RE = re.compile(r'(\.fc\d+)$')
@@ -687,18 +792,20 @@ def main():
             if release:
                 if not release.get("summary") and api_key:
                     release["summary"] = summarize_release(
-                        release_to_diff(release), release_to_security(release),
-                        release_to_notes(release), api_key)
+                        release_to_diff(release), release_to_bodhi_data(release),
+                        release_to_notes(release), release_to_descriptions(release), api_key)
                     if release["summary"] and cache_dir:
                         save_release(cache_dir, release)
                         toc[toc_key] = toc_entry(release)
                         save_toc(cache_dir, toc)
             else:
                 diff = get_diff(old_ver, new_ver)
-                security, bodhi_notes = get_security_packages(diff)
+                security, bodhi_data = get_bodhi_metadata(diff)
+                descriptions = get_package_descriptions(diff)
+                bodhi_notes = {name: d["notes"] for name, d in bodhi_data.items() if d.get("notes")}
                 all_notes = {**get_changelogs(diff), **bodhi_notes}
-                summary = summarize_release(diff, security, all_notes, api_key)
-                release = build_release(old_ver, new_ver, diff, security, all_notes, summary, args.variant, args.arch)
+                summary = summarize_release(diff, bodhi_data, all_notes, descriptions, api_key)
+                release = build_release(old_ver, new_ver, diff, security, bodhi_data, all_notes, descriptions, summary, args.variant, args.arch)
                 if cache_dir:
                     save_release(cache_dir, release)
                     toc[toc_key] = toc_entry(release)
