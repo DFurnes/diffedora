@@ -229,7 +229,8 @@ def build_release(old_ver, new_ver, diff, security, notes, summary, variant, arc
                 "note": notes.get(name) if notes else None,
             })
     for pkg in diff["added"]:
-        name, _, ver = pkg.rpartition(" ")
+        parts = pkg.rsplit(" ", 1)
+        name, ver = (parts[0], parts[1]) if len(parts) == 2 else (parts[0], "")
         changes.append({
             "type": "added",
             "package": name,
@@ -238,7 +239,8 @@ def build_release(old_ver, new_ver, diff, security, notes, summary, variant, arc
             "to": ver,
         })
     for pkg in diff["removed"]:
-        name, _, ver = pkg.rpartition(" ")
+        parts = pkg.rsplit(" ", 1)
+        name, ver = (parts[0], parts[1]) if len(parts) == 2 else (parts[0], "")
         changes.append({
             "type": "removed",
             "package": name,
@@ -561,7 +563,7 @@ def format_html(variant, arch, releases):
       line-height: 1.6;
       padding: 2.5rem 2rem;
     }}
-    main    {{ max-width: 920px; margin: 0 auto; }}
+    main    {{ max-width: 640px; margin: 0 auto; }}
     header  {{ display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }}
     h1      {{ font-size: 1.05em; }}
     nav     {{ font-size: 0.95em; }}
