@@ -236,6 +236,26 @@ def save_release(cache_dir, release):
 
 
 def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descriptions, summary, variant, arch):
+    # Collect all package names in this diff so sub-packages can resolve their source.
+    all_names = set()
+    for pkg in diff.get("upgraded", []):
+        p = pkg.split(" -> ", 1)
+        if len(p) == 2:
+            op = p[0].rsplit(" ", 1)
+            all_names.add(op[0] if len(op) == 2 else p[0])
+    for pkg in diff.get("added", []) + diff.get("removed", []):
+        all_names.add(pkg.rsplit(" ", 1)[0])
+
+    def pkg_url(name):
+        # If another package in the diff is a prefix of this name, it's the source package.
+        source = next(
+            (s for s in sorted(all_names, key=len) if s != name and name.startswith(s + "-")),
+            None,
+        )
+        if source:
+            return f"https://packages.fedoraproject.org/pkgs/{source}/{name}/"
+        return f"https://packages.fedoraproject.org/pkgs/{name}/"
+
     changes = []
     for pkg in diff["upgraded"]:
         parts = pkg.split(" -> ", 1)
@@ -247,7 +267,7 @@ def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descripti
             changes.append({
                 "type": "upgrade",
                 "package": name,
-                "url": f"https://packages.fedoraproject.org/pkgs/{name}/",
+                "url": pkg_url(name),
                 "from": from_evr,
                 "to": parts[1],
                 "security": name in security,
@@ -263,7 +283,7 @@ def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descripti
         changes.append({
             "type": "added",
             "package": name,
-            "url": f"https://packages.fedoraproject.org/pkgs/{name}/",
+            "url": pkg_url(name),
             "from": None,
             "to": ver,
         })
@@ -273,7 +293,7 @@ def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descripti
         changes.append({
             "type": "removed",
             "package": name,
-            "url": f"https://packages.fedoraproject.org/pkgs/{name}/",
+            "url": pkg_url(name),
             "from": ver,
             "to": None,
         })
