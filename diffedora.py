@@ -502,6 +502,9 @@ def get_package_descriptions(diff):
 _FC_RE = re.compile(r'(\.fc\d+)$')
 
 
+_EPOCH_RE = re.compile(r'^\d+:')
+
+
 def _trim_evr_pair(old_evr, new_evr):
     def split(evr):
         idx = evr.rfind('-')
@@ -511,8 +514,15 @@ def _trim_evr_pair(old_evr, new_evr):
         m = _FC_RE.search(rel)
         return ver, rel[:m.start()] if m else rel, m.group(1) if m else None
 
+    def normalize(ver):
+        ver = _EPOCH_RE.sub('', ver)  # strip epoch (e.g. "1:")
+        if ver.startswith('0^'):      # strip snapshot base (e.g. "0^20260526..." → "20260526...")
+            ver = ver[2:]
+        return ver
+
     ov, or_, ofc = split(old_evr)
     nv, nr, nfc = split(new_evr)
+    ov, nv = normalize(ov), normalize(nv)
     if ofc is not None and ofc == nfc:
         ofc = nfc = None
     # Keep release only when version is unchanged but release differs (e.g. 3.26.4-2 → 3.26.4-6)
