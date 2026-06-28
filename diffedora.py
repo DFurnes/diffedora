@@ -36,15 +36,26 @@ _GN = "\033[32m"  # green
 _CY = "\033[36m"  # cyan
 
 _SUMMARY_PROMPT = """\
-You are summarizing a Fedora OS update for end users.
-Write a single short sentence (under 20 words) summarizing the theme of these changes.
-Name specific packages — prefer "curl, glibc, and bind" over "core libraries" or "library updates".
-If there are security updates, name the affected packages specifically.
-Avoid vague filler like "important fixes", "various improvements", "and more", or "across the system".
-Be concise and plain — no markdown, no leading label.
-Start directly with the main topic. Never begin with "This update", "This Fedora update", or similar preambles.
-Good: "Kernel 7.0.13, curl, and bind security fixes with GNOME Control Center update."
-Bad: "Kernel and library security updates with important bug fixes."\
+You are writing a changelog headline for a Fedora OS update — a short noun phrase, not a sentence.
+Under 20 words. No markdown, no leading label.
+
+Format: list the key software, then what happened to it. Like a git commit subject or release note title.
+Do NOT write full sentences with verbs like "receives", "gets", "is updated", or "has been fixed".
+Do NOT write filler like "and version updates", "various improvements", "and more".
+
+Version numbers: only include them for well-known packages users track by version (kernel, Mesa, Firefox, GNOME Shell).
+Skip version numbers for everything else — the change type (bug fix, security fix, new feature) matters more.
+
+Package names: use the description in parentheses to write human-readable names.
+Prefer "HP printer drivers" over "hplip", "spell checker" over "hunspell", "DNS utilities" over "bind-utils".
+Well-known names (kernel, vim, curl, Firefox) can stay as-is.
+
+Security updates: name the affected software and include CVE IDs when listed.
+
+Good: "Kernel 7.0.13, HP printer driver, and GNOME Control Center bug fixes."
+Good: "curl security fix (CVE-2024-9681) and spell checker update."
+Good: "Flatpak portal library gains clipboard support."
+Bad: "GNOME Software 50.3, hunspell 1.7.3, and bind-utils receive bug fixes and version updates."\
 """
 
 
@@ -418,7 +429,7 @@ def summarize_release(diff, bodhi_data, notes, descriptions, api_key):
     if extra:
         lines.append(f"  (... and {extra} more package changes)")
     body = json.dumps({
-        "model": "claude-haiku-4-5-20251001",
+        "model": "claude-sonnet-4-6",
         "max_tokens": 80,
         "system": _SUMMARY_PROMPT,
         "messages": [{"role": "user", "content": "\n".join(lines)}],
