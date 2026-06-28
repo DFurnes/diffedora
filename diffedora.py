@@ -195,14 +195,41 @@ def _get_bodhi_update(name, new_evr):
         return None, None, None, None
 
 
+_srcpkg_cache: dict = {}
+
+
+def _is_source_package(name):
+    if name in _srcpkg_cache:
+        return _srcpkg_cache[name]
+    url = f"https://mdapi.fedoraproject.org/rawhide/srcpkg/{name}"
+    try:
+        req = urllib.request.Request(url, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            json.load(r)
+        _srcpkg_cache[name] = True
+        return True
+    except Exception:
+        _srcpkg_cache[name] = False
+        return False
+
+
 def _get_package_summary(name):
     url = f"https://mdapi.fedoraproject.org/rawhide/pkg/{name}"
     try:
         req = urllib.request.Request(url, headers={"Accept": "application/json"})
         with urllib.request.urlopen(req, timeout=10) as r:
-            return json.load(r).get("summary")
+            data = json.load(r)
+        summary = data.get("summary")
+        co_packages = data.get("co-packages") or []
+        # Find source package: check each co-package (plus self) against srcpkg endpoint.
+        # Sort by length so the source (typically the shortest name) is checked first.
+        source = next(
+            (c for c in sorted(set(co_packages + [name]), key=len) if _is_source_package(c)),
+            None,
+        )
+        return summary, source
     except Exception:
-        return None
+        return None, None
 
 
 def _get_koji_changelog(name, new_evr):
@@ -235,24 +262,10 @@ def save_release(cache_dir, release):
     (d / f"{release['id']}.json").write_text(json.dumps(release, indent=2))
 
 
-def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descriptions, summary, variant, arch):
-    # Collect all package names in this diff so sub-packages can resolve their source.
-    all_names = set()
-    for pkg in diff.get("upgraded", []):
-        p = pkg.split(" -> ", 1)
-        if len(p) == 2:
-            op = p[0].rsplit(" ", 1)
-            all_names.add(op[0] if len(op) == 2 else p[0])
-    for pkg in diff.get("added", []) + diff.get("removed", []):
-        all_names.add(pkg.rsplit(" ", 1)[0])
-
+def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descriptions, sources, summary, variant, arch):
     def pkg_url(name):
-        # If another package in the diff is a prefix of this name, it's the source package.
-        source = next(
-            (s for s in sorted(all_names, key=len) if s != name and name.startswith(s + "-")),
-            None,
-        )
-        if source:
+        source = sources.get(name) if sources else None
+        if source and source != name:
             return f"https://packages.fedoraproject.org/pkgs/{source}/{name}/"
         return f"https://packages.fedoraproject.org/pkgs/{name}/"
 
@@ -264,10 +277,12 @@ def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descripti
             name = old_parts[0] if len(old_parts) == 2 else parts[0]
             from_evr = old_parts[1] if len(old_parts) == 2 else ""
             bd = bodhi_data.get(name, {}) if bodhi_data else {}
+            src = sources.get(name) if sources else None
             changes.append({
                 "type": "upgrade",
                 "package": name,
                 "url": pkg_url(name),
+                "source_package": src,
                 "from": from_evr,
                 "to": parts[1],
                 "security": name in security,
@@ -352,6 +367,11 @@ def release_to_bodhi_data(release):
 def release_to_descriptions(release):
     return {c["package"]: c["description"]
             for c in release["changes"] if c.get("description")}
+
+
+def release_to_sources(release):
+    return {c["package"]: c["source_package"]
+            for c in release["changes"] if c.get("source_package")}
 
 
 def _bodhi_tag(name, bodhi_data):
@@ -509,14 +529,18 @@ def get_changelogs(diff):
 
 def get_package_descriptions(diff):
     descriptions = {}
+    sources = {}
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(_get_package_summary, name): name
                    for name, _ in _upgraded_candidates(diff)}
         for f in as_completed(futures):
-            result = f.result()
-            if result:
-                descriptions[futures[f]] = result
-    return descriptions
+            summary, source = f.result()
+            name = futures[f]
+            if summary:
+                descriptions[name] = summary
+            if source:
+                sources[name] = source
+    return descriptions, sources
 
 
 _FC_RE = re.compile(r'(\.fc\d+)$')
@@ -842,11 +866,11 @@ def main():
             else:
                 diff = get_diff(old_ver, new_ver)
                 security, bodhi_data = get_bodhi_metadata(diff)
-                descriptions = get_package_descriptions(diff)
+                descriptions, sources = get_package_descriptions(diff)
                 bodhi_notes = {name: d["notes"] for name, d in bodhi_data.items() if d.get("notes")}
                 all_notes = {**get_changelogs(diff), **bodhi_notes}
                 summary = summarize_release(diff, bodhi_data, all_notes, descriptions, api_key)
-                release = build_release(old_ver, new_ver, diff, security, bodhi_data, all_notes, descriptions, summary, args.variant, args.arch)
+                release = build_release(old_ver, new_ver, diff, security, bodhi_data, all_notes, descriptions, sources, summary, args.variant, args.arch)
                 if cache_dir:
                     save_release(cache_dir, release)
                     toc[toc_key] = toc_entry(release)
