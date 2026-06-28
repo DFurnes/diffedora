@@ -523,7 +523,7 @@ def _html_release(release):
     parts   = [
         '    <div class="release">',
         '      <div class="release-header">',
-        f'        <span class="version">{old_ver} → {new_ver}</span>'
+        f'        <span class="version">{new_ver}</span>'
         f'  <span class="dim">({total} {label})</span>',
         '      </div>',
     ]
