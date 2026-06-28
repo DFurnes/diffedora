@@ -5,6 +5,7 @@ diffedora — show package diffs between Fedora Silverblue releases
 
 import argparse
 import contextlib
+import html
 import json
 import os
 import re
@@ -497,6 +498,116 @@ def format_ansi(old_ver, new_ver, diff, security=frozenset(), summary=None, note
     return "\n".join(lines)
 
 
+def _html_change(change):
+    name = html.escape(change["package"])
+    url  = html.escape(change["url"])
+    if change["type"] == "upgrade":
+        sec = '<span class="sec-marker">[!]</span> ' if change.get("security") else ""
+        old_disp, new_disp = _trim_evr_pair(change.get("from") or "", change.get("to") or "")
+        ver = f'<span class="dim">{html.escape(old_disp)} → {html.escape(new_disp)}</span>'
+        return f'        <div class="pkg">{sec}<a class="pkg-name" href="{url}">{name}</a>  {ver}</div>'
+    elif change["type"] == "added":
+        ver = html.escape(change.get("to") or "")
+        return (f'        <div class="pkg"><span class="new-marker">[New!]</span> '
+                f'<a class="pkg-name" href="{url}">{name}</a>  '
+                f'<span class="dim">{ver}</span></div>')
+    else:
+        return f'        <div class="pkg"><span class="dim">[Removed] {name}</span></div>'
+
+
+def _html_release(release):
+    old_ver = html.escape(release["old_version"])
+    new_ver = html.escape(release["new_version"])
+    total   = len(release["changes"])
+    label   = "change" if total == 1 else "changes"
+    parts   = [
+        '    <div class="release">',
+        '      <div class="release-header">',
+        f'        <span class="version">{old_ver} → {new_ver}</span>'
+        f'  <span class="dim">({total} {label})</span>',
+        '      </div>',
+    ]
+    if release.get("summary"):
+        parts.append(f'      <div class="summary">{html.escape(release["summary"])}</div>')
+    if release["changes"]:
+        parts.append('      <div class="packages">')
+        parts.extend(_html_change(c) for c in release["changes"])
+        parts.append('      </div>')
+    parts.append('    </div>')
+    return "\n".join(parts)
+
+
+def format_html(variant, arch, releases):
+    _LABELS = {"silverblue": "Silverblue", "coreos": "CoreOS"}
+    _PAGES  = {"silverblue": "index.html",  "coreos": "coreos.html"}
+    nav = ' <span class="dim">·</span> '.join(
+        f'<a class="nav-link{" active" if v == variant else ""}" href="{_PAGES[v]}">{label}</a>'
+        for v, label in _LABELS.items()
+    )
+    blocks = "\n".join(_html_release(r) for r in releases)
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>diffedora</title>
+  <style>
+    :root {{
+      --bg:    #1a1a1a;
+      --fg:    #cccccc;
+      --cyan:  #4ec9b0;
+      --red:   #f14c4c;
+      --green: #4ec94e;
+      --dim:   #666666;
+    }}
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    body {{
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 2.5rem 2rem;
+    }}
+    #app {{ max-width: 920px; margin: 0 auto; }}
+    .page-header {{
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 1.05em;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }}
+    .switcher {{ font-weight: normal; font-size: 0.95em; }}
+    .nav-link {{ color: var(--dim); text-decoration: none; }}
+    .nav-link.active {{ color: var(--fg); font-weight: bold; }}
+    .nav-link:not(.active):hover {{ color: var(--cyan); }}
+    .release {{ margin-bottom: 1.75rem; }}
+    .release-header {{ margin-bottom: 0.2rem; }}
+    .version {{ color: var(--cyan); font-weight: bold; }}
+    .summary {{ font-style: italic; margin-bottom: 0.6rem; }}
+    .packages {{ padding-left: 2ch; }}
+    .pkg {{ line-height: 1.5; }}
+    .sec-marker {{ color: var(--red); font-weight: bold; }}
+    .pkg-name {{ color: var(--fg); font-weight: bold; text-decoration: none; }}
+    .pkg-name:hover {{ text-decoration: underline; }}
+    .new-marker {{ color: var(--green); }}
+    .cyan {{ color: var(--cyan); }}
+    .dim {{ color: var(--dim); }}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="page-header">
+      <span><span class="cyan">diff</span>edora</span>
+      <span class="switcher">{nav}</span>
+    </div>
+{blocks}
+  </div>
+</body>
+</html>"""
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Diff Fedora Silverblue/CoreOS releases",
@@ -517,7 +628,7 @@ def main():
                         help="show Bodhi notes and Koji changelogs per package")
     parser.add_argument("--cache-dir", metavar="PATH",
                         help="directory for persistent summary cache")
-    parser.add_argument("--output", choices=["markdown", "ansi"],
+    parser.add_argument("--output", choices=["markdown", "ansi", "html"],
                         default="ansi" if sys.stdout.isatty() else "markdown",
                         help="output format (default: ansi if terminal, markdown if piped)")
     args = parser.parse_args()
@@ -532,7 +643,12 @@ def main():
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     cache_dir = args.cache_dir
     toc = load_toc(cache_dir) if cache_dir else {}
-    formatter = format_ansi if args.output == "ansi" else format_markdown
+    if args.output == "ansi":
+        formatter = format_ansi
+    elif args.output == "markdown":
+        formatter = format_markdown
+    else:
+        formatter = None  # html: collected and rendered after loop
 
     if variant_type == "ostree":
         print(f"Resolving {args.variant} {args.version}/{args.arch}...", file=sys.stderr)
@@ -569,9 +685,10 @@ def main():
 
         if args.output == "ansi":
             print(f"\n{_B}Fedora {variant_label} {args.arch} — Last {actual} Releases{_R}\n")
-        else:
+        elif args.output == "markdown":
             print(f"\n# Fedora {variant_label} {args.arch} — Last {actual} Releases\n")
 
+        collected = []
         for old_ver, new_ver in pairs:
             toc_key = f"{args.variant}-{args.arch}-{old_ver}→{new_ver}"
             release_id = f"{args.variant}-{args.arch}-{old_ver}-{new_ver}"
@@ -598,15 +715,20 @@ def main():
                     toc[toc_key] = toc_entry(release)
                     save_toc(cache_dir, toc)
 
-            # Render phase: flags only affect output, not what was fetched/cached
-            print(formatter(
-                old_ver, new_ver,
-                release_to_diff(release),
-                release_to_security(release) if not args.no_security else set(),
-                release.get("summary"),
-                release_to_notes(release) if args.changelogs else None,
-                verbose=args.verbose,
-            ))
+            if args.output == "html":
+                collected.append(release)
+            else:
+                print(formatter(
+                    old_ver, new_ver,
+                    release_to_diff(release),
+                    release_to_security(release) if not args.no_security else set(),
+                    release.get("summary"),
+                    release_to_notes(release) if args.changelogs else None,
+                    verbose=args.verbose,
+                ))
+
+        if args.output == "html":
+            print(format_html(args.variant, args.arch, collected))
 
 
 if __name__ == "__main__":

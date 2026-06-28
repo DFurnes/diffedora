@@ -25,30 +25,31 @@ jobs:
       - name: Build diffedora image
         run: docker build -f Containerfile -t diffedora . -q
 
-      - name: Fetch Silverblue releases
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          docker run --rm \
-            -e ANTHROPIC_API_KEY \
-            -v "$PWD/data:/cache" \
-            diffedora --cache-dir /cache --releases 20 --variant silverblue \
-            > /dev/null
-
-      - name: Fetch CoreOS releases
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          docker run --rm \
-            -e ANTHROPIC_API_KEY \
-            -v "$PWD/data:/cache" \
-            diffedora --cache-dir /cache --releases 5 --variant coreos \
-            > /dev/null
-
       - name: Prepare site
+        run: mkdir -p _site
+
+      - name: Build Silverblue HTML
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          mkdir _site
-          cp index.html _site/
+          docker run --rm \
+            -e ANTHROPIC_API_KEY \
+            -v "$PWD/data:/cache" \
+            diffedora --cache-dir /cache --releases 20 --variant silverblue --output html \
+            > _site/index.html
+
+      - name: Build CoreOS HTML
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          docker run --rm \
+            -e ANTHROPIC_API_KEY \
+            -v "$PWD/data:/cache" \
+            diffedora --cache-dir /cache --releases 5 --variant coreos --output html \
+            > _site/coreos.html
+
+      - name: Finalize site
+        run: |
           cp -r data _site/
           touch _site/.nojekyll
 
