@@ -502,46 +502,38 @@ def _html_change(change):
     name = html.escape(change["package"])
     url  = html.escape(change["url"])
     if change["type"] == "upgrade":
-        sec = '<span class="sec-marker">[!]</span> ' if change.get("security") else ""
+        sec = "<strong>[!]</strong> " if change.get("security") else ""
         old_disp, new_disp = _trim_evr_pair(change.get("from") or "", change.get("to") or "")
-        ver = f'<span class="dim">{html.escape(old_disp)} → {html.escape(new_disp)}</span>'
-        return f'        <div class="pkg">{sec}<a class="pkg-name" href="{url}">{name}</a>  {ver}</div>'
+        ver = f"<small>{html.escape(old_disp)} → {html.escape(new_disp)}</small>"
+        return f'    <li>{sec}<a href="{url}">{name}</a>  {ver}</li>'
     elif change["type"] == "added":
         ver = html.escape(change.get("to") or "")
-        return (f'        <div class="pkg"><span class="new-marker">[New!]</span> '
-                f'<a class="pkg-name" href="{url}">{name}</a>  '
-                f'<span class="dim">{ver}</span></div>')
+        return f'    <li><b>[New!]</b> <a href="{url}">{name}</a>  <small>{ver}</small></li>'
     else:
-        return f'        <div class="pkg"><span class="dim">[Removed] {name}</span></div>'
+        return f'    <li><span class="dim">[Removed] {name}</span></li>'
 
 
 def _html_release(release):
-    old_ver = html.escape(release["old_version"])
     new_ver = html.escape(release["new_version"])
     total   = len(release["changes"])
     label   = "change" if total == 1 else "changes"
-    parts   = [
-        '    <div class="release">',
-        '      <div class="release-header">',
-        f'        <span class="version">{new_ver}</span>'
-        f'  <span class="dim">({total} {label})</span>',
-        '      </div>',
-    ]
+    parts   = [f'  <article>',
+               f'    <h2>{new_ver}  <small>({total} {label})</small></h2>']
     if release.get("summary"):
-        parts.append(f'      <div class="summary">{html.escape(release["summary"])}</div>')
+        parts.append(f'    <em>{html.escape(release["summary"])}</em>')
     if release["changes"]:
-        parts.append('      <div class="packages">')
+        parts.append('    <ul>')
         parts.extend(_html_change(c) for c in release["changes"])
-        parts.append('      </div>')
-    parts.append('    </div>')
+        parts.append('    </ul>')
+    parts.append('  </article>')
     return "\n".join(parts)
 
 
 def format_html(variant, arch, releases):
     _LABELS = {"silverblue": "Silverblue", "coreos": "CoreOS"}
     _PAGES  = {"silverblue": "index.html",  "coreos": "coreos.html"}
-    nav = ' <span class="dim">·</span> '.join(
-        f'<a class="nav-link{" active" if v == variant else ""}" href="{_PAGES[v]}">{label}</a>'
+    nav = " · ".join(
+        f'<a{"" if v != variant else " class=\"active\""} href="{_PAGES[v]}">{label}</a>'
         for v, label in _LABELS.items()
     )
     blocks = "\n".join(_html_release(r) for r in releases)
@@ -569,41 +561,36 @@ def format_html(variant, arch, releases):
       line-height: 1.6;
       padding: 2.5rem 2rem;
     }}
-    #app {{ max-width: 920px; margin: 0 auto; }}
-    .page-header {{
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 1.05em;
-      font-weight: bold;
-      margin-bottom: 2rem;
-    }}
-    .switcher {{ font-weight: normal; font-size: 0.95em; }}
-    .nav-link {{ color: var(--dim); text-decoration: none; }}
-    .nav-link.active {{ color: var(--fg); font-weight: bold; }}
-    .nav-link:not(.active):hover {{ color: var(--cyan); }}
-    .release {{ margin-bottom: 1.75rem; }}
-    .release-header {{ margin-bottom: 0.2rem; }}
-    .version {{ color: var(--cyan); font-weight: bold; }}
-    .summary {{ font-style: italic; margin-bottom: 0.6rem; }}
-    .packages {{ padding-left: 2ch; }}
-    .pkg {{ line-height: 1.5; }}
-    .sec-marker {{ color: var(--red); font-weight: bold; }}
-    .pkg-name {{ color: var(--fg); font-weight: bold; text-decoration: none; }}
-    .pkg-name:hover {{ text-decoration: underline; }}
-    .new-marker {{ color: var(--green); }}
-    .cyan {{ color: var(--cyan); }}
-    .dim {{ color: var(--dim); }}
+    main    {{ max-width: 920px; margin: 0 auto; }}
+    header  {{ display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }}
+    h1      {{ font-size: 1.05em; }}
+    nav     {{ font-size: 0.95em; }}
+    nav a   {{ color: var(--dim); text-decoration: none; }}
+    nav a.active           {{ color: var(--fg); font-weight: bold; }}
+    nav a:not(.active):hover {{ color: var(--cyan); }}
+    article {{ margin-bottom: 1.75rem; }}
+    h2      {{ color: var(--cyan); font-size: 1em; font-weight: bold; margin-bottom: 0.2rem; }}
+    h2 small {{ color: var(--dim); font-weight: normal; }}
+    em      {{ display: block; margin-bottom: 0.6rem; }}
+    ul      {{ list-style: none; padding-left: 2ch; }}
+    li      {{ line-height: 1.5; }}
+    ul a    {{ color: var(--fg); font-weight: bold; text-decoration: none; }}
+    ul a:hover {{ text-decoration: underline; }}
+    strong  {{ color: var(--red); }}
+    b       {{ color: var(--green); }}
+    small   {{ font-size: 1em; color: var(--dim); }}
+    .cyan   {{ color: var(--cyan); }}
+    .dim    {{ color: var(--dim); }}
   </style>
 </head>
 <body>
-  <div id="app">
-    <div class="page-header">
-      <span><span class="cyan">diff</span>edora</span>
-      <span class="switcher">{nav}</span>
-    </div>
+  <main>
+    <header>
+      <h1><span class="cyan">diff</span>edora</h1>
+      <nav>{nav}</nav>
+    </header>
 {blocks}
-  </div>
+  </main>
 </body>
 </html>"""
 
