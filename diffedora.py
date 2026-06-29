@@ -748,7 +748,8 @@ def format_html(variant, arch, releases):
     header  {{ display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }}
     h1      {{ font-size: 1.05em; }}
     nav     {{ font-size: 0.95em; }}
-    nav a   {{ color: var(--dim); text-decoration: none; }}
+    nav a        {{ color: var(--dim); text-decoration: none; }}
+    nav a:hover  {{ text-decoration: none; }}
     nav a.active           {{ color: var(--fg); font-weight: bold; }}
     nav a:not(.active):hover {{ color: var(--cyan); text-decoration: none; }}
     article {{ margin-bottom: 1.75rem; }}
