@@ -750,7 +750,7 @@ def format_html(variant, arch, releases):
     nav     {{ font-size: 0.95em; }}
     nav a   {{ color: var(--dim); text-decoration: none; }}
     nav a.active           {{ color: var(--fg); font-weight: bold; }}
-    nav a:not(.active):hover {{ color: var(--cyan); }}
+    nav a:not(.active):hover {{ color: var(--cyan); text-decoration: none; }}
     article {{ margin-bottom: 1.75rem; }}
     h2      {{ color: var(--cyan); font-size: 1em; font-weight: bold; margin-bottom: 0.2rem; }}
     h2 small {{ color: var(--dim); font-weight: normal; }}
