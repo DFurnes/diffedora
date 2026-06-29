@@ -175,8 +175,10 @@ def _strip_epoch(evr):
     return evr.split(":", 1)[1] if ":" in evr else evr
 
 
-def _get_bodhi_update(name, new_evr):
-    nvr = f"{name}-{_strip_epoch(new_evr)}"
+def _get_bodhi_update(name, new_evr, source_name=None):
+    # Bodhi indexes by source build NVR; use source_name when available.
+    lookup = source_name if source_name and source_name != name else name
+    nvr = f"{lookup}-{_strip_epoch(new_evr)}"
     url = f"https://bodhi.fedoraproject.org/updates/?builds={nvr}&rows_per_page=1"
     try:
         req = urllib.request.Request(url, headers={"Accept": "application/json"})
@@ -190,9 +192,10 @@ def _get_bodhi_update(name, new_evr):
         update_type = update.get("type") or None
         severity = update.get("severity") or None
         cves = [c["cve_id"] for c in update.get("cves", []) if c.get("cve_id")] or None
-        return update_type, severity, notes, cves
+        alias = update.get("alias") or None
+        return update_type, severity, notes, cves, alias
     except Exception:
-        return None, None, None, None
+        return None, None, None, None, None
 
 
 _srcpkg_cache: dict = {}
@@ -278,6 +281,7 @@ def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descripti
             from_evr = old_parts[1] if len(old_parts) == 2 else ""
             bd = bodhi_data.get(name, {}) if bodhi_data else {}
             src = sources.get(name) if sources else None
+            alias = bd.get("alias")
             changes.append({
                 "type": "upgrade",
                 "package": name,
@@ -289,6 +293,7 @@ def build_release(old_ver, new_ver, diff, security, bodhi_data, notes, descripti
                 "update_type": bd.get("type"),
                 "severity": bd.get("severity"),
                 "cves": bd.get("cves"),
+                "bodhi_url": f"https://bodhi.fedoraproject.org/updates/{alias}" if alias else None,
                 "description": descriptions.get(name) if descriptions else None,
                 "note": notes.get(name) if notes else None,
             })
@@ -500,17 +505,18 @@ def _upgraded_candidates(diff):
                 yield old_parts[0], parts[1]
 
 
-def get_bodhi_metadata(diff):
+def get_bodhi_metadata(diff, sources=None):
     bodhi_data = {}
     with ThreadPoolExecutor(max_workers=8) as pool:
-        futures = {pool.submit(_get_bodhi_update, name, evr): name
+        futures = {pool.submit(_get_bodhi_update, name, evr,
+                               sources.get(name) if sources else None): name
                    for name, evr in _upgraded_candidates(diff)}
         for f in as_completed(futures):
-            update_type, severity, notes, cves = f.result()
+            update_type, severity, notes, cves, alias = f.result()
             name = futures[f]
-            if any([update_type, severity, notes, cves]):
+            if any([update_type, severity, notes, cves, alias]):
                 bodhi_data[name] = {"type": update_type, "severity": severity,
-                                    "notes": notes, "cves": cves}
+                                    "notes": notes, "cves": cves, "alias": alias}
     security = {name for name, d in bodhi_data.items() if d.get("type") == "security"}
     return security, bodhi_data
 
@@ -676,7 +682,12 @@ def _html_change(change):
     if change["type"] == "upgrade":
         sec = "<strong>[!]</strong> " if change.get("security") else ""
         old_disp, new_disp = _trim_evr_pair(change.get("from") or "", change.get("to") or "")
-        ver = f"<small>{html.escape(old_disp)} → {html.escape(new_disp)}</small>"
+        ver_text = f"{html.escape(old_disp)} → {html.escape(new_disp)}"
+        bodhi_url = change.get("bodhi_url")
+        if bodhi_url:
+            ver = f'<small><a href="{html.escape(bodhi_url)}">{ver_text}</a></small>'
+        else:
+            ver = f"<small>{ver_text}</small>"
         return f'    <li>{sec}<a href="{url}">{name}</a>  {ver}</li>'
     elif change["type"] == "added":
         ver = html.escape(change.get("to") or "")
@@ -865,8 +876,8 @@ def main():
                         save_toc(cache_dir, toc)
             else:
                 diff = get_diff(old_ver, new_ver)
-                security, bodhi_data = get_bodhi_metadata(diff)
                 descriptions, sources = get_package_descriptions(diff)
+                security, bodhi_data = get_bodhi_metadata(diff, sources)
                 bodhi_notes = {name: d["notes"] for name, d in bodhi_data.items() if d.get("notes")}
                 all_notes = {**get_changelogs(diff), **bodhi_notes}
                 summary = summarize_release(diff, bodhi_data, all_notes, descriptions, api_key)
