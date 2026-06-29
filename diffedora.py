@@ -758,6 +758,7 @@ def format_html(variant, arch, releases):
     ul      {{ list-style: none; padding-left: 2ch; }}
     li      {{ line-height: 1.5; }}
     ul a    {{ color: var(--fg); font-weight: bold; text-decoration: none; }}
+    small a {{ color: var(--dim); font-weight: normal; }}
     ul a:hover {{ text-decoration: underline; }}
     strong  {{ color: var(--red); }}
     b       {{ color: var(--green); }}
