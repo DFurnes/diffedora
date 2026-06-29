@@ -186,7 +186,7 @@ def _get_bodhi_update(name, new_evr, source_name=None):
             data = json.load(r)
         updates = data.get("updates", [])
         if not updates:
-            return None, None, None, None
+            return None, None, None, None, None
         update = updates[0]
         notes = update.get("notes", "").strip() or None
         update_type = update.get("type") or None
