@@ -757,9 +757,10 @@ def format_html(variant, arch, releases):
     em      {{ display: block; margin-bottom: 0.6rem; }}
     ul      {{ list-style: none; padding-left: 2ch; }}
     li      {{ line-height: 1.5; }}
-    ul a    {{ color: var(--fg); font-weight: bold; text-decoration: none; }}
-    small a {{ color: var(--dim); font-weight: normal; }}
-    small a:hover {{ color: #999; text-decoration: none; }}
+    ul a       {{ color: var(--fg); font-weight: bold; text-decoration: none; }}
+    ul a:hover {{ text-decoration: none; }}
+    small a    {{ color: var(--dim); font-weight: normal; }}
+    small a:hover {{ color: #999; }}
     ul a:hover {{ text-decoration: underline; }}
     strong  {{ color: var(--red); }}
     b       {{ color: var(--green); }}
