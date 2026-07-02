@@ -1,0 +1,71 @@
+{
+  "id": "coreos-x86_64-43.20260413.3.1-43.20260413.3.2",
+  "variant": "coreos",
+  "arch": "x86_64",
+  "old_version": "43.20260413.3.1",
+  "new_version": "43.20260413.3.2",
+  "summary": "Kernel 6.19.12 bug fixes.",
+  "fetched_at": "2026-06-28T16:11:43.775122+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "kernel",
+      "url": "https://packages.fedoraproject.org/pkgs/kernel/",
+      "source_package": "kernel",
+      "from": "6.19.11-200.fc43",
+      "to": "6.19.12-200.fc43",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "description": "The Linux kernel",
+      "note": "The 6.19.12 stable kernel update contains a number of important fixes across the tree.",
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1c80855ea1"
+    },
+    {
+      "type": "upgrade",
+      "package": "kernel-core",
+      "url": "https://packages.fedoraproject.org/pkgs/kernel/kernel-core/",
+      "source_package": "kernel",
+      "from": "6.19.11-200.fc43",
+      "to": "6.19.12-200.fc43",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "description": "The Linux kernel",
+      "note": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1c80855ea1"
+    },
+    {
+      "type": "upgrade",
+      "package": "kernel-modules",
+      "url": "https://packages.fedoraproject.org/pkgs/kernel/kernel-modules/",
+      "source_package": "kernel",
+      "from": "6.19.11-200.fc43",
+      "to": "6.19.12-200.fc43",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "description": "kernel modules to match the core kernel",
+      "note": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1c80855ea1"
+    },
+    {
+      "type": "upgrade",
+      "package": "kernel-modules-core",
+      "url": "https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-core/",
+      "source_package": "kernel",
+      "from": "6.19.11-200.fc43",
+      "to": "6.19.12-200.fc43",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "description": "Core kernel modules to match the core kernel",
+      "note": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1c80855ea1"
+    }
+  ]
+}

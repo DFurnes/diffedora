@@ -1,0 +1,56 @@
+{
+  "id": "silverblue-x86_64-44.20260625.0-44.20260626.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260625.0",
+  "new_version": "44.20260626.0",
+  "summary": "Flatpak portal library gains clipboard support and iptstate update.",
+  "fetched_at": "2026-06-28T16:06:16.282322+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "iptstate",
+      "url": "https://packages.fedoraproject.org/pkgs/iptstate/",
+      "source_package": "iptstate",
+      "from": "2.2.7-11.fc44",
+      "to": "2.3.0-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "description": "A top-like display of IP Tables state table entries",
+      "note": "new version",
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-d7ef4340c4"
+    },
+    {
+      "type": "upgrade",
+      "package": "libportal",
+      "url": "https://packages.fedoraproject.org/pkgs/libportal/",
+      "source_package": "libportal",
+      "from": "0.9.1-6.fc44",
+      "to": "0.10.0-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "description": "Flatpak portal library",
+      "note": "Update to add support for xdp clipboard interface",
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1bb619d012"
+    },
+    {
+      "type": "upgrade",
+      "package": "libportal-gtk4",
+      "url": "https://packages.fedoraproject.org/pkgs/libportal/libportal-gtk4/",
+      "source_package": "libportal",
+      "from": "0.9.1-6.fc44",
+      "to": "0.10.0-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "description": "GTK 4 libraries for libportal",
+      "note": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1bb619d012"
+    }
+  ]
+}
