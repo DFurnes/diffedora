@@ -50,7 +50,7 @@ Package names: use the description in parentheses to write human-readable names.
 Prefer "HP printer drivers" over "hplip", "spell checker" over "hunspell", "DNS utilities" over "bind-utils".
 Well-known names (kernel, vim, curl, Firefox) can stay as-is.
 
-Security updates: name the affected software and include CVE IDs when listed.
+Security updates: name the affected software and include CVE IDs when listed. Never print CVE ranges (e.g. instead of "CVE-2026-53612–53614", say "CVE-2026-53612, CVE-2026-53613, and more"
 
 Good: "Kernel 7.0.13, HP printer driver, and GNOME Control Center bug fixes."
 Good: "curl security fix (CVE-2024-9681) and spell checker update."
@@ -676,6 +676,14 @@ def format_ansi(old_ver, new_ver, diff, security=frozenset(), summary=None, note
     return "\n".join(lines)
 
 
+def _link_cves(text):
+    return re.sub(
+        r'(CVE-\d{4}-\d+)',
+        lambda m: f'<a href="https://nvd.nist.gov/vuln/detail/{m.group(1)}">{m.group(1)}</a>',
+        text,
+    )
+
+
 def _html_change(change):
     name = html.escape(change["package"])
     url  = html.escape(change["url"])
@@ -703,7 +711,7 @@ def _html_release(release):
     parts   = [f'  <article>',
                f'    <h2>{new_ver}  <small>({total} {label})</small></h2>']
     if release.get("summary"):
-        parts.append(f'    <em>{html.escape(release["summary"])}</em>')
+        parts.append(f'    <em>{_link_cves(html.escape(release["summary"]))}</em>')
     if release["changes"]:
         parts.append('    <ul>')
         parts.extend(_html_change(c) for c in release["changes"])
@@ -760,6 +768,7 @@ def format_html(variant, arch, releases):
     li      {{ line-height: 1.5; }}
     a:hover    {{ text-decoration: underline; }}
     ul a       {{ color: var(--fg); font-weight: bold; text-decoration: none; }}
+    em a       {{ color: inherit; text-decoration: none; }}
     small a    {{ color: var(--dim); font-weight: normal; }}
     small a:hover {{ color: #999; text-decoration: none; }}
     strong  {{ color: var(--red); }}
