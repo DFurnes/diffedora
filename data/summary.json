@@ -1,0 +1,821 @@
+{
+  "silverblue-x86_64-44.20260627.0\u219244.20260628.0": {
+    "id": "silverblue-x86_64-44.20260627.0-44.20260628.0",
+    "old_version": "44.20260627.0",
+    "new_version": "44.20260628.0",
+    "summary": "Spell checker, GNOME Software, vim, DNS utilities, and device-mapper persistent data bug fixes.",
+    "total_changes": 9,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:06:05.375672+00:00"
+  },
+  "silverblue-x86_64-44.20260626.0\u219244.20260627.0": {
+    "id": "silverblue-x86_64-44.20260626.0-44.20260627.0",
+    "old_version": "44.20260626.0",
+    "new_version": "44.20260627.0",
+    "summary": "Kernel 7.0.13, HP printer drivers, and GNOME Control Center 50.3 bug fixes and enhancements.",
+    "total_changes": 14,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:06:12.970014+00:00"
+  },
+  "silverblue-x86_64-44.20260625.0\u219244.20260626.0": {
+    "id": "silverblue-x86_64-44.20260625.0-44.20260626.0",
+    "old_version": "44.20260625.0",
+    "new_version": "44.20260626.0",
+    "summary": "Flatpak portal library gains clipboard support and iptstate update.",
+    "total_changes": 3,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:06:16.282322+00:00"
+  },
+  "silverblue-x86_64-44.20260624.0\u219244.20260625.0": {
+    "id": "silverblue-x86_64-44.20260624.0-44.20260625.0",
+    "old_version": "44.20260624.0",
+    "new_version": "44.20260625.0",
+    "summary": "PCI bus utilities bug fix and update to 3.15.0",
+    "total_changes": 2,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:06:19.941271+00:00"
+  },
+  "silverblue-x86_64-44.20260623.0\u219244.20260624.0": {
+    "id": "silverblue-x86_64-44.20260623.0-44.20260624.0",
+    "old_version": "44.20260623.0",
+    "new_version": "44.20260624.0",
+    "summary": "Mesa 26.1.3, Bluetooth LE regression fix, rpm-ostree, and GNOME Control Center updates.",
+    "total_changes": 15,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:06:38.234426+00:00"
+  },
+  "silverblue-x86_64-44.20260622.0\u219244.20260623.0": {
+    "id": "silverblue-x86_64-44.20260622.0-44.20260623.0",
+    "old_version": "44.20260622.0",
+    "new_version": "44.20260623.0",
+    "summary": "FFmpeg, Python 3, LLVM, SDL2 compatibility, sos, UPnP framework, and Intel Low Power Mode Daemon updates.",
+    "total_changes": 17,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:07:21.122029+00:00"
+  },
+  "silverblue-x86_64-44.20260621.0\u219244.20260622.0": {
+    "id": "silverblue-x86_64-44.20260621.0-44.20260622.0",
+    "old_version": "44.20260621.0",
+    "new_version": "44.20260622.0",
+    "summary": "Podman and buildah security fix (CVE-2026-44517), NSS and exFAT filesystem utilities bug fixes, FreeRDP update.",
+    "total_changes": 11,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:07:26.733284+00:00"
+  },
+  "silverblue-x86_64-44.20260620.0\u219244.20260621.0": {
+    "id": "silverblue-x86_64-44.20260620.0-44.20260621.0",
+    "old_version": "44.20260620.0",
+    "new_version": "44.20260621.0",
+    "summary": "Flatpak portal security fix (CVE-2026-55888, CVE-2026-55889) and NFS utilities bug fix.",
+    "total_changes": 7,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:07:30.481589+00:00"
+  },
+  "silverblue-x86_64-44.20260619.0\u219244.20260620.0": {
+    "id": "silverblue-x86_64-44.20260619.0-44.20260620.0",
+    "old_version": "44.20260619.0",
+    "new_version": "44.20260620.0",
+    "summary": "AWS SDK for Python (boto3, botocore) and S3 Transfer Manager updates.",
+    "total_changes": 3,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:07:34.109295+00:00"
+  },
+  "silverblue-x86_64-44.20260617.0\u219244.20260619.0": {
+    "id": "silverblue-x86_64-44.20260617.0-44.20260619.0",
+    "old_version": "44.20260617.0",
+    "new_version": "44.20260619.0",
+    "summary": "util-linux security fixes (CVE-2026-53612, CVE-2026-53613, CVE-2026-53614) and PipeWire bug fix.",
+    "total_changes": 20,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:07:45.589733+00:00"
+  },
+  "silverblue-x86_64-44.20260616.0\u219244.20260617.0": {
+    "id": "silverblue-x86_64-44.20260616.0-44.20260617.0",
+    "old_version": "44.20260616.0",
+    "new_version": "44.20260617.0",
+    "summary": "Firefox 152.0, NSS 3.124.0, and AMQP client library security fixes; mtr 0.96 and dmidecode 3.7 enhancements.",
+    "total_changes": 19,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:07:53.205989+00:00"
+  },
+  "silverblue-x86_64-44.20260615.0\u219244.20260616.0": {
+    "id": "silverblue-x86_64-44.20260615.0-44.20260616.0",
+    "old_version": "44.20260615.0",
+    "new_version": "44.20260616.0",
+    "summary": "7zip security fixes (CVE-2026-48092, CVE-2026-48095, CVE-2026-48101\u201348104, CVE-2026-48111, CVE-2026-48112), GStreamer bug fixes, and ALSA updates.",
+    "total_changes": 13,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:07:59.170516+00:00"
+  },
+  "silverblue-x86_64-44.20260613.0\u219244.20260615.0": {
+    "id": "silverblue-x86_64-44.20260613.0-44.20260615.0",
+    "old_version": "44.20260613.0",
+    "new_version": "44.20260615.0",
+    "summary": "NetworkManager strongSwan VPN fix, WireGuard tools update, KDE Frameworks 6.27, and SELinux policy update.",
+    "total_changes": 14,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:08:06.515133+00:00"
+  },
+  "silverblue-x86_64-44.20260612.0\u219244.20260613.0": {
+    "id": "silverblue-x86_64-44.20260612.0-44.20260613.0",
+    "old_version": "44.20260612.0",
+    "new_version": "44.20260613.0",
+    "summary": "SVG library bug fix, coreutils heap overflow fix, and LLVM libraries update.",
+    "total_changes": 5,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:08:10.183580+00:00"
+  },
+  "silverblue-x86_64-44.20260611.0\u219244.20260612.0": {
+    "id": "silverblue-x86_64-44.20260611.0-44.20260612.0",
+    "old_version": "44.20260611.0",
+    "new_version": "44.20260612.0",
+    "summary": "Kernel security fix (CVE-2025-10263), OpenSSL security fixes (multiple CVEs), firmware updater bug fixes, and SSSD update.",
+    "total_changes": 25,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:08:16.751660+00:00"
+  },
+  "silverblue-x86_64-44.20260610.0\u219244.20260611.0": {
+    "id": "silverblue-x86_64-44.20260610.0-44.20260611.0",
+    "old_version": "44.20260610.0",
+    "new_version": "44.20260611.0",
+    "summary": "Apache HTTP Server security fixes, Kernel 7.0.12, fwupd bug fixes, Flatpak 1.18.0, less and GRUB2 updates.",
+    "total_changes": 33,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:08:45.830062+00:00"
+  },
+  "silverblue-x86_64-44.20260609.0\u219244.20260610.0": {
+    "id": "silverblue-x86_64-44.20260609.0-44.20260610.0",
+    "old_version": "44.20260609.0",
+    "new_version": "44.20260610.0",
+    "summary": "Flatpak portal service update with new features.",
+    "total_changes": 1,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:08:48.152384+00:00"
+  },
+  "silverblue-x86_64-44.20260607.0\u219244.20260609.0": {
+    "id": "silverblue-x86_64-44.20260607.0-44.20260609.0",
+    "old_version": "44.20260607.0",
+    "new_version": "44.20260609.0",
+    "summary": "Audio metadata library slow seeking fix in Matroska files, async DNS library pkgconfig fix.",
+    "total_changes": 2,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:08:51.430736+00:00"
+  },
+  "silverblue-x86_64-44.20260606.0\u219244.20260607.0": {
+    "id": "silverblue-x86_64-44.20260606.0-44.20260607.0",
+    "old_version": "44.20260606.0",
+    "new_version": "44.20260607.0",
+    "summary": "SELinux policy bug fix and vim update.",
+    "total_changes": 4,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:08:53.851005+00:00"
+  },
+  "silverblue-x86_64-44.20260605.0\u219244.20260606.0": {
+    "id": "silverblue-x86_64-44.20260605.0-44.20260606.0",
+    "old_version": "44.20260605.0",
+    "new_version": "44.20260606.0",
+    "summary": "Firefox 151.0.3 security fix, libinput local privilege escalation fix, GNOME Software bug fix, and WebKitGTK update.",
+    "total_changes": 10,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:09:07.243812+00:00"
+  },
+  "coreos-x86_64-44.20260523.3.1\u219244.20260607.3.1": {
+    "id": "coreos-x86_64-44.20260523.3.1-44.20260607.3.1",
+    "old_version": "44.20260523.3.1",
+    "new_version": "44.20260607.3.1",
+    "summary": "Kernel 7.0.11, passt networking fixes, libsolv security fix (CVE-2026-48864), systemd, NetworkManager, btrfs-progs, xfsprogs, and container runtime updates.",
+    "total_changes": 69,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:09:32.997370+00:00"
+  },
+  "coreos-x86_64-44.20260510.3.1\u219244.20260523.3.1": {
+    "id": "coreos-x86_64-44.20260510.3.1-44.20260523.3.1",
+    "old_version": "44.20260510.3.1",
+    "new_version": "44.20260523.3.1",
+    "summary": "Kernel 7.0.9, dnsmasq security fixes (CVE-2026-2291, CVE-2026-4890\u20134893, CVE-2026-5172), expat, rsync, glibc, and linux-firmware updates.",
+    "total_changes": 75,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:10:08.424906+00:00"
+  },
+  "coreos-x86_64-44.20260419.3.1\u219244.20260510.3.1": {
+    "id": "coreos-x86_64-44.20260419.3.1-44.20260510.3.1",
+    "old_version": "44.20260419.3.1",
+    "new_version": "44.20260510.3.1",
+    "summary": "Kernel 7.0.8, jq, curl, nano, sudo, glibc, GnuTLS, OpenSSL, libgcrypt, podman, containerd, and moby-engine security fixes.",
+    "total_changes": 112,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:10:29.328894+00:00"
+  },
+  "coreos-x86_64-43.20260413.3.2\u219244.20260419.3.1": {
+    "id": "coreos-x86_64-43.20260413.3.2-44.20260419.3.1",
+    "old_version": "43.20260413.3.2",
+    "new_version": "44.20260419.3.1",
+    "summary": "tar security fix (CVE-2025-45582), polkit (CVE-2026-4897), systemd, util-linux (CVE-2026-27456, CWE-190), libtasn1 (CVE-2025-13151), CPU microcode, dnf5, fwupd, and coreutils",
+    "total_changes": 460,
+    "critical": true,
+    "fetched_at": "2026-06-28T16:11:39.630550+00:00"
+  },
+  "coreos-x86_64-43.20260413.3.1\u219243.20260413.3.2": {
+    "id": "coreos-x86_64-43.20260413.3.1-43.20260413.3.2",
+    "old_version": "43.20260413.3.1",
+    "new_version": "43.20260413.3.2",
+    "summary": "Kernel 6.19.12 bug fixes.",
+    "total_changes": 4,
+    "critical": false,
+    "fetched_at": "2026-06-28T16:11:43.775122+00:00"
+  },
+  "silverblue-x86_64-44.20260628.0\u219244.20260629.0": {
+    "id": "silverblue-x86_64-44.20260628.0-44.20260629.0",
+    "old_version": "44.20260628.0",
+    "new_version": "44.20260629.0",
+    "summary": "systemd bug fix, fingerprint reader support for Lenovo and Framework laptops, cifs-utils security fix (CVE-2026-12505), and GLib/GVFS updates.",
+    "total_changes": 25,
+    "critical": false,
+    "fetched_at": "2026-06-29T00:35:42.486823+00:00"
+  },
+  "silverblue-x86_64-44.20260629.0\u219244.20260630.0": {
+    "id": "silverblue-x86_64-44.20260629.0-44.20260630.0",
+    "old_version": "44.20260629.0",
+    "new_version": "44.20260630.0",
+    "summary": "Linux kernel firmware updates for AMD/Intel/NVIDIA GPUs, WiFi, Bluetooth, and Qualcomm platform support.",
+    "total_changes": 21,
+    "critical": false,
+    "fetched_at": "2026-06-30T01:40:39.238580+00:00"
+  },
+  "silverblue-x86_64-44.20260630.0\u219244.20260702.0": {
+    "id": "silverblue-x86_64-44.20260630.0-44.20260702.0",
+    "old_version": "44.20260630.0",
+    "new_version": "44.20260702.0",
+    "summary": "Kernel 7.0.14 container escape fix, ipp-usb security fix (CVE-2026-27145), GNOME Shell 50.3, Papers document viewer, and git 2.55.0 bug fixes and updates.",
+    "total_changes": 33,
+    "critical": true,
+    "fetched_at": "2026-07-02T01:41:00.734777+00:00"
+  },
+  "silverblue-x86_64-44.20260702.0\u219244.20260703.0": {
+    "id": "silverblue-x86_64-44.20260702.0-44.20260703.0",
+    "old_version": "44.20260702.0",
+    "new_version": "44.20260703.0",
+    "summary": "7zip security fix, fwupd bug fixes and new features, and libicu timezone data update.",
+    "total_changes": 5,
+    "critical": true,
+    "fetched_at": "2026-07-03T02:48:05.912632+00:00"
+  },
+  "silverblue-x86_64-44.20260703.0\u219244.20260704.0": {
+    "id": "silverblue-x86_64-44.20260703.0-44.20260704.0",
+    "old_version": "44.20260703.0",
+    "new_version": "44.20260704.0",
+    "summary": "OpenVPN and image processing library security fixes, spell checker and SDL3 enhancements, ostree and bootloader updater improvements.",
+    "total_changes": 8,
+    "critical": true,
+    "fetched_at": "2026-07-04T02:06:32.575328+00:00"
+  },
+  "silverblue-x86_64-44.20260704.0\u219244.20260705.0": {
+    "id": "silverblue-x86_64-44.20260704.0-44.20260705.0",
+    "old_version": "44.20260704.0",
+    "new_version": "44.20260705.0",
+    "summary": "Samba bug fixes, GNOME user sharing, vim, and hardware ID updates.",
+    "total_changes": 13,
+    "critical": false,
+    "fetched_at": "2026-07-05T02:15:04.703223+00:00"
+  },
+  "silverblue-x86_64-44.20260705.0\u219244.20260706.0": {
+    "id": "silverblue-x86_64-44.20260705.0-44.20260706.0",
+    "old_version": "44.20260705.0",
+    "new_version": "44.20260706.0",
+    "summary": "HP printer/scanner drivers security fix (CVE-2026-14544), SELinux policy and container-selinux updates.",
+    "total_changes": 7,
+    "critical": true,
+    "fetched_at": "2026-07-06T03:54:55.646113+00:00"
+  },
+  "coreos-x86_64-44.20260607.3.1\u219244.20260621.3.1": {
+    "id": "coreos-x86_64-44.20260607.3.1-44.20260621.3.1",
+    "old_version": "44.20260607.3.1",
+    "new_version": "44.20260621.3.1",
+    "summary": "Kernel 7.0.12, OpenSSL, and libmount security fixes (CVE-2025-10263, CVE-2026-45447, CVE-2026-53612\u201353614); NetworkManager, fwupd, and SSSD bug fixes and updates.",
+    "total_changes": 63,
+    "critical": true,
+    "fetched_at": "2026-07-07T00:03:14.530024+00:00"
+  },
+  "silverblue-x86_64-44.20260706.0\u219244.20260707.0": {
+    "id": "silverblue-x86_64-44.20260706.0-44.20260707.0",
+    "old_version": "44.20260706.0",
+    "new_version": "44.20260707.0",
+    "summary": "Kernel 7.1.3 security fix (CVE-2026-53359), Bluetooth, Podman, and checkpoint/restore tool updates.",
+    "total_changes": 18,
+    "critical": true,
+    "fetched_at": "2026-07-07T04:44:19.584698+00:00"
+  },
+  "silverblue-x86_64-44.20260707.0\u219244.20260708.0": {
+    "id": "silverblue-x86_64-44.20260707.0-44.20260708.0",
+    "old_version": "44.20260707.0",
+    "new_version": "44.20260708.0",
+    "summary": "Firefox 152.0.4 and CIFS mount Kerberos regression fix.",
+    "total_changes": 4,
+    "critical": false,
+    "fetched_at": "2026-07-08T01:55:30.795230+00:00"
+  },
+  "silverblue-x86_64-44.20260708.0\u219244.20260709.0": {
+    "id": "silverblue-x86_64-44.20260708.0-44.20260709.0",
+    "old_version": "44.20260708.0",
+    "new_version": "44.20260709.0",
+    "summary": "OpenSSH security fixes (CVE-2026-55653, CVE-2026-55654, CVE-2026-55655), glibc security fixes (CVE-2026-6791, CVE-2026-6238, CVE-2026-5435), Mesa 26.1.4, mutter bug fixes, and",
+    "total_changes": 23,
+    "critical": true,
+    "fetched_at": "2026-07-09T04:44:03.519380+00:00"
+  },
+  "silverblue-x86_64-44.20260709.0\u219244.20260710.0": {
+    "id": "silverblue-x86_64-44.20260709.0-44.20260710.0",
+    "old_version": "44.20260709.0",
+    "new_version": "44.20260710.0",
+    "summary": "PAM timing leak fix, c-ares CVE-2026-33630 and more, libXfont2 CVE-2026-56001 and more, Xwayland CVE-2026-55999 and CVE-2026-56000, PipeWire and Bluetooth utilities bug fixes.",
+    "total_changes": 21,
+    "critical": true,
+    "fetched_at": "2026-07-10T02:07:39.161899+00:00"
+  },
+  "silverblue-x86_64-44.20260710.0\u219244.20260711.0": {
+    "id": "silverblue-x86_64-44.20260710.0-44.20260711.0",
+    "old_version": "44.20260710.0",
+    "new_version": "44.20260711.0",
+    "summary": "SSSD security fixes (CVE-2026-12610, CVE-2026-14474, CVE-2026-14476), ACL utilities (CVE-2026-54369, CVE-2026-54370), filesystem attribute tools (CVE-2026-54371), RabbitMQ client library security fixes, firewal",
+    "total_changes": 37,
+    "critical": true,
+    "fetched_at": "2026-07-11T01:54:12.830058+00:00"
+  },
+  "silverblue-x86_64-44.20260711.0\u219244.20260712.0": {
+    "id": "silverblue-x86_64-44.20260711.0-44.20260712.0",
+    "old_version": "44.20260711.0",
+    "new_version": "44.20260712.0",
+    "summary": "p11-kit security fix (CVE-2026-13757), async DNS library API fix, KDE Frameworks 6.28, and WebKitGTK updates.",
+    "total_changes": 12,
+    "critical": true,
+    "fetched_at": "2026-07-12T01:57:02.819793+00:00"
+  },
+  "silverblue-x86_64-44.20260712.0\u219244.20260714.1": {
+    "id": "silverblue-x86_64-44.20260712.0-44.20260714.1",
+    "old_version": "44.20260712.0",
+    "new_version": "44.20260714.1",
+    "summary": "Kernel 7.1.3-201 security fix for XFS users and bootable container system update.",
+    "total_changes": 12,
+    "critical": true,
+    "fetched_at": "2026-07-14T19:06:16.264357+00:00"
+  },
+  "silverblue-x86_64-44.20260714.1\u219244.20260715.0": {
+    "id": "silverblue-x86_64-44.20260714.1-44.20260715.0",
+    "old_version": "44.20260714.1",
+    "new_version": "44.20260715.0",
+    "summary": "FreeRDP and Windows Portable Runtime security fixes (CVE-2026-57156, CVE-2026-57157, CVE-2026-57158) and VirtualBox Guest Additions bug fix.",
+    "total_changes": 3,
+    "critical": true,
+    "fetched_at": "2026-07-15T01:42:07.827611+00:00"
+  },
+  "silverblue-x86_64-44.20260715.0\u219244.20260716.0": {
+    "id": "silverblue-x86_64-44.20260715.0-44.20260716.0",
+    "old_version": "44.20260715.0",
+    "new_version": "44.20260716.0",
+    "summary": "Firefox 152.0.6 security update, rsync security fixes (CVE-2026-29518, CVE-2026-43617, CVE-2026-43618, CVE-2026-43619, and more), Qt6 and NetworkManager SSH VPN plugin bug fixes.",
+    "total_changes": 9,
+    "critical": true,
+    "fetched_at": "2026-07-16T01:52:18.944183+00:00"
+  },
+  "silverblue-x86_64-44.20260716.0\u219244.20260717.0": {
+    "id": "silverblue-x86_64-44.20260716.0-44.20260717.0",
+    "old_version": "44.20260716.0",
+    "new_version": "44.20260717.0",
+    "summary": "FreeRDP and Windows Portable Runtime security fixes, ImageMagick security fix, less and NFS utilities bug fixes.",
+    "total_changes": 11,
+    "critical": true,
+    "fetched_at": "2026-07-17T01:55:38.878261+00:00"
+  },
+  "silverblue-x86_64-44.20260717.0\u219244.20260719.0": {
+    "id": "silverblue-x86_64-44.20260717.0-44.20260719.0",
+    "old_version": "44.20260717.0",
+    "new_version": "44.20260719.0",
+    "summary": "libtiff security fix, OpenSSH CVE-2026-59996 and CVE-2026-60002, Bluetooth utilities crash fixes, and virtual machine networking bug fixes.",
+    "total_changes": 18,
+    "critical": true,
+    "fetched_at": "2026-07-19T08:03:03.259799+00:00"
+  },
+  "silverblue-x86_64-44.20260719.0\u219244.20260720.0": {
+    "id": "silverblue-x86_64-44.20260719.0-44.20260720.0",
+    "old_version": "44.20260719.0",
+    "new_version": "44.20260720.0",
+    "summary": "Kernel 7.1.4, libseccomp security fixes (GHSA-4q85-33p6-j5g6, GHSA-46fr-jh49-xvhx, GHSA-2hqh-5c36-grrm), OpenSSL bug fix, and ethtool new features.",
+    "total_changes": 12,
+    "critical": true,
+    "fetched_at": "2026-07-20T02:13:12.808826+00:00"
+  },
+  "coreos-x86_64-44.20260621.3.1\u219244.20260707.3.1": {
+    "id": "coreos-x86_64-44.20260621.3.1-44.20260707.3.1",
+    "old_version": "44.20260621.3.1",
+    "new_version": "44.20260707.3.1",
+    "summary": "Kernel 7.1.3, Docker security fixes (CVE-2026-39828, CVE-2026-39829, CVE-2026-39830), linux-firmware, systemd, Samba, DNS utilities, git, and podman bug fixes.",
+    "total_changes": 58,
+    "critical": true,
+    "fetched_at": "2026-07-20T17:26:58.424960+00:00"
+  },
+  "silverblue-x86_64-44.20260720.0\u219244.20260721.0": {
+    "id": "silverblue-x86_64-44.20260720.0-44.20260721.0",
+    "old_version": "44.20260720.0",
+    "new_version": "44.20260721.0",
+    "summary": "FreeRDP and Windows Portable Runtime security fixes, LibRaw bug fix, bootc enhancement, IBus fixes, AWS SDK for Python update.",
+    "total_changes": 12,
+    "critical": true,
+    "fetched_at": "2026-07-21T01:53:54.807681+00:00"
+  },
+  "silverblue-x86_64-44.20260721.0\u219244.20260722.0": {
+    "id": "silverblue-x86_64-44.20260721.0-44.20260722.0",
+    "old_version": "44.20260721.0",
+    "new_version": "44.20260722.0",
+    "summary": "Kernel 7.1.4-202 security fix (net/can), XFS utilities bug fix, and AWS SDK for Python update.",
+    "total_changes": 11,
+    "critical": true,
+    "fetched_at": "2026-07-22T01:53:15.133277+00:00"
+  },
+  "silverblue-x86_64-44.20260722.0\u219244.20260723.0": {
+    "id": "silverblue-x86_64-44.20260722.0-44.20260723.0",
+    "old_version": "44.20260722.0",
+    "new_version": "44.20260723.0",
+    "summary": "Kernel 7.1.4-204, libssh, SRT, and LLVM security fixes; Mesa 26.1.5, mutter, CRIU, and input method updates.",
+    "total_changes": 28,
+    "critical": true,
+    "fetched_at": "2026-07-23T02:01:07.415263+00:00"
+  },
+  "silverblue-x86_64-44.20260723.0\u219244.20260724.0": {
+    "id": "silverblue-x86_64-44.20260723.0-44.20260724.0",
+    "old_version": "44.20260723.0",
+    "new_version": "44.20260724.0",
+    "summary": "Firefox 153.0 security update and KDE image format plugins bug fix.",
+    "total_changes": 3,
+    "critical": true,
+    "fetched_at": "2026-07-24T02:26:23.622145+00:00"
+  },
+  "silverblue-x86_64-44.20260724.0\u219244.20260725.0": {
+    "id": "silverblue-x86_64-44.20260724.0-44.20260725.0",
+    "old_version": "44.20260724.0",
+    "new_version": "44.20260725.0",
+    "summary": "skopeo security fix (CVE-2026-27145), GTK3 Firefox menu and session restore bug fixes, and distribution GPG keys update.",
+    "total_changes": 4,
+    "critical": true,
+    "fetched_at": "2026-07-25T03:58:22.001062+00:00"
+  },
+  "silverblue-x86_64-44.20260725.0\u219244.20260726.0": {
+    "id": "silverblue-x86_64-44.20260725.0-44.20260726.0",
+    "old_version": "44.20260725.0",
+    "new_version": "44.20260726.0",
+    "summary": "vim and cryptsetup updates.",
+    "total_changes": 4,
+    "critical": false,
+    "fetched_at": "2026-07-26T01:59:39.347374+00:00"
+  },
+  "silverblue-x86_64-44.20260726.0\u219244.20260727.0": {
+    "id": "silverblue-x86_64-44.20260726.0-44.20260727.0",
+    "old_version": "44.20260726.0",
+    "new_version": "44.20260727.0",
+    "summary": "Kernel 7.1.5 and systemd security fix with bug fixes.",
+    "total_changes": 18,
+    "critical": true,
+    "fetched_at": "2026-07-27T02:07:35.771838+00:00"
+  },
+  "silverblue-x86_64-44.20260727.0\u219244.20260728.0": {
+    "id": "silverblue-x86_64-44.20260727.0-44.20260728.0",
+    "old_version": "44.20260727.0",
+    "new_version": "44.20260728.0",
+    "summary": "RPM security fix and VirtualBox Guest Additions bug fix.",
+    "total_changes": 6,
+    "critical": true,
+    "fetched_at": "2026-07-28T01:48:54.813870+00:00"
+  },
+  "silverblue-x86_64-44.20260728.0\u219244.20260729.0": {
+    "id": "silverblue-x86_64-44.20260728.0-44.20260729.0",
+    "old_version": "44.20260728.0",
+    "new_version": "44.20260729.0",
+    "summary": "fwupd 2.1.7 bug fixes and new BIOS, MTD, TCG security attributes.",
+    "total_changes": 3,
+    "critical": false,
+    "fetched_at": "2026-07-29T01:50:54.222808+00:00"
+  },
+  "silverblue-x86_64-44.20260729.0\u219244.20260730.0": {
+    "id": "silverblue-x86_64-44.20260729.0-44.20260730.0",
+    "old_version": "44.20260729.0",
+    "new_version": "44.20260730.0",
+    "summary": "libssh security fix, unbound DNS resolver security fixes (CVE-2026-14586, CVE-2026-32665, CVE-2026-40691, and more), kernel 7.1.5-201, and SELinux policy bug fixes.",
+    "total_changes": 15,
+    "critical": true,
+    "fetched_at": "2026-07-30T01:44:07.865778+00:00"
+  },
+  "silverblue-x86_64-44.20260730.0\u219244.20260731.0": {
+    "id": "silverblue-x86_64-44.20260730.0-44.20260731.0",
+    "old_version": "44.20260730.0",
+    "new_version": "44.20260731.0",
+    "summary": "passt networking, local caching server, Tesseract OCR, and GNOME Initial Setup bug fixes.",
+    "total_changes": 7,
+    "critical": false,
+    "fetched_at": "2026-07-31T02:02:43.117439+00:00"
+  },
+  "silverblue-x86_64-44.20260731.0\u219244.20260801.0": {
+    "id": "silverblue-x86_64-44.20260731.0-44.20260801.0",
+    "old_version": "44.20260731.0",
+    "new_version": "44.20260801.0",
+    "summary": "FUSE overlay filesystem security fix (CVE-2026-52791), audit tools with TLS remote logging, and spell checking library bug fix.",
+    "total_changes": 6,
+    "critical": true,
+    "fetched_at": "2026-08-01T02:02:42.539738+00:00"
+  },
+  "silverblue-x86_64-44.20260801.0\u219244.20260802.0": {
+    "id": "silverblue-x86_64-44.20260801.0-44.20260802.0",
+    "old_version": "44.20260801.0",
+    "new_version": "44.20260802.0",
+    "summary": "curl security fixes (CVE-2026-8924, CVE-2026-9547, CVE-2026-8926, CVE-2026-11856, CVE-2026-7168, CVE-2026-7009), Network Security Services bug fixes, and FFmpeg updates.",
+    "total_changes": 18,
+    "critical": true,
+    "fetched_at": "2026-08-02T01:59:06.224593+00:00"
+  },
+  "silverblue-x86_64-44.20260802.0\u219244.20260803.0": {
+    "id": "silverblue-x86_64-44.20260802.0-44.20260803.0",
+    "old_version": "44.20260802.0",
+    "new_version": "44.20260803.0",
+    "summary": "GNOME Tour build fix for newer GTK4 Rust bindings.",
+    "total_changes": 1,
+    "critical": false,
+    "fetched_at": "2026-08-03T02:01:28.558036+00:00"
+  },
+  "coreos-x86_64-44.20260707.3.1\u219244.20260720.3.1": {
+    "id": "coreos-x86_64-44.20260707.3.1-44.20260720.3.1",
+    "old_version": "44.20260707.3.1",
+    "new_version": "44.20260720.3.1",
+    "summary": "OpenSSH, SSSD, glibc, rsync, ACL utilities, and PAM security fixes (CVE-2026-59996, CVE-2026-60002, CVE-2026-12610, CVE-2026-14474, CVE-2026-14476, CVE-2026-6791, CV",
+    "total_changes": 59,
+    "critical": true,
+    "fetched_at": "2026-08-03T20:21:50.105876+00:00"
+  },
+  "silverblue-x86_64-44.20260803.0\u219244.20260804.0": {
+    "id": "silverblue-x86_64-44.20260803.0-44.20260804.0",
+    "old_version": "44.20260803.0",
+    "new_version": "44.20260804.0",
+    "summary": "Firefox 153.0.1 bug fix, SELinux userspace security fixes, bootc and zchunk library updates.",
+    "total_changes": 17,
+    "critical": false,
+    "fetched_at": "2026-08-04T01:47:03.927385+00:00"
+  },
+  "silverblue-x86_64-44.20260804.0\u219244.20260805.0": {
+    "id": "silverblue-x86_64-44.20260804.0-44.20260805.0",
+    "old_version": "44.20260804.0",
+    "new_version": "44.20260805.0",
+    "summary": "coreutils security fix (CVE-2026-56391), kernel 7.1.6, GLib bug fix, and accessibility, terminal, and GNOME Control Center updates.",
+    "total_changes": 30,
+    "critical": true,
+    "fetched_at": "2026-08-05T02:05:53.299837+00:00"
+  },
+  "silverblue-x86_64-44.20260805.0\u219244.20260806.0": {
+    "id": "silverblue-x86_64-44.20260805.0-44.20260806.0",
+    "old_version": "44.20260805.0",
+    "new_version": "44.20260806.0",
+    "summary": "Samba security fixes (CVE-2026-6949, CVE-2026-58218, CVE-2026-58221, CVE-2026-58222, and more), X font library security fixes (CVE-2026-59679, CVE-2026-44950), SDL3, libadwaita, and NV",
+    "total_changes": 19,
+    "critical": true,
+    "fetched_at": "2026-08-06T01:49:24.174719+00:00"
+  },
+  "silverblue-x86_64-44.20260806.0\u219244.20260807.0": {
+    "id": "silverblue-x86_64-44.20260806.0-44.20260807.0",
+    "old_version": "44.20260806.0",
+    "new_version": "44.20260807.0",
+    "summary": "GStreamer security fixes, GNOME Shell 50.4, GDM, and AWS SDK for Python updates.",
+    "total_changes": 15,
+    "critical": true,
+    "fetched_at": "2026-08-07T02:13:11.939530+00:00"
+  },
+  "silverblue-x86_64-44.20260807.0\u219244.20260808.0": {
+    "id": "silverblue-x86_64-44.20260807.0-44.20260808.0",
+    "old_version": "44.20260807.0",
+    "new_version": "44.20260808.0",
+    "summary": "Kernel 7.1.7 (CVE-2026-68480), Mesa 26.1.6, Firefox 153.0.3, Disk Manager security fixes (CVE-2026-18938), mutter, OpenVPN, and thermald bug fixes.",
+    "total_changes": 26,
+    "critical": true,
+    "fetched_at": "2026-08-08T02:57:02.407920+00:00"
+  },
+  "silverblue-x86_64-44.20260808.0\u219244.20260809.0": {
+    "id": "silverblue-x86_64-44.20260808.0-44.20260809.0",
+    "old_version": "44.20260808.0",
+    "new_version": "44.20260809.0",
+    "summary": "libnghttp2 security fix (CVE-2026-58055), unbound DNS tools bug fixes, and vim update.",
+    "total_changes": 5,
+    "critical": true,
+    "fetched_at": "2026-08-09T01:04:08.257448+00:00"
+  },
+  "silverblue-x86_64-44.20260809.0\u219244.20260810.0": {
+    "id": "silverblue-x86_64-44.20260809.0-44.20260810.0",
+    "old_version": "44.20260809.0",
+    "new_version": "44.20260810.0",
+    "summary": "Thermal management daemon crash fix on non-mobile Intel platforms.",
+    "total_changes": 1,
+    "critical": false,
+    "fetched_at": "2026-08-10T01:05:56.167215+00:00"
+  },
+  "silverblue-x86_64-44.20260810.0\u219244.20260811.0": {
+    "id": "silverblue-x86_64-44.20260810.0-44.20260811.0",
+    "old_version": "44.20260810.0",
+    "new_version": "44.20260811.0",
+    "summary": "Kernel 7.1.8 security update and AWS SDK for Python bug fixes.",
+    "total_changes": 10,
+    "critical": true,
+    "fetched_at": "2026-08-11T01:05:15.978489+00:00"
+  },
+  "silverblue-x86_64-44.20260811.0\u219244.20260813.0": {
+    "id": "silverblue-x86_64-44.20260811.0-44.20260813.0",
+    "old_version": "44.20260811.0",
+    "new_version": "44.20260813.0",
+    "summary": "Linux firmware security updates, sqlite CVE-2026-11822 and CVE-2026-11824 fixes, Apache Portable Runtime and print filter security fixes, timezone data update.",
+    "total_changes": 27,
+    "critical": true,
+    "fetched_at": "2026-08-13T01:15:45.429271+00:00"
+  },
+  "silverblue-x86_64-44.20260813.0\u219244.20260814.0": {
+    "id": "silverblue-x86_64-44.20260813.0-44.20260814.0",
+    "old_version": "44.20260813.0",
+    "new_version": "44.20260814.0",
+    "summary": "Flatpak security fix, fingerprint scanner update, and D-Bus proxy improvements.",
+    "total_changes": 7,
+    "critical": true,
+    "fetched_at": "2026-08-14T01:14:25.547389+00:00"
+  },
+  "silverblue-x86_64-44.20260814.0\u219244.20260815.0": {
+    "id": "silverblue-x86_64-44.20260814.0-44.20260815.0",
+    "old_version": "44.20260814.0",
+    "new_version": "44.20260815.0",
+    "summary": "libsoup3 security fixes, KDE Frameworks 6.29.0, and AWS SDK for Python update.",
+    "total_changes": 6,
+    "critical": true,
+    "fetched_at": "2026-08-15T00:45:24.588780+00:00"
+  },
+  "silverblue-x86_64-44.20260815.0\u219244.20260816.0": {
+    "id": "silverblue-x86_64-44.20260815.0-44.20260816.0",
+    "old_version": "44.20260815.0",
+    "new_version": "44.20260816.0",
+    "summary": "exFAT utilities, SELinux policy, GNOME Help browser, Epiphany web runtime, and GRUB2 bug fixes and updates.",
+    "total_changes": 13,
+    "critical": false,
+    "fetched_at": "2026-08-16T02:18:05.495924+00:00"
+  },
+  "silverblue-x86_64-44.20260816.0\u219244.20260817.0": {
+    "id": "silverblue-x86_64-44.20260816.0-44.20260817.0",
+    "old_version": "44.20260816.0",
+    "new_version": "44.20260817.0",
+    "summary": "ostree and NFS utilities bug fixes, including memory overflow and leak corrections.",
+    "total_changes": 8,
+    "critical": false,
+    "fetched_at": "2026-08-17T00:45:27.374781+00:00"
+  },
+  "coreos-x86_64-44.20260720.3.1\u219244.20260802.3.1": {
+    "id": "coreos-x86_64-44.20260720.3.1-44.20260802.3.1",
+    "old_version": "44.20260720.3.1",
+    "new_version": "44.20260802.3.1",
+    "summary": "Kernel 7.1.6, curl security fixes (CVE-2026-8924, CVE-2026-9547, CVE-2026-8926, and more), systemd, RPM, Docker, fuse-overlayfs (CVE-2026-52791), and skopeo security updates.",
+    "total_changes": 42,
+    "critical": true,
+    "fetched_at": "2026-08-18T18:25:33.984556+00:00"
+  },
+  "silverblue-x86_64-44.20260817.0\u219244.20260819.0": {
+    "id": "silverblue-x86_64-44.20260817.0-44.20260819.0",
+    "old_version": "44.20260817.0",
+    "new_version": "44.20260819.0",
+    "summary": "Mesa 26.1.7, Python 3.14.7, btrfs-progs 7.1, and emulated input library updates.",
+    "total_changes": 16,
+    "critical": false,
+    "fetched_at": "2026-08-19T00:45:18.261739+00:00"
+  },
+  "silverblue-x86_64-44.20260819.0\u219244.20260820.0": {
+    "id": "silverblue-x86_64-44.20260819.0-44.20260820.0",
+    "old_version": "44.20260819.0",
+    "new_version": "44.20260820.0",
+    "summary": "Firefox 154.0 security update, GNOME Shell extensions, sos, printer config tools, and GNOME initial setup bug fixes.",
+    "total_changes": 13,
+    "critical": true,
+    "fetched_at": "2026-08-20T00:45:31.853924+00:00"
+  },
+  "silverblue-x86_64-44.20260820.0\u219244.20260821.0": {
+    "id": "silverblue-x86_64-44.20260820.0-44.20260821.0",
+    "old_version": "44.20260820.0",
+    "new_version": "44.20260821.0",
+    "summary": "OpenSSH security fix (CVE-2026-59995), NVMe CLI Ctrl-C bug fix, vim, and less updates.",
+    "total_changes": 7,
+    "critical": true,
+    "fetched_at": "2026-08-21T05:25:20.710423+00:00"
+  },
+  "silverblue-x86_64-44.20260821.0\u219244.20260822.0": {
+    "id": "silverblue-x86_64-44.20260821.0-44.20260822.0",
+    "old_version": "44.20260821.0",
+    "new_version": "44.20260822.0",
+    "summary": "Kernel 7.1.9, rsync security fixes (CVE-2026-53783, CVE-2026-53784, and more), Bluetooth security fix (CVE-2026-75032), GCC 16.2 libraries, and DNF5 package manager bug fixes.",
+    "total_changes": 27,
+    "critical": true,
+    "fetched_at": "2026-08-22T02:10:40.075094+00:00"
+  },
+  "silverblue-x86_64-44.20260822.0\u219244.20260823.0": {
+    "id": "silverblue-x86_64-44.20260822.0-44.20260823.0",
+    "old_version": "44.20260822.0",
+    "new_version": "44.20260823.0",
+    "summary": "Thermal daemon Wildcat Lake support, Qt settings theme fix, bootc update, and AWS SDK for Python refresh.",
+    "total_changes": 5,
+    "critical": false,
+    "fetched_at": "2026-08-23T00:50:06.605154+00:00"
+  },
+  "silverblue-x86_64-44.20260823.0\u219244.20260825.0": {
+    "id": "silverblue-x86_64-44.20260823.0-44.20260825.0",
+    "old_version": "44.20260823.0",
+    "new_version": "44.20260825.0",
+    "summary": "Kernel 7.1.10, Samba 4.24.6, SELinux policy bug fix, and libdeflate security updates.",
+    "total_changes": 19,
+    "critical": true,
+    "fetched_at": "2026-08-25T00:46:56.645637+00:00"
+  },
+  "silverblue-x86_64-44.20260825.0\u219244.20260826.0": {
+    "id": "silverblue-x86_64-44.20260825.0-44.20260826.0",
+    "old_version": "44.20260825.0",
+    "new_version": "44.20260826.0",
+    "summary": "Firefox 154.0-5 session management crash fix, Mesa 26.1.8, elfutils update, and Fedora GPG keys and repos prep for Fedora 45.",
+    "total_changes": 16,
+    "critical": false,
+    "fetched_at": "2026-08-26T02:21:06.026155+00:00"
+  },
+  "silverblue-x86_64-44.20260826.0\u219244.20260827.0": {
+    "id": "silverblue-x86_64-44.20260826.0-44.20260827.0",
+    "old_version": "44.20260826.0",
+    "new_version": "44.20260827.0",
+    "summary": "curl security fixes (CVE-2026-11352, CVE-2026-11586, CVE-2026-12064, CVE-2026-8286, and more) and tracker music library security update.",
+    "total_changes": 3,
+    "critical": true,
+    "fetched_at": "2026-08-27T02:28:03.894485+00:00"
+  },
+  "silverblue-x86_64-44.20260827.0\u219244.20260828.0": {
+    "id": "silverblue-x86_64-44.20260827.0-44.20260828.0",
+    "old_version": "44.20260827.0",
+    "new_version": "44.20260828.0",
+    "summary": "Bluetooth utilities security fix (CVE in BlueZ SDP XML parser and EIR buffer overflow) and bootable container system update.",
+    "total_changes": 7,
+    "critical": true,
+    "fetched_at": "2026-08-28T08:11:21.924492+00:00"
+  },
+  "silverblue-x86_64-44.20260828.0\u219244.20260831.0": {
+    "id": "silverblue-x86_64-44.20260828.0-44.20260831.0",
+    "old_version": "44.20260828.0",
+    "new_version": "44.20260831.0",
+    "summary": "Kernel 7.1.12, BIND DNS security fixes (CVE-2026-11331, CVE-2026-10822, CVE-2026-12617, and more), FreeRDP, Windows Portable Runtime, image loading library (CVE-2026-16768), expat XML parser, console keyboard tools (CVE-",
+    "total_changes": 29,
+    "critical": true,
+    "fetched_at": "2026-08-31T20:32:11.648968+00:00"
+  },
+  "coreos-x86_64-44.20260802.3.1\u219244.20260817.3.1": {
+    "id": "coreos-x86_64-44.20260802.3.1-44.20260817.3.1",
+    "old_version": "44.20260802.3.1",
+    "new_version": "44.20260817.3.1",
+    "summary": "Kernel 7.1.8, Samba security fixes (CVE-2026-6949, CVE-2026-58218, CVE-2026-58221, and more), SQLite security fixes (CVE-2026-11822, CVE-2026-11824), coreutils (CVE-2026-56391",
+    "total_changes": 62,
+    "critical": true,
+    "fetched_at": "2026-09-01T15:21:26.620593+00:00"
+  },
+  "silverblue-x86_64-44.20260831.0\u219244.20260902.0": {
+    "id": "silverblue-x86_64-44.20260831.0-44.20260902.0",
+    "old_version": "44.20260831.0",
+    "new_version": "44.20260902.0",
+    "summary": "OpenSSL security fix, image library CVE-2026-81893, GDM auto-login fix, Flatpak bug fixes, Qt 6.11.2, and GNOME Files 50.3.",
+    "total_changes": 25,
+    "critical": true,
+    "fetched_at": "2026-09-02T05:17:52.435839+00:00"
+  },
+  "silverblue-x86_64-44.20260902.0\u219244.20260903.0": {
+    "id": "silverblue-x86_64-44.20260902.0-44.20260903.0",
+    "old_version": "44.20260902.0",
+    "new_version": "44.20260903.0",
+    "summary": "Firefox 155.0 and NSS security fixes, CA certificates and repodata library updates.",
+    "total_changes": 10,
+    "critical": true,
+    "fetched_at": "2026-09-03T02:17:02.425888+00:00"
+  },
+  "coreos-x86_64-44.20260817.3.1\u219244.20260817.3.2": {
+    "id": "coreos-x86_64-44.20260817.3.1-44.20260817.3.2",
+    "old_version": "44.20260817.3.1",
+    "new_version": "44.20260817.3.2",
+    "summary": null,
+    "total_changes": 0,
+    "critical": false,
+    "fetched_at": "2026-09-03T07:33:11.460905+00:00"
+  },
+  "silverblue-x86_64-44.20260903.0\u219244.20260904.0": {
+    "id": "silverblue-x86_64-44.20260903.0-44.20260904.0",
+    "old_version": "44.20260903.0",
+    "new_version": "44.20260904.0",
+    "summary": "Kernel 7.1.13, file indexer, and CUPS filters bug fixes.",
+    "total_changes": 11,
+    "critical": true,
+    "fetched_at": "2026-09-04T05:17:27.745367+00:00"
+  },
+  "silverblue-x86_64-44.20260904.0\u219244.20260905.0": {
+    "id": "silverblue-x86_64-44.20260904.0-44.20260905.0",
+    "old_version": "44.20260904.0",
+    "new_version": "44.20260905.0",
+    "summary": "GNOME Display Manager bug fixes, RDP library updates, SDL3 enhancements, and wireless regulatory database refresh.",
+    "total_changes": 7,
+    "critical": false,
+    "fetched_at": "2026-09-05T05:06:36.179511+00:00"
+  }
+}
