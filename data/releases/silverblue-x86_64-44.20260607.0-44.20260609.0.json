@@ -1,0 +1,41 @@
+{
+  "id": "silverblue-x86_64-44.20260607.0-44.20260609.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260607.0",
+  "new_version": "44.20260609.0",
+  "summary": "Audio metadata library slow seeking fix in Matroska files, async DNS library pkgconfig fix.",
+  "fetched_at": "2026-06-28T16:08:51.430736+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "libasyncns",
+      "url": "https://packages.fedoraproject.org/pkgs/libasyncns/",
+      "source_package": "libasyncns",
+      "from": "0.8-32.fc44",
+      "to": "0.8-34.fc44",
+      "security": false,
+      "update_type": "unspecified",
+      "severity": "unspecified",
+      "cves": null,
+      "description": "Asynchronous Name Service Library",
+      "note": "- Fix pkgconfig file",
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-e336159e7e"
+    },
+    {
+      "type": "upgrade",
+      "package": "taglib",
+      "url": "https://packages.fedoraproject.org/pkgs/taglib/",
+      "source_package": "taglib",
+      "from": "2.2.1-1.fc44",
+      "to": "2.3-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "description": "Audio Meta-Data Library",
+      "note": "Latest upstream release. Resolves slow seeking in Matroska files regression.",
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-4febdb3db5"
+    }
+  ]
+}

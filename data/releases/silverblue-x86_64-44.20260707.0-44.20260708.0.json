@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20260707.0-44.20260708.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260707.0",
+  "new_version": "44.20260708.0",
+  "summary": "Firefox 152.0.4 and CIFS mount Kerberos regression fix.",
+  "fetched_at": "2026-07-08T01:55:30.795230+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "cifs-utils",
+      "url": "https://packages.fedoraproject.org/pkgs/cifs-utils/",
+      "source_package": "cifs-utils",
+      "from": "7.6-1.fc44",
+      "to": "7.6-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "high",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-3d6c9d67ec",
+      "description": "Utilities for mounting and managing CIFS mounts",
+      "note": "Fix regression with kerberos mounts after fix for CVE-2026-12505"
+    },
+    {
+      "type": "upgrade",
+      "package": "cifs-utils-info",
+      "url": "https://packages.fedoraproject.org/pkgs/cifs-utils/cifs-utils-info/",
+      "source_package": "cifs-utils",
+      "from": "7.6-1.fc44",
+      "to": "7.6-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "high",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-3d6c9d67ec",
+      "description": "Additional tools for querying information about CIFS mount",
+      "note": "Fix regression with kerberos mounts after fix for CVE-2026-12505"
+    },
+    {
+      "type": "upgrade",
+      "package": "firefox",
+      "url": "https://packages.fedoraproject.org/pkgs/firefox/",
+      "source_package": "firefox",
+      "from": "152.0-1.fc44",
+      "to": "152.0.4-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "medium",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1d2f0d6cd6",
+      "description": "Mozilla Firefox Web browser",
+      "note": "- Updated to latest upstream (152.0.4)"
+    },
+    {
+      "type": "upgrade",
+      "package": "firefox-langpacks",
+      "url": "https://packages.fedoraproject.org/pkgs/firefox/firefox-langpacks/",
+      "source_package": "firefox",
+      "from": "152.0-1.fc44",
+      "to": "152.0.4-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "medium",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1d2f0d6cd6",
+      "description": "Firefox langpacks",
+      "note": "- Updated to latest upstream (152.0.4)"
+    }
+  ]
+}
