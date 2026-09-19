@@ -1,0 +1,26 @@
+{
+  "id": "silverblue-x86_64-44.20260809.0-44.20260810.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260809.0",
+  "new_version": "44.20260810.0",
+  "summary": "Thermal management daemon crash fix on non-mobile Intel platforms.",
+  "fetched_at": "2026-08-10T01:05:56.167215+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "thermald",
+      "url": "https://packages.fedoraproject.org/pkgs/thermald/",
+      "source_package": "thermald",
+      "from": "2.5.12-1.fc44",
+      "to": "2.5.12-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "high",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-d6ca05b39a",
+      "description": "Thermal Management daemon",
+      "note": "Stop crashing on non-mobile Intel platforms"
+    }
+  ]
+}
