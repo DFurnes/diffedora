@@ -1,0 +1,26 @@
+{
+  "id": "silverblue-x86_64-44.20260609.0-44.20260610.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260609.0",
+  "new_version": "44.20260610.0",
+  "summary": "Flatpak portal service update with new features.",
+  "fetched_at": "2026-06-28T16:08:48.152384+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "xdg-desktop-portal",
+      "url": "https://packages.fedoraproject.org/pkgs/xdg-desktop-portal/",
+      "source_package": "xdg-desktop-portal",
+      "from": "1.21.2-1.fc44",
+      "to": "1.22.0-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "low",
+      "cves": null,
+      "description": "Portal frontend service to flatpak",
+      "note": "Update to 1.22.0",
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-3f9d12b175"
+    }
+  ]
+}
