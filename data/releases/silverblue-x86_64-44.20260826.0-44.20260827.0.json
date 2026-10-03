@@ -1,0 +1,56 @@
+{
+  "id": "silverblue-x86_64-44.20260826.0-44.20260827.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260826.0",
+  "new_version": "44.20260827.0",
+  "summary": "curl security fixes (CVE-2026-11352, CVE-2026-11586, CVE-2026-12064, CVE-2026-8286, and more) and tracker music library security update.",
+  "fetched_at": "2026-08-27T02:28:03.894485+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "curl",
+      "url": "https://packages.fedoraproject.org/pkgs/curl/",
+      "source_package": "curl",
+      "from": "8.18.0-8.fc44",
+      "to": "8.18.0-9.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "high",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-2f88b83676",
+      "description": "A utility for getting files from remote servers (FTP, HTTP, and others)",
+      "note": "- Fix QUIC zero-length UDP datagrams busy-loop (CVE-2026-11352)\n- Fix WS Auto-PONG memory exhaustion (CVE-2026-11586)\n- Fix proto-default skips SSH verification (CVE-2026-12064)\n- Fix wrong STARTTLS connection reuse (CVE-2026-8286)\n- Fix SASL double-free (CVE-2026-8925)\n- Fix env-set cross-proxy Digest auth state leak (CVE-2026-8927)\n- Fix sending old referer (CVE-2026-9546)\n- Fix exposing HTTP/3 early data (CVE-2026-9545)\n- Fix UAF after pause in socket callback (CVE-2026-9080)"
+    },
+    {
+      "type": "upgrade",
+      "package": "libcurl-minimal",
+      "url": "https://packages.fedoraproject.org/pkgs/curl/libcurl-minimal/",
+      "source_package": "curl",
+      "from": "8.18.0-8.fc44",
+      "to": "8.18.0-9.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "high",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-2f88b83676",
+      "description": "Conservatively configured build of libcurl for minimal installations",
+      "note": "- Fix QUIC zero-length UDP datagrams busy-loop (CVE-2026-11352)\n- Fix WS Auto-PONG memory exhaustion (CVE-2026-11586)\n- Fix proto-default skips SSH verification (CVE-2026-12064)\n- Fix wrong STARTTLS connection reuse (CVE-2026-8286)\n- Fix SASL double-free (CVE-2026-8925)\n- Fix env-set cross-proxy Digest auth state leak (CVE-2026-8927)\n- Fix sending old referer (CVE-2026-9546)\n- Fix exposing HTTP/3 early data (CVE-2026-9545)\n- Fix UAF after pause in socket callback (CVE-2026-9080)"
+    },
+    {
+      "type": "upgrade",
+      "package": "libopenmpt",
+      "url": "https://packages.fedoraproject.org/pkgs/libopenmpt/",
+      "source_package": "libopenmpt",
+      "from": "0.8.7-1.fc44",
+      "to": "0.8.9-1.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "low",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-a6d074ea9c",
+      "description": "C/C++ library to decode tracker music module (MOD) files",
+      "note": "Security uppdate from 0.8.7 to 0.8.9 plus bug-fixes:\nhttps://lib.openmpt.org/libopenmpt/2026/08/19/security-updates-0.8.9-0.7.21-0.6.30-0.5.44-0.4.56/\nhttps://lib.openmpt.org/libopenmpt/2026/08/15/releases-0.8.8-0.7.20-0.6.29-0.5.43-0.4.55/"
+    }
+  ]
+}

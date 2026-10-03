@@ -1,0 +1,56 @@
+{
+  "id": "silverblue-x86_64-44.20260723.0-44.20260724.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260723.0",
+  "new_version": "44.20260724.0",
+  "summary": "Firefox 153.0 security update and KDE image format plugins bug fix.",
+  "fetched_at": "2026-07-24T02:26:23.622145+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "firefox",
+      "url": "https://packages.fedoraproject.org/pkgs/firefox/",
+      "source_package": "firefox",
+      "from": "152.0.6-1.fc44",
+      "to": "153.0-3.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "urgent",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-7d71f89d7e",
+      "description": "Mozilla Firefox Web browser",
+      "note": "- Update to latest upstream (153.0)\n\n----\n\n- New upstream release (153.0)\n\n----\n\n- Updated to latest upstream (153.0)"
+    },
+    {
+      "type": "upgrade",
+      "package": "firefox-langpacks",
+      "url": "https://packages.fedoraproject.org/pkgs/firefox/firefox-langpacks/",
+      "source_package": "firefox",
+      "from": "152.0.6-1.fc44",
+      "to": "153.0-3.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "urgent",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-7d71f89d7e",
+      "description": "Firefox langpacks",
+      "note": "- Update to latest upstream (153.0)\n\n----\n\n- New upstream release (153.0)\n\n----\n\n- Updated to latest upstream (153.0)"
+    },
+    {
+      "type": "upgrade",
+      "package": "kf6-kimageformats",
+      "url": "https://packages.fedoraproject.org/pkgs/kf6-kimageformats/",
+      "source_package": "kf6-kimageformats",
+      "from": "6.28.0-1.fc44",
+      "to": "6.28.1-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-bd68f83ba6",
+      "description": "KDE Frameworks 6 Tier 1 addon with additional image plugins for QtGui",
+      "note": "Frameworks 6.28 hotfix"
+    }
+  ]
+}

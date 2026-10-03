@@ -1,0 +1,41 @@
+{
+  "id": "silverblue-x86_64-44.20260624.0-44.20260625.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260624.0",
+  "new_version": "44.20260625.0",
+  "summary": "PCI bus utilities bug fix and update to 3.15.0",
+  "fetched_at": "2026-06-28T16:06:19.941271+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "pciutils",
+      "url": "https://packages.fedoraproject.org/pkgs/pciutils/",
+      "source_package": "pciutils",
+      "from": "3.14.0-3.fc44",
+      "to": "3.15.0-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "description": "PCI bus related utilities",
+      "note": "- updated to 3.15.0 (#2455221)",
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-b263ae4d3f"
+    },
+    {
+      "type": "upgrade",
+      "package": "pciutils-libs",
+      "url": "https://packages.fedoraproject.org/pkgs/pciutils/pciutils-libs/",
+      "source_package": "pciutils",
+      "from": "3.14.0-3.fc44",
+      "to": "3.15.0-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "description": "Linux PCI library",
+      "note": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-b263ae4d3f"
+    }
+  ]
+}
