@@ -1,0 +1,56 @@
+{
+  "id": "silverblue-x86_64-44.20260714.1-44.20260715.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260714.1",
+  "new_version": "44.20260715.0",
+  "summary": "FreeRDP and Windows Portable Runtime security fixes (CVE-2026-57156, CVE-2026-57157, CVE-2026-57158) and VirtualBox Guest Additions bug fix.",
+  "fetched_at": "2026-07-15T01:42:07.827611+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "freerdp-libs",
+      "url": "https://packages.fedoraproject.org/pkgs/freerdp/freerdp-libs/",
+      "source_package": "freerdp",
+      "from": "2:3.27.1-1.fc44",
+      "to": "2:3.28.0-1.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "high",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-931f893f1b",
+      "description": "Core libraries implementing the RDP protocol",
+      "note": "Update to 3.28.0\n    \nIt fixes CVE-2026-57156, CVE-2026-57157 and CVE-2026-57158."
+    },
+    {
+      "type": "upgrade",
+      "package": "libwinpr",
+      "url": "https://packages.fedoraproject.org/pkgs/freerdp/libwinpr/",
+      "source_package": "freerdp",
+      "from": "2:3.27.1-1.fc44",
+      "to": "2:3.28.0-1.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "high",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-931f893f1b",
+      "description": "Windows Portable Runtime",
+      "note": "Update to 3.28.0\n    \nIt fixes CVE-2026-57156, CVE-2026-57157 and CVE-2026-57158."
+    },
+    {
+      "type": "upgrade",
+      "package": "virtualbox-guest-additions",
+      "url": "https://packages.fedoraproject.org/pkgs/virtualbox-guest-additions/",
+      "source_package": "virtualbox-guest-additions",
+      "from": "7.2.8-1.fc44",
+      "to": "7.2.12-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-de473e35b4",
+      "description": "VirtualBox Guest Additions",
+      "note": "Update Virtualbox Guest Additions to 7.2.12 (rhbz#2489301)"
+    }
+  ]
+}

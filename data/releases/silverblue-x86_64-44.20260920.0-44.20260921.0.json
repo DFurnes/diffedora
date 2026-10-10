@@ -1,0 +1,41 @@
+{
+  "id": "silverblue-x86_64-44.20260920.0-44.20260921.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260920.0",
+  "new_version": "44.20260921.0",
+  "summary": "ImageMagick bug fix update.",
+  "fetched_at": "2026-09-21T00:42:20.577109+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "ImageMagick",
+      "url": "https://packages.fedoraproject.org/pkgs/ImageMagick/",
+      "source_package": "ImageMagick",
+      "from": "1:7.1.2.27-1.fc44",
+      "to": "1:7.1.2.31-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-03d441556d",
+      "description": "An X application for displaying and manipulating images",
+      "note": "Automatic update for ImageMagick-7.1.2.31-1.fc44.\n\n##### **Changelog for ImageMagick**\n\n```\n* Fri Sep 18 2026 Luya Tshimbalanga <luya@fedoraproject.org> - 1:7.1.2.31-1\n- Update to version 7.1.2.31\n- Resolves: rhbz#2521653\n\n```"
+    },
+    {
+      "type": "upgrade",
+      "package": "ImageMagick-libs",
+      "url": "https://packages.fedoraproject.org/pkgs/ImageMagick/ImageMagick-libs/",
+      "source_package": "ImageMagick",
+      "from": "1:7.1.2.27-1.fc44",
+      "to": "1:7.1.2.31-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-03d441556d",
+      "description": "ImageMagick libraries to link with",
+      "note": "Automatic update for ImageMagick-7.1.2.31-1.fc44.\n\n##### **Changelog for ImageMagick**\n\n```\n* Fri Sep 18 2026 Luya Tshimbalanga <luya@fedoraproject.org> - 1:7.1.2.31-1\n- Update to version 7.1.2.31\n- Resolves: rhbz#2521653\n\n```"
+    }
+  ]
+}

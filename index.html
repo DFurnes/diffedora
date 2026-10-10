@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>diffedora</title>
+  <style>
+    :root {
+      --bg:    #1a1a1a;
+      --fg:    #cccccc;
+      --cyan:  #4ec9b0;
+      --red:   #f14c4c;
+      --green: #4ec94e;
+      --dim:   #666666;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 2.5rem 2rem;
+    }
+    main    { max-width: 480px; margin: 0 auto; }
+    header  { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }
+    h1      { font-size: 1.05em; }
+    nav     { font-size: 0.95em; }
+    nav a        { color: var(--dim); text-decoration: none; font-weight: bold; }
+    nav a:hover  { text-decoration: none; }
+    nav a.active { color: var(--fg); }
+    nav a:not(.active):hover { color: var(--cyan); text-decoration: none; }
+    article { margin-bottom: 1.75rem; }
+    h2      { color: var(--cyan); font-size: 1em; font-weight: bold; margin-bottom: 0.2rem; }
+    h2 small { color: var(--dim); font-weight: normal; }
+    em      { display: block; margin-bottom: 0.6rem; }
+    ul      { list-style: none; padding-left: 2ch; }
+    li      { line-height: 1.5; }
+    a:hover    { text-decoration: underline; }
+    ul a       { color: var(--fg); font-weight: bold; text-decoration: none; }
+    em a       { color: inherit; text-decoration: none; }
+    small a    { color: var(--dim); font-weight: normal; }
+    small a:hover { color: #999; text-decoration: none; }
+    strong  { color: var(--red); }
+    b       { color: var(--green); }
+    small   { font-size: 1em; color: var(--dim); }
+    .cyan   { color: var(--cyan); }
+    .dim    { color: var(--dim); }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="cyan">diff</span>edora</h1>
+      <nav><a class="active" href="index.html">Silverblue</a> · <a href="coreos.html">CoreOS</a></nav>
+    </header>
+  <article>
+    <h2>44.20261010.0  <small>(17 changes)</small></h2>
+    <em>OpenVPN security fix, GStreamer bug fixes, and Mesa 26.2.4.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gst-editing-services/">gst-editing-services</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1/">gstreamer1</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1-plugin-libav/">gstreamer1-plugin-libav</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1-plugins-bad-free/">gstreamer1-plugins-bad-free</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1-plugins-bad-free/gstreamer1-plugins-bad-free-libs/">gstreamer1-plugins-bad-free-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1-plugins-base/">gstreamer1-plugins-base</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1-plugins-good/">gstreamer1-plugins-good</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1-plugins-good/gstreamer1-plugins-good-qt/">gstreamer1-plugins-good-qt</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1-plugins-good/gstreamer1-plugins-good-qt6/">gstreamer1-plugins-good-qt6</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gstreamer1-plugins-ugly-free/">gstreamer1-plugins-ugly-free</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8f783432f8">1.28.7 → 1.28.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-dri-drivers/">mesa-dri-drivers</a>  <small>26.2.3 → 26.2.4</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-filesystem/">mesa-filesystem</a>  <small>26.2.3 → 26.2.4</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-libEGL/">mesa-libEGL</a>  <small>26.2.3 → 26.2.4</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-libGL/">mesa-libGL</a>  <small>26.2.3 → 26.2.4</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-libgbm/">mesa-libgbm</a>  <small>26.2.3 → 26.2.4</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-vulkan-drivers/">mesa-vulkan-drivers</a>  <small>26.2.3 → 26.2.4</small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/openvpn/">openvpn</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-eed9c789d3">2.7.7 → 2.7.8</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261009.0  <small>(12 changes)</small></h2>
+    <em>sudo security fix (<a href="https://nvd.nist.gov/vuln/detail/CVE-2026-96512">CVE-2026-96512</a>), Xwayland security fixes (<a href="https://nvd.nist.gov/vuln/detail/CVE-2026-88812">CVE-2026-88812</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-93515">CVE-2026-93515</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-93516">CVE-2026-93516</a>, and more), Firefox 157.0.1, spell checker, and rpm-ostree updates.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/firefox/">firefox</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ed84c7e75a">157.0 → 157.0.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/firefox/firefox-langpacks/">firefox-langpacks</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ed84c7e75a">157.0 → 157.0.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/hunspell/">hunspell</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1c6f975afb">1.7.4 → 1.7.5</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/hunspell/hunspell-filesystem/">hunspell-filesystem</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1c6f975afb">1.7.4 → 1.7.5</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libva-intel-media-driver/">libva-intel-media-driver</a>  <small>26.2.4 → 26.3.5</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-boto3/">python3-boto3</a>  <small>1.43.106 → 1.43.109</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-botocore/">python3-botocore</a>  <small>1.43.106 → 1.43.109</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/rpm-ostree/">rpm-ostree</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-d03472ee52">2026.2 → 2026.3</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/rpm-ostree/rpm-ostree-libs/">rpm-ostree-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-d03472ee52">2026.2 → 2026.3</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/sudo/">sudo</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7d4732cbab">1.9.17-8.p2 → 1.9.17-10.p2</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/sudo/sudo-python-plugin/">sudo-python-plugin</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7d4732cbab">1.9.17-8.p2 → 1.9.17-10.p2</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/xorg-x11-server-Xwayland/">xorg-x11-server-Xwayland</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-2448dda850">24.1.13 → 24.1.14</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261008.0  <small>(18 changes)</small></h2>
+    <em>Kernel 7.2.9, curl security fixes (<a href="https://nvd.nist.gov/vuln/detail/CVE-2026-80255">CVE-2026-80255</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-80229">CVE-2026-80229</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-18924">CVE-2026-18924</a>), 7zip security fix, NSS 3.130.0, and timezone data updates.</em>
+    <ul>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/7zip/">7zip</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-b92ecada92">26.03 → 26.04</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/curl/">curl</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8efcd7a2a0">8.18.0-10 → 8.18.0-12</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/">kernel</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-666b555ae8">7.2.8 → 7.2.9</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-core/">kernel-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-666b555ae8">7.2.8 → 7.2.9</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules/">kernel-modules</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-666b555ae8">7.2.8 → 7.2.9</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-core/">kernel-modules-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-666b555ae8">7.2.8 → 7.2.9</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-extra/">kernel-modules-extra</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-666b555ae8">7.2.8 → 7.2.9</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-tools/">kernel-tools</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-666b555ae8">7.2.8 → 7.2.9</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-tools-libs/">kernel-tools-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-666b555ae8">7.2.8 → 7.2.9</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/curl/libcurl-minimal/">libcurl-minimal</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8efcd7a2a0">8.18.0-10 → 8.18.0-12</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/nss/nspr/">nspr</a>  <small>4.39.0-5 → 4.39.0-6</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/nss/">nss</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-5485c0f483">3.129.0 → 3.130.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/nss/nss-softokn/">nss-softokn</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-5485c0f483">3.129.0 → 3.130.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/nss/nss-softokn-freebl/">nss-softokn-freebl</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-5485c0f483">3.129.0 → 3.130.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/nss/nss-sysinit/">nss-sysinit</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-5485c0f483">3.129.0 → 3.130.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/nss/nss-util/">nss-util</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-5485c0f483">3.129.0 → 3.130.0</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/python3-perf/">python3-perf</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-666b555ae8">7.2.8 → 7.2.9</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/tzdata/">tzdata</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7d957ce87d">2026c → 2026e</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261007.0  <small>(42 changes)</small></h2>
+    <em>Apache HTTP Server 2.4.69 security fix, tesseract <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-88047">CVE-2026-88047</a> and more, libical <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-88383">CVE-2026-88383</a>, FreeRDP and Windows Portable Runtime security updates, git 2.56.0, and various bug fixes.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/SDL3/">SDL3</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-cf449d7d3a">3.4.16 → 3.4.18</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/b43-fwcutter/">b43-fwcutter</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-99f40ee07f">020 → 021</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/cairo/">cairo</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8d8642fd00">1.18.4 → 1.18.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/cairo/cairo-gobject/">cairo-gobject</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8d8642fd00">1.18.4 → 1.18.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/expat/">expat</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-b686f007e0">2.8.3 → 2.8.5</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/freerdp/freerdp-libs/">freerdp-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-9aca5215f2">3.31.1 → 3.32.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gcr/">gcr</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-cc59585e0b">4.4.0.1 → 4.4.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/gcr/gcr-libs/">gcr-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-cc59585e0b">4.4.0.1 → 4.4.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/git/git-core/">git-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-5f6ad6e483">2.55.0 → 2.56.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/git/git-core-doc/">git-core-doc</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-5f6ad6e483">2.55.0 → 2.56.0</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/httpd/">httpd</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-34b2d69632">2.4.68 → 2.4.69</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/httpd/httpd-core/">httpd-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-34b2d69632">2.4.68 → 2.4.69</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/httpd/httpd-filesystem/">httpd-filesystem</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-34b2d69632">2.4.68 → 2.4.69</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/httpd/httpd-tools/">httpd-tools</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-34b2d69632">2.4.68 → 2.4.69</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/javascriptcoregtk4.1/">javascriptcoregtk4.1</a>  <small>2.54.0 → 2.54.1</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/javascriptcoregtk6.0/">javascriptcoregtk6.0</a>  <small>2.54.0 → 2.54.1</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libgsf/">libgsf</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-61c3b3c700">1.14.58 → 1.14.60</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/libical/">libical</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-a76bba1412">3.0.20-7 → 3.0.20-8</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/libical/libical-glib/">libical-glib</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-a76bba1412">3.0.20-7 → 3.0.20-8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libmd/">libmd</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-f9feef53d6">1.2.0 → 1.3.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/librepo/">librepo</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-cbdf81ee6b">1.21.1 → 1.21.2</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/librsvg2/">librsvg2</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-040cf8d928">2.62.3 → 2.62.4</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/freerdp/libwinpr/">libwinpr</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-9aca5215f2">3.31.1 → 3.32.1</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/httpd/mod_lua/">mod_lua</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-34b2d69632">2.4.68 → 2.4.69</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/orca/">orca</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-a6221fdc3d">50.2 → 50.3</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/passt/">passt</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-29bf204723">20260728.gf8df3f1 → 20261002.gcba3570</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/passt/passt-selinux/">passt-selinux</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-29bf204723">20260728.gf8df3f1 → 20261002.gcba3570</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python-unversioned-command/">python-unversioned-command</a>  <small>3.14.7 → 3.14.8</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3/">python3</a>  <small>3.14.7 → 3.14.8</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-boto3/">python3-boto3</a>  <small>1.43.104 → 1.43.106</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-botocore/">python3-botocore</a>  <small>1.43.104 → 1.43.106</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-libs/">python3-libs</a>  <small>3.14.7 → 3.14.8</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/qt6-qtbase/">qt6-qtbase</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-d3e776ebd1">6.11.2-2 → 6.11.2-3</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/qt6-qtbase/qt6-qtbase-common/">qt6-qtbase-common</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-d3e776ebd1">6.11.2-2 → 6.11.2-3</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/qt6-qtbase/qt6-qtbase-gui/">qt6-qtbase-gui</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-d3e776ebd1">6.11.2-2 → 6.11.2-3</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/sdl2-compat/">sdl2-compat</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-136af6b7e1">2.32.72 → 2.32.74</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/tesseract/tesseract-common/">tesseract-common</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-fc27f09459">5.5.3-1 → 5.5.3-2</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/tesseract/tesseract-libs/">tesseract-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-fc27f09459">5.5.3-1 → 5.5.3-2</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/upower/">upower</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7ef04fe4dd">1.91.4 → 1.91.5</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/upower/upower-libs/">upower-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7ef04fe4dd">1.91.4 → 1.91.5</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/webkit2gtk4.1/">webkit2gtk4.1</a>  <small>2.54.0 → 2.54.1</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/webkitgtk6.0/">webkitgtk6.0</a>  <small>2.54.0 → 2.54.1</small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261006.0  <small>(1 change)</small></h2>
+    <em>Python regex module update.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-regex/">python3-regex</a>  <small>2026.7.19 → 2026.9.10</small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261005.0  <small>(1 change)</small></h2>
+    <em>xxHash library update to 0.8.4.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/xxhash/xxhash-libs/">xxhash-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-42228d1bde">0.8.3 → 0.8.4</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261004.0  <small>(8 changes)</small></h2>
+    <em>Flatpak security fix, GNOME Files bug fix, rsync update with IDN support, and hardware ID data refresh.</em>
+    <ul>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/flatpak/">flatpak</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7a31054ed6">1.18.2 → 1.18.4</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/flatpak/flatpak-libs/">flatpak-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7a31054ed6">1.18.2 → 1.18.4</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/flatpak/flatpak-selinux/">flatpak-selinux</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7a31054ed6">1.18.2 → 1.18.4</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/flatpak/flatpak-session-helper/">flatpak-session-helper</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7a31054ed6">1.18.2 → 1.18.4</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/hwdata/">hwdata</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-c334ed18f9">0.411 → 0.412</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/nautilus/">nautilus</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-38dc27c9a9">50.3 → 50.3.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/nautilus/nautilus-extensions/">nautilus-extensions</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-38dc27c9a9">50.3 → 50.3.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/rsync/">rsync</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1611964b12">3.5.0 → 3.5.1</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261003.0  <small>(19 changes)</small></h2>
+    <em>Firefox 157.0, HP printer/scanner drivers, libX11, and OpenSSL security fixes; spell checker and SELinux policy bug fixes.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/cifs-utils/">cifs-utils</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-638ffb5f89">7.7 → 7.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/cifs-utils/cifs-utils-info/">cifs-utils-info</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-638ffb5f89">7.7 → 7.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/enchant2/">enchant2</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-9bb4ef9cb0">2.8.19 → 2.8.21</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/firefox/">firefox</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-913130e4f5">156.0.1 → 157.0</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/firefox/firefox-langpacks/">firefox-langpacks</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-913130e4f5">156.0.1 → 157.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/fuse3/fuse-common/">fuse-common</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-f68088c7f2">3.18.2 → 3.18.3</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/fuse3/">fuse3</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-f68088c7f2">3.18.2 → 3.18.3</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/fuse3/fuse3-libs/">fuse3-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-f68088c7f2">3.18.2 → 3.18.3</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/hplip/">hplip</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-9e80aed94f">3.26.4 → 3.26.6</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/hplip/hplip-common/">hplip-common</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-9e80aed94f">3.26.4 → 3.26.6</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/hplip/hplip-libs/">hplip-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-9e80aed94f">3.26.4 → 3.26.6</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/libX11/">libX11</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0d57b0d529">1.8.13-1 → 1.8.13-3</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/libX11/libX11-common/">libX11-common</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0d57b0d529">1.8.13-1 → 1.8.13-3</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/libX11/libX11-xcb/">libX11-xcb</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0d57b0d529">1.8.13-1 → 1.8.13-3</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/hplip/libsane-hpaio/">libsane-hpaio</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-9e80aed94f">3.26.4 → 3.26.6</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/openssl/">openssl</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-12f3f3d569">3.5.8 → 3.5.9</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/openssl/openssl-libs/">openssl-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-12f3f3d569">3.5.8 → 3.5.9</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/selinux-policy/">selinux-policy</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-fbe94e8d5e">44.10 → 44.11</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/selinux-policy/selinux-policy-targeted/">selinux-policy-targeted</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-fbe94e8d5e">44.10 → 44.11</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261002.0  <small>(10 changes)</small></h2>
+    <em>sos security fix (<a href="https://nvd.nist.gov/vuln/detail/CVE-2026-79655">CVE-2026-79655</a>) and GRUB2, SHIM bootloader bug fixes.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/grub2-common/">grub2-common</a>  <small>2.12-64 → 2.12-66</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/grub2-efi-ia32/">grub2-efi-ia32</a>  <small>2.12-64 → 2.12-66</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/grub2-efi-x64/">grub2-efi-x64</a>  <small>2.12-64 → 2.12-66</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/grub2-pc/">grub2-pc</a>  <small>2.12-64 → 2.12-66</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/grub2-pc-modules/">grub2-pc-modules</a>  <small>2.12-64 → 2.12-66</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/grub2-tools/">grub2-tools</a>  <small>2.12-64 → 2.12-66</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/grub2-tools-minimal/">grub2-tools-minimal</a>  <small>2.12-64 → 2.12-66</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/shim-ia32/">shim-ia32</a>  <small>16.1-5 → 16.1-7</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/shim-x64/">shim-x64</a>  <small>16.1-5 → 16.1-7</small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/sos/">sos</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-594e78463a">4.12.0-1 → 4.12.0-2</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20261001.0  <small>(32 changes)</small></h2>
+    <em>Kernel 7.2.8, glibc security fixes (<a href="https://nvd.nist.gov/vuln/detail/CVE-2026-8674">CVE-2026-8674</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-18374">CVE-2026-18374</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-80489">CVE-2026-80489</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-77117">CVE-2026-77117</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-19499">CVE-2026-19499</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6368">CVE-2026-6368</a>, and more), AMQP client library DoS</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/7zip/">7zip</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7defd09760">26.02 → 26.03</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/ImageMagick/">ImageMagick</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-080c7084b3">7.1.2.31 → 7.1.2.32</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/ImageMagick/ImageMagick-libs/">ImageMagick-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-080c7084b3">7.1.2.31 → 7.1.2.32</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/ffmpeg-free/">ffmpeg-free</a>  <small>8.1.2 → 8.1.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/glibc/">glibc</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8dd7cc3306">2.43-8 → 2.43-9</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/glibc/glibc-all-langpacks/">glibc-all-langpacks</a>  <small>2.43-8 → 2.43-9</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/glibc/glibc-common/">glibc-common</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8dd7cc3306">2.43-8 → 2.43-9</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/glibc/glibc-gconv-extra/">glibc-gconv-extra</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8dd7cc3306">2.43-8 → 2.43-9</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/intel-vpl-gpu-rt/">intel-vpl-gpu-rt</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-5933fa959c">26.1.6 → 26.3.4</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/">kernel</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0864de8ca7">7.2.7 → 7.2.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-core/">kernel-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0864de8ca7">7.2.7 → 7.2.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules/">kernel-modules</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0864de8ca7">7.2.7 → 7.2.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-core/">kernel-modules-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0864de8ca7">7.2.7 → 7.2.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-extra/">kernel-modules-extra</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0864de8ca7">7.2.7 → 7.2.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-tools/">kernel-tools</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0864de8ca7">7.2.7 → 7.2.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-tools-libs/">kernel-tools-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0864de8ca7">7.2.7 → 7.2.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libavcodec-free/">libavcodec-free</a>  <small>8.1.2 → 8.1.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libavdevice-free/">libavdevice-free</a>  <small>8.1.2 → 8.1.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libavfilter-free/">libavfilter-free</a>  <small>8.1.2 → 8.1.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libavformat-free/">libavformat-free</a>  <small>8.1.2 → 8.1.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libavutil-free/">libavutil-free</a>  <small>8.1.2 → 8.1.3</small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/librabbitmq/">librabbitmq</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-981119a846">0.17.0 → 0.18.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/librepo/">librepo</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-b6bc20c87e">1.21.0 → 1.21.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libsolv/">libsolv</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-436c921b8e">0.7.39 → 0.7.40</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libswresample-free/">libswresample-free</a>  <small>8.1.2 → 8.1.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libswscale-free/">libswscale-free</a>  <small>8.1.2 → 8.1.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-boto3/">python3-boto3</a>  <small>1.43.102 → 1.43.104</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-botocore/">python3-botocore</a>  <small>1.43.102 → 1.43.104</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/python3-perf/">python3-perf</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0864de8ca7">7.2.7 → 7.2.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/wireplumber/">wireplumber</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-99f229453f">0.5.17 → 0.5.18</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/wireplumber/wireplumber-libs/">wireplumber-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-99f229453f">0.5.17 → 0.5.18</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/xdg-dbus-proxy/">xdg-dbus-proxy</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-93f562a43f">0.1.8 → 0.1.9</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260930.0  <small>(6 changes)</small></h2>
+    <em>Firefox language pack fix, spell checker, and bootloader updater updates.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/bootupd/">bootupd</a>  <small>0.2.35 → 0.3.2</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/firefox/">firefox</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-22d8596f62">156.0.1-1 → 156.0.1-2</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/firefox/firefox-langpacks/">firefox-langpacks</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-22d8596f62">156.0.1-1 → 156.0.1-2</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/hunspell/">hunspell</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-dc73b3deb6">1.7.3 → 1.7.4</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/hunspell/hunspell-filesystem/">hunspell-filesystem</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-dc73b3deb6">1.7.3 → 1.7.4</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libmaxminddb/">libmaxminddb</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0069bfb2aa">1.14.0 → 1.14.1</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260929.0  <small>(5 changes)</small></h2>
+    <em>Typing booster and Noto Emoji fonts updated with Unicode 18.0 support, plus urllib3 improvements.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/google-noto-color-emoji-fonts/">google-noto-color-emoji-fonts</a>  <small>20250623 → 20260921</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/google-noto-emoji-fonts/">google-noto-emoji-fonts</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-40ed6a7bb9">20250623 → 20260921</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/ibus-typing-booster/">ibus-typing-booster</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-47eae2c1f6">2.31.0 → 2.31.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-urllib3/">python3-urllib3</a>  <small>2.7.0 → 2.8.0</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-urllib3+socks/">python3-urllib3+socks</a>  <small>2.7.0 → 2.8.0</small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260928.0  <small>(8 changes)</small></h2>
+    <em>Unicode Character Database 18.0, MaxMind DB library security and bug fixes, DNF5 package manager updates.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/dnf5/dnf5daemon-server/">dnf5daemon-server</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-2a33732e22">5.4.5.0 → 5.4.6.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/dnf5/dnf5daemon-server-polkit/">dnf5daemon-server-polkit</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-2a33732e22">5.4.5.0 → 5.4.6.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/dnf5/libdnf5/">libdnf5</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-2a33732e22">5.4.5.0 → 5.4.6.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/dnf5/libdnf5-cli/">libdnf5-cli</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-2a33732e22">5.4.5.0 → 5.4.6.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/dnf5/libdnf5-plugin-appstream/">libdnf5-plugin-appstream</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-2a33732e22">5.4.5.0 → 5.4.6.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/dnf5/libdnf5-plugin-systemd-inhibit/">libdnf5-plugin-systemd-inhibit</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-2a33732e22">5.4.5.0 → 5.4.6.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/libmaxminddb/">libmaxminddb</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-0f75cd00ff">1.13.3 → 1.14.0</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/unicode-ucd/">unicode-ucd</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-b35dd9f473">17.0.0 → 18.0.0</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260927.0  <small>(5 changes)</small></h2>
+    <em>Distribution GPG keys update with new Ultramarine and Terra repos, vim, and AWS Python SDK updates.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/distribution-gpg-keys/">distribution-gpg-keys</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-d4607a6d53">1.121 → 1.123</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-boto3/">python3-boto3</a>  <small>1.43.99 → 1.43.102</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-botocore/">python3-botocore</a>  <small>1.43.99 → 1.43.102</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/vim-data/">vim-data</a>  <small>9.2.1119 → 9.2.1129</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/vim-minimal/">vim-minimal</a>  <small>9.2.1119 → 9.2.1129</small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260926.0  <small>(9 changes)</small></h2>
+    <em>HEIF/AVIF decoder security fix, fwupd bug fixes and new hardware support, Firefox 156.0.1, AWS SDK for Python update.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/firefox/">firefox</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7e4994b254">156.0 → 156.0.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/firefox/firefox-langpacks/">firefox-langpacks</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-7e4994b254">156.0 → 156.0.1</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/fwupd/">fwupd</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-83c254b6bb">2.1.7 → 2.1.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/fwupd/fwupd-plugin-modem-manager/">fwupd-plugin-modem-manager</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-83c254b6bb">2.1.7 → 2.1.8</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/fwupd/fwupd-plugin-uefi-capsule-data/">fwupd-plugin-uefi-capsule-data</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-83c254b6bb">2.1.7 → 2.1.8</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/libheif/">libheif</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-cfdbb8b2f0">1.23.4 → 1.23.5</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/libheif/libheif-ffmpeg/">libheif-ffmpeg</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-cfdbb8b2f0">1.23.4 → 1.23.5</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-boto3/">python3-boto3</a>  <small>1.43.96 → 1.43.99</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/python3-botocore/">python3-botocore</a>  <small>1.43.96 → 1.43.99</small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260925.0  <small>(13 changes)</small></h2>
+    <em>Samba 4.24.7, WebKitGTK 2.54.0, and bootc bug fixes.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/bootc/">bootc</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-8cf9520d02">1.16.10 → 1.16.13</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/javascriptcoregtk4.1/">javascriptcoregtk4.1</a>  <small>2.52.5 → 2.54.0</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/javascriptcoregtk6.0/">javascriptcoregtk6.0</a>  <small>2.52.5 → 2.54.0</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/samba/libldb/">libldb</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-add05daf07">4.24.6 → 4.24.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/samba/libsmbclient/">libsmbclient</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-add05daf07">4.24.6 → 4.24.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/samba/libwbclient/">libwbclient</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-add05daf07">4.24.6 → 4.24.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/samba/samba-client/">samba-client</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-add05daf07">4.24.6 → 4.24.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/samba/samba-client-libs/">samba-client-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-add05daf07">4.24.6 → 4.24.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/samba/samba-common/">samba-common</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-add05daf07">4.24.6 → 4.24.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/samba/samba-core-libs/">samba-core-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-add05daf07">4.24.6 → 4.24.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/samba/samba-ndr-libs/">samba-ndr-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-add05daf07">4.24.6 → 4.24.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/webkit2gtk4.1/">webkit2gtk4.1</a>  <small>2.52.5 → 2.54.0</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/webkitgtk6.0/">webkitgtk6.0</a>  <small>2.52.5 → 2.54.0</small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260924.0  <small>(2 changes)</small></h2>
+    <em>Unbound DNS resolver security fixes (<a href="https://nvd.nist.gov/vuln/detail/CVE-2026-81642">CVE-2026-81642</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-81634">CVE-2026-81634</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82717">CVE-2026-82717</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-77955">CVE-2026-77955</a>, <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-78227">CVE-2026-78227</a>, and more).</em>
+    <ul>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/unbound/unbound-anchor/">unbound-anchor</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-996b326401">1.26.0 → 1.26.1</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/unbound/unbound-libs/">unbound-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-996b326401">1.26.0 → 1.26.1</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260923.0  <small>(15 changes)</small></h2>
+    <em>Kernel 7.2.7 security fixes, Mesa 26.2.3, and thermal management daemon bug fix.</em>
+    <ul>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/">kernel</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ca91e91bf0">7.2.6 → 7.2.7</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-core/">kernel-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ca91e91bf0">7.2.6 → 7.2.7</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules/">kernel-modules</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ca91e91bf0">7.2.6 → 7.2.7</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-core/">kernel-modules-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ca91e91bf0">7.2.6 → 7.2.7</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-extra/">kernel-modules-extra</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ca91e91bf0">7.2.6 → 7.2.7</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-tools/">kernel-tools</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ca91e91bf0">7.2.6 → 7.2.7</a></small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-tools-libs/">kernel-tools-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ca91e91bf0">7.2.6 → 7.2.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-dri-drivers/">mesa-dri-drivers</a>  <small>26.2.2 → 26.2.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-filesystem/">mesa-filesystem</a>  <small>26.2.2 → 26.2.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-libEGL/">mesa-libEGL</a>  <small>26.2.2 → 26.2.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-libGL/">mesa-libGL</a>  <small>26.2.2 → 26.2.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-libgbm/">mesa-libgbm</a>  <small>26.2.2 → 26.2.3</small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/mesa-vulkan-drivers/">mesa-vulkan-drivers</a>  <small>26.2.2 → 26.2.3</small></li>
+    <li><strong>[!]</strong> <a href="https://packages.fedoraproject.org/pkgs/kernel/python3-perf/">python3-perf</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-ca91e91bf0">7.2.6 → 7.2.7</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/thermald/">thermald</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-3ab4cc31ce">2.5.12 → 2.5.13</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260922.0  <small>(10 changes)</small></h2>
+    <em>Kernel 7.2.6 and SELinux policy bug fixes.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/">kernel</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1649616d86">7.2.5 → 7.2.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-core/">kernel-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1649616d86">7.2.5 → 7.2.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules/">kernel-modules</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1649616d86">7.2.5 → 7.2.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-core/">kernel-modules-core</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1649616d86">7.2.5 → 7.2.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-modules-extra/">kernel-modules-extra</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1649616d86">7.2.5 → 7.2.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-tools/">kernel-tools</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1649616d86">7.2.5 → 7.2.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/kernel-tools-libs/">kernel-tools-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1649616d86">7.2.5 → 7.2.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/kernel/python3-perf/">python3-perf</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-1649616d86">7.2.5 → 7.2.6</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/selinux-policy/">selinux-policy</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-f0a01395fb">44.9 → 44.10</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/selinux-policy/selinux-policy-targeted/">selinux-policy-targeted</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-f0a01395fb">44.9 → 44.10</a></small></li>
+    </ul>
+  </article>
+  <article>
+    <h2>44.20260921.0  <small>(2 changes)</small></h2>
+    <em>ImageMagick bug fix update.</em>
+    <ul>
+    <li><a href="https://packages.fedoraproject.org/pkgs/ImageMagick/">ImageMagick</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-03d441556d">7.1.2.27 → 7.1.2.31</a></small></li>
+    <li><a href="https://packages.fedoraproject.org/pkgs/ImageMagick/ImageMagick-libs/">ImageMagick-libs</a>  <small><a href="https://bodhi.fedoraproject.org/updates/FEDORA-2026-03d441556d">7.1.2.27 → 7.1.2.31</a></small></li>
+    </ul>
+  </article>
+  </main>
+</body>
+</html>
