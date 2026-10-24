@@ -1,0 +1,26 @@
+{
+  "id": "silverblue-x86_64-44.20261004.0-44.20261005.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261004.0",
+  "new_version": "44.20261005.0",
+  "summary": "xxHash library update to 0.8.4.",
+  "fetched_at": "2026-10-05T03:16:14.914619+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "xxhash-libs",
+      "url": "https://packages.fedoraproject.org/pkgs/xxhash/xxhash-libs/",
+      "source_package": "xxhash",
+      "from": "0.8.3-4.fc44",
+      "to": "0.8.4-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-42228d1bde",
+      "description": "Extremely fast hash algorithm - library",
+      "note": "xxhash 0.8.4"
+    }
+  ]
+}

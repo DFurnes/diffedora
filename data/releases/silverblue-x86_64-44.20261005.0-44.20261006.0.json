@@ -1,0 +1,26 @@
+{
+  "id": "silverblue-x86_64-44.20261005.0-44.20261006.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261005.0",
+  "new_version": "44.20261006.0",
+  "summary": "Python regex module update.",
+  "fetched_at": "2026-10-06T08:22:02.716495+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "python3-regex",
+      "url": "https://packages.fedoraproject.org/pkgs/python3-regex/",
+      "source_package": null,
+      "from": "2026.7.19-1.fc44",
+      "to": "2026.9.10-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": "Alternative regular expression module, to replace re",
+      "note": null
+    }
+  ]
+}
