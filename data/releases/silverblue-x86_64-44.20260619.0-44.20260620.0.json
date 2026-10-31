@@ -1,0 +1,56 @@
+{
+  "id": "silverblue-x86_64-44.20260619.0-44.20260620.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260619.0",
+  "new_version": "44.20260620.0",
+  "summary": "AWS SDK for Python (boto3, botocore) and S3 Transfer Manager updates.",
+  "fetched_at": "2026-06-28T16:07:34.109295+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "python3-boto3",
+      "url": "https://packages.fedoraproject.org/pkgs/python3-boto3/",
+      "source_package": null,
+      "from": "1.43.30-1.fc44",
+      "to": "1.43.31-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "description": "The AWS SDK for Python",
+      "note": null,
+      "bodhi_url": null
+    },
+    {
+      "type": "upgrade",
+      "package": "python3-botocore",
+      "url": "https://packages.fedoraproject.org/pkgs/python3-botocore/",
+      "source_package": null,
+      "from": "1.43.30-1.fc44",
+      "to": "1.43.31-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "description": "Low-level, data-driven core of boto 3",
+      "note": null,
+      "bodhi_url": null
+    },
+    {
+      "type": "upgrade",
+      "package": "python3-s3transfer",
+      "url": "https://packages.fedoraproject.org/pkgs/python3-s3transfer/",
+      "source_package": null,
+      "from": "0.18.0-1.fc44",
+      "to": "0.19.0-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "description": "Amazon S3 Transfer Manager",
+      "note": null,
+      "bodhi_url": null
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20261029.0-44.20261030.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261029.0",
+  "new_version": "44.20261030.0",
+  "summary": "Package dependency solver security fixes (CVE-2026-104621, CVE-2026-104622, CVE-2026-104624), spell checker, and IBus M17N input engine bug fixes.",
+  "fetched_at": "2026-10-30T03:44:42.023787+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "hunspell",
+      "url": "https://packages.fedoraproject.org/pkgs/hunspell/",
+      "source_package": "hunspell",
+      "from": "1.7.5-1.fc44",
+      "to": "1.7.6-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "low",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-0f1339e01d",
+      "description": "A spell checker and morphological analyzer library",
+      "note": "1.7.6"
+    },
+    {
+      "type": "upgrade",
+      "package": "hunspell-filesystem",
+      "url": "https://packages.fedoraproject.org/pkgs/hunspell/hunspell-filesystem/",
+      "source_package": "hunspell",
+      "from": "1.7.5-1.fc44",
+      "to": "1.7.6-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "low",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-0f1339e01d",
+      "description": "Hunspell filesystem layout",
+      "note": "1.7.6"
+    },
+    {
+      "type": "upgrade",
+      "package": "ibus-m17n",
+      "url": "https://packages.fedoraproject.org/pkgs/ibus-m17n/",
+      "source_package": "ibus-m17n",
+      "from": "1.4.39-1.fc44",
+      "to": "1.4.41-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-4677067bbe",
+      "description": "The M17N engine for IBus platform",
+      "note": "Update to 1.4.41\n- Check whether m17n-lib was correctly initialized, if not exit (EXIT_FAILURE)\n(See also: https://security-tracker.debian.org/tracker/CVE-2026-107170)"
+    },
+    {
+      "type": "upgrade",
+      "package": "libsolv",
+      "url": "https://packages.fedoraproject.org/pkgs/libsolv/",
+      "source_package": "libsolv",
+      "from": "0.7.40-2.fc44",
+      "to": "0.7.41-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-e8baaa23de",
+      "description": "Package dependency solver",
+      "note": "This release fixes parsing XML in Conda repositories (CVE-2026-104621), hardens parsing APK version 3 repository (CVE-2026-104622, CVE-2026-104624), and hanlding corupted solv files. It also adds POOL_FLAG_NOWHATPROVIDESSHRINK flag to disable expensive memory compaction, improves performance by prefetching data into CPU cache, and supports pre-sizing identifier hash tables."
+    }
+  ]
+}
