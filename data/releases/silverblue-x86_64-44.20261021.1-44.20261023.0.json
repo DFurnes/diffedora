@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20261021.1-44.20261023.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261021.1",
+  "new_version": "44.20261023.0",
+  "summary": "Mozilla CA certificates security fix, Firefox 158.0.1 canvas bug fix, and sos diagnostic tool update.",
+  "fetched_at": "2026-10-23T05:36:35.861909+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "ca-certificates",
+      "url": "https://packages.fedoraproject.org/pkgs/ca-certificates/",
+      "source_package": "ca-certificates",
+      "from": "2026.2.92_v9.0.319-1.fc44",
+      "to": "2026.2.92_v9.0.319-2.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "urgent",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-0609e13c0d",
+      "description": "The Mozilla CA root certificate bundle",
+      "note": "Update ca-certificates to ca-certificates-2026.2.92_v9.0.319-2.fc44\n\n* Remove emSign Root CS CA - G3\n\nAdditional code signing certificate that sign 2 of the compromised certificates"
+    },
+    {
+      "type": "upgrade",
+      "package": "firefox",
+      "url": "https://packages.fedoraproject.org/pkgs/firefox/",
+      "source_package": "firefox",
+      "from": "158.0-1.fc44",
+      "to": "158.0.1-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "low",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-a0794ddd8e",
+      "description": "Mozilla Firefox Web browser",
+      "note": "- Fixed canvas rendering in HDR mode (mzbz#2084134)"
+    },
+    {
+      "type": "upgrade",
+      "package": "firefox-langpacks",
+      "url": "https://packages.fedoraproject.org/pkgs/firefox/firefox-langpacks/",
+      "source_package": "firefox",
+      "from": "158.0-1.fc44",
+      "to": "158.0.1-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "low",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-a0794ddd8e",
+      "description": "Firefox langpacks",
+      "note": "- Fixed canvas rendering in HDR mode (mzbz#2084134)"
+    },
+    {
+      "type": "upgrade",
+      "package": "sos",
+      "url": "https://packages.fedoraproject.org/pkgs/sos/",
+      "source_package": "sos",
+      "from": "4.12.0-2.fc44",
+      "to": "4.12.1-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "low",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-9300684e04",
+      "description": "A set of tools to gather troubleshooting information from a system",
+      "note": "See full release notes on https://github.com/sosreport/sos/releases/tag/4.12.1\n\nIncludes the patches previously backported to 4.12.0 for CVE-2026-79655."
+    }
+  ]
+}

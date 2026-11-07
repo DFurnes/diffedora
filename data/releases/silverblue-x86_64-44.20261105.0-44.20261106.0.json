@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20261105.0-44.20261106.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261105.0",
+  "new_version": "44.20261106.0",
+  "summary": "CRIU 4.3 with LZ4 compression, hardware ID data, and timezone data updates (Cuba DST change, leap seconds removal).",
+  "fetched_at": "2026-11-06T03:00:34.535052+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "criu",
+      "url": "https://packages.fedoraproject.org/pkgs/criu/",
+      "source_package": "criu",
+      "from": "4.2.1-1.fc44",
+      "to": "4.3-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1b5596a77b",
+      "description": "Tool for Checkpoint/Restore in User-space",
+      "note": "Update CRIU to 4.3, including LZ4 compression support in CRIU and crit."
+    },
+    {
+      "type": "upgrade",
+      "package": "criu-libs",
+      "url": "https://packages.fedoraproject.org/pkgs/criu/criu-libs/",
+      "source_package": "criu",
+      "from": "4.2.1-1.fc44",
+      "to": "4.3-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-1b5596a77b",
+      "description": "Libraries for criu",
+      "note": "Update CRIU to 4.3, including LZ4 compression support in CRIU and crit."
+    },
+    {
+      "type": "upgrade",
+      "package": "hwdata",
+      "url": "https://packages.fedoraproject.org/pkgs/hwdata/",
+      "source_package": "hwdata",
+      "from": "0.412-1.fc44",
+      "to": "0.413-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-77989da63d",
+      "description": "Hardware identification and configuration data",
+      "note": "Update pci and vendor ids"
+    },
+    {
+      "type": "upgrade",
+      "package": "tzdata",
+      "url": "https://packages.fedoraproject.org/pkgs/tzdata/",
+      "source_package": "tzdata",
+      "from": "2026e-1.fc44",
+      "to": "2026f-1.fc44",
+      "security": false,
+      "update_type": "unspecified",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-eb1954eea8",
+      "description": "Timezone data",
+      "note": "Update to tzdata-2026f (#2562623)\n    - Cuba will not fall back on 2026-11-01.  Cuba will stay on -04\n      through 2027-11-07.\n    - There will be no more leap seconds.  The leap seconds tables will\n      no longer expire.\n    - Improve 1965/1966 data for Brazil.\n    - Revert temporary zonenow.tab changes."
+    }
+  ]
+}
