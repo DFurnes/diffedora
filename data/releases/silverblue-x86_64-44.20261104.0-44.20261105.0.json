@@ -1,0 +1,41 @@
+{
+  "id": "silverblue-x86_64-44.20261104.0-44.20261105.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261104.0",
+  "new_version": "44.20261105.0",
+  "summary": "AWS SDK for Python (boto3 and botocore) update.",
+  "fetched_at": "2026-11-05T01:11:45.757276+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "python3-boto3",
+      "url": "https://packages.fedoraproject.org/pkgs/python3-boto3/",
+      "source_package": null,
+      "from": "1.43.114-1.fc44",
+      "to": "1.43.122-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": "The AWS SDK for Python",
+      "note": null
+    },
+    {
+      "type": "upgrade",
+      "package": "python3-botocore",
+      "url": "https://packages.fedoraproject.org/pkgs/python3-botocore/",
+      "source_package": null,
+      "from": "1.43.114-1.fc44",
+      "to": "1.43.122-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": "Low-level, data-driven core of boto 3",
+      "note": null
+    }
+  ]
+}

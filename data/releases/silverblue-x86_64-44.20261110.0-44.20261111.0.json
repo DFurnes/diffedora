@@ -1,0 +1,91 @@
+{
+  "id": "silverblue-x86_64-44.20261110.0-44.20261111.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261110.0",
+  "new_version": "44.20261111.0",
+  "summary": "vim, ICU library updates; VPNC VPN plugin and user management tools removed.",
+  "fetched_at": "2026-11-11T02:26:35.377899+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "libicu",
+      "url": "https://packages.fedoraproject.org/pkgs/libicu/",
+      "source_package": null,
+      "from": "77.1-3.fc44",
+      "to": "77.1-4.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": null,
+      "note": null
+    },
+    {
+      "type": "upgrade",
+      "package": "vim-data",
+      "url": "https://packages.fedoraproject.org/pkgs/vim-data/",
+      "source_package": null,
+      "from": "2:9.2.1202-1.fc44",
+      "to": "2:9.2.1302-2.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": null,
+      "note": null
+    },
+    {
+      "type": "upgrade",
+      "package": "vim-minimal",
+      "url": "https://packages.fedoraproject.org/pkgs/vim-minimal/",
+      "source_package": null,
+      "from": "2:9.2.1202-1.fc44",
+      "to": "2:9.2.1302-2.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": null,
+      "note": null
+    },
+    {
+      "type": "removed",
+      "package": "NetworkManager-vpnc-1:1.4.0-6.fc44.x86_64",
+      "url": "https://packages.fedoraproject.org/pkgs/NetworkManager-vpnc-1:1.4.0-6.fc44.x86_64/",
+      "from": "",
+      "to": null
+    },
+    {
+      "type": "removed",
+      "package": "NetworkManager-vpnc-gnome-1:1.4.0-6.fc44.x86_64",
+      "url": "https://packages.fedoraproject.org/pkgs/NetworkManager-vpnc-gnome-1:1.4.0-6.fc44.x86_64/",
+      "from": "",
+      "to": null
+    },
+    {
+      "type": "removed",
+      "package": "libuser-0.64-17.fc44.x86_64",
+      "url": "https://packages.fedoraproject.org/pkgs/libuser-0.64-17.fc44.x86_64/",
+      "from": "",
+      "to": null
+    },
+    {
+      "type": "removed",
+      "package": "usermode-1.114-16.fc44.x86_64",
+      "url": "https://packages.fedoraproject.org/pkgs/usermode-1.114-16.fc44.x86_64/",
+      "from": "",
+      "to": null
+    },
+    {
+      "type": "removed",
+      "package": "vpnc-0.5.3^20241114.git11e15a1-4.fc44.x86_64",
+      "url": "https://packages.fedoraproject.org/pkgs/vpnc-0.5.3^20241114.git11e15a1-4.fc44.x86_64/",
+      "from": "",
+      "to": null
+    }
+  ]
+}

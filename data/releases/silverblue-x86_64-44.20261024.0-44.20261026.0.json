@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20261024.0-44.20261026.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261024.0",
+  "new_version": "44.20261026.0",
+  "summary": "wget2 absolute path fix with -P option and GNOME desktop wallpaper update.",
+  "fetched_at": "2026-10-26T00:54:15.050207+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "desktop-backgrounds-gnome",
+      "url": "https://packages.fedoraproject.org/pkgs/desktop-backgrounds-gnome/",
+      "source_package": null,
+      "from": "44.0.0-2.fc44",
+      "to": "44.0.0-3.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": "The default Fedora wallpaper from GNOME desktop",
+      "note": null
+    },
+    {
+      "type": "upgrade",
+      "package": "wget2",
+      "url": "https://packages.fedoraproject.org/pkgs/wget2/",
+      "source_package": "wget2",
+      "from": "2.3.0-1.fc44",
+      "to": "2.3.0-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-11d2faf060",
+      "description": "An advanced file and recursive website downloader",
+      "note": "Backport patch fixing usage of absolute paths with -P option"
+    },
+    {
+      "type": "upgrade",
+      "package": "wget2-libs",
+      "url": "https://packages.fedoraproject.org/pkgs/wget2/wget2-libs/",
+      "source_package": "wget2",
+      "from": "2.3.0-1.fc44",
+      "to": "2.3.0-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-11d2faf060",
+      "description": "Runtime libraries for GNU Wget2",
+      "note": "Backport patch fixing usage of absolute paths with -P option"
+    },
+    {
+      "type": "upgrade",
+      "package": "wget2-wget",
+      "url": "https://packages.fedoraproject.org/pkgs/wget2/wget2-wget/",
+      "source_package": "wget2",
+      "from": "2.3.0-1.fc44",
+      "to": "2.3.0-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-11d2faf060",
+      "description": "wget2 shim to provide wget",
+      "note": "Backport patch fixing usage of absolute paths with -P option"
+    }
+  ]
+}

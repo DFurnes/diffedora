@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20260725.0-44.20260726.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260725.0",
+  "new_version": "44.20260726.0",
+  "summary": "vim and cryptsetup updates.",
+  "fetched_at": "2026-07-26T01:59:39.347374+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "cryptsetup",
+      "url": "https://packages.fedoraproject.org/pkgs/cryptsetup/",
+      "source_package": "cryptsetup",
+      "from": "2.8.4-1.fc44",
+      "to": "2.8.7-1.fc44",
+      "security": false,
+      "update_type": "unspecified",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-5951fafe12",
+      "description": "Utility for setting up encrypted disks",
+      "note": "Update to cryptsetup 2.8.7"
+    },
+    {
+      "type": "upgrade",
+      "package": "cryptsetup-libs",
+      "url": "https://packages.fedoraproject.org/pkgs/cryptsetup/cryptsetup-libs/",
+      "source_package": "cryptsetup",
+      "from": "2.8.4-1.fc44",
+      "to": "2.8.7-1.fc44",
+      "security": false,
+      "update_type": "unspecified",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-5951fafe12",
+      "description": "Cryptsetup shared library",
+      "note": "Update to cryptsetup 2.8.7"
+    },
+    {
+      "type": "upgrade",
+      "package": "vim-data",
+      "url": "https://packages.fedoraproject.org/pkgs/vim-data/",
+      "source_package": null,
+      "from": "2:9.2.782-1.fc44",
+      "to": "2:9.2.843-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": "Shared data for Vi and Vim",
+      "note": null
+    },
+    {
+      "type": "upgrade",
+      "package": "vim-minimal",
+      "url": "https://packages.fedoraproject.org/pkgs/vim-minimal/",
+      "source_package": null,
+      "from": "2:9.2.782-1.fc44",
+      "to": "2:9.2.843-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": "A minimal version of the VIM editor",
+      "note": null
+    }
+  ]
+}

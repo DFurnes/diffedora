@@ -1,0 +1,41 @@
+{
+  "id": "silverblue-x86_64-44.20260905.0-44.20260907.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260905.0",
+  "new_version": "44.20260907.0",
+  "summary": "RPM package downloader and Windows Metafile parser bug fixes.",
+  "fetched_at": "2026-09-07T05:31:02.483013+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "librepo",
+      "url": "https://packages.fedoraproject.org/pkgs/librepo/",
+      "source_package": "librepo",
+      "from": "1.21.0-1.fc44",
+      "to": "1.21.0-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "high",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-f7379c1c15",
+      "description": "Repodata downloading library",
+      "note": "This update backports a fix for [a bug](https://github.com/rpm-software-management/librepo/issues/384) that caused the second attempt to install a package from a remote URL to fail."
+    },
+    {
+      "type": "upgrade",
+      "package": "libwmf-lite",
+      "url": "https://packages.fedoraproject.org/pkgs/libwmf/libwmf-lite/",
+      "source_package": "libwmf",
+      "from": "0.2.13-9.fc44",
+      "to": "0.2.16-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "low",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-32acbb5f81",
+      "description": "Windows Metafile parser library",
+      "note": "0.2.16"
+    }
+  ]
+}
