@@ -1,0 +1,26 @@
+{
+  "id": "coreos-x86_64-44.20260928.3.1-44.20260928.3.2",
+  "variant": "coreos",
+  "arch": "x86_64",
+  "old_version": "44.20260928.3.1",
+  "new_version": "44.20260928.3.2",
+  "summary": "Mozilla CA root certificate bundle security update",
+  "fetched_at": "2026-10-21T22:55:56.061248+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "ca-certificates",
+      "url": "https://packages.fedoraproject.org/pkgs/ca-certificates/",
+      "source_package": "ca-certificates",
+      "from": "2026.2.90_v9.0.317-1.fc44",
+      "to": "2026.2.92_v9.0.319-1.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "urgent",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-56e14eb520",
+      "description": "The Mozilla CA root certificate bundle",
+      "note": "Update ca-certificates to ca-certificates-2026.2.92_v9.0.319-1.fc44"
+    }
+  ]
+}

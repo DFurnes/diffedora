@@ -1,0 +1,26 @@
+{
+  "id": "silverblue-x86_64-44.20261114.0-44.20261115.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261114.0",
+  "new_version": "44.20261115.0",
+  "summary": "Epiphany web runtime security fixes (CVE-2026-115683, CVE-2026-118598, CVE-2026-118599, CVE-2026-18487, CVE-2026-94291).",
+  "fetched_at": "2026-11-15T07:23:59.460979+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "epiphany-runtime",
+      "url": "https://packages.fedoraproject.org/pkgs/epiphany/epiphany-runtime/",
+      "source_package": "epiphany",
+      "from": "1:50.6-1.fc44",
+      "to": "1:50.6-6.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "medium",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-dfb4d079c6",
+      "description": "Epiphany runtime suitable for web applications",
+      "note": "Fixes CVE-2026-115683\n\n----\n\nFix CVE-2026-118598 and CVE-2026-118599\n\n----\n\nFix for CVE-2026-18487 and CVE-2026-94291"
+    }
+  ]
+}

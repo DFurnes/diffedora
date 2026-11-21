@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20261106.0-44.20261107.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261106.0",
+  "new_version": "44.20261107.0",
+  "summary": "file utility bug fixes: large ZIP recognition, INI detection, and Landlock decompressor fix; SDL3 update.",
+  "fetched_at": "2026-11-07T02:29:19.710105+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "SDL3",
+      "url": "https://packages.fedoraproject.org/pkgs/SDL3/",
+      "source_package": "SDL3",
+      "from": "3.4.18-1.fc44",
+      "to": "3.4.20-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-43c2db49d3",
+      "description": "Cross-platform multimedia library",
+      "note": "Update to SDL v3.4.20"
+    },
+    {
+      "type": "upgrade",
+      "package": "file",
+      "url": "https://packages.fedoraproject.org/pkgs/file/",
+      "source_package": "file",
+      "from": "5.46-10.fc44",
+      "to": "5.48-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-24396f548e",
+      "description": "Utility for determining file types",
+      "note": "Rebase to file 5.48, fixing large ZIP recognition and overly broad INI detection. Backport the upstream Landlock fix so external decompressors used by file -z and --uncompress work correctly, and update test expectations for 5.48."
+    },
+    {
+      "type": "upgrade",
+      "package": "file-libs",
+      "url": "https://packages.fedoraproject.org/pkgs/file/file-libs/",
+      "source_package": "file",
+      "from": "5.46-10.fc44",
+      "to": "5.48-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-24396f548e",
+      "description": "Libraries for applications using libmagic",
+      "note": "Rebase to file 5.48, fixing large ZIP recognition and overly broad INI detection. Backport the upstream Landlock fix so external decompressors used by file -z and --uncompress work correctly, and update test expectations for 5.48."
+    },
+    {
+      "type": "upgrade",
+      "package": "python3-file-magic",
+      "url": "https://packages.fedoraproject.org/pkgs/file/python3-file-magic/",
+      "source_package": "file",
+      "from": "5.46-10.fc44",
+      "to": "5.48-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-24396f548e",
+      "description": "Python 3 bindings for the libmagic API",
+      "note": "Rebase to file 5.48, fixing large ZIP recognition and overly broad INI detection. Backport the upstream Landlock fix so external decompressors used by file -z and --uncompress work correctly, and update test expectations for 5.48."
+    }
+  ]
+}
