@@ -1,0 +1,56 @@
+{
+  "id": "silverblue-x86_64-44.20260728.0-44.20260729.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260728.0",
+  "new_version": "44.20260729.0",
+  "summary": "fwupd 2.1.7 bug fixes and new BIOS, MTD, TCG security attributes.",
+  "fetched_at": "2026-07-29T01:50:54.222808+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "fwupd",
+      "url": "https://packages.fedoraproject.org/pkgs/fwupd/",
+      "source_package": "fwupd",
+      "from": "2.1.6-1.fc44",
+      "to": "2.1.7-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "medium",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-e86d435be5",
+      "description": "Firmware update daemon",
+      "note": "This release adds the following features:\n\n * Add \"well known\" AppStream IDs for common BIOS settings\n * Add MTD lock security attribute\n * Add support for \"externally managed\" EFI signature lists\n * Add systemd-pcrlock plugin and hook up to UEFI updates\n * Add TCG disk encryption security attribute\n * Enable more plugins when compiling for Android\n\nThis release fixes the following bugs:\n\n * Add wrappers for input streams for future Rust implementations\n * Allow overriding some methods in FwupdClient for a future refactor\n * Allow plain string versions for some AMD GPUs\n * Allow suspend-to-ram with encrypted RAM\n * Always test Dell dock type when connected\n * Avoid possible out-of-bounds read in when parsing the DFU sector\n * Do not abort when udisks cannot resolve a device\n * Do not allow force installs over D-Bus\n * Do not fail to start when a pre-group comment has no keys set\n * Fall back to copying the file descriptor contents when not sealed\n * Fix dropped status updates during updates\n * Fix FW update for Lenovo TBT5 Smart Dock 7500\n * Fix fwupd-refresh.service polkit auth errors\n * Fix segfault parsing some logitech-hidpp bootloader records\n * Fix the seal self tests when building on a tmpfs\n * Fix update failure when the TP IC is in bootloader-only mode\n * Mark Coreboot VBOOT as obsoleting BootGuard verified\n * Move more per-class limits to the class instances to reduce RSS\n * Prepare modem-manager firmware after firehose detach\n * Reject out-of-range CCGX device mode before indexing versions\n * Require trusted metadata for device updates\n * Require trusted metadata when using OnlyTrusted\n * Skip modem-manager secboot status when unsupported\n * Use safe reads for synaptics-rmi device responses\n * Validate GUID-defined section offset against EFI section size"
+    },
+    {
+      "type": "upgrade",
+      "package": "fwupd-plugin-modem-manager",
+      "url": "https://packages.fedoraproject.org/pkgs/fwupd/fwupd-plugin-modem-manager/",
+      "source_package": "fwupd",
+      "from": "2.1.6-1.fc44",
+      "to": "2.1.7-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "medium",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-e86d435be5",
+      "description": "fwupd plugin using ModemManger",
+      "note": "This release adds the following features:\n\n * Add \"well known\" AppStream IDs for common BIOS settings\n * Add MTD lock security attribute\n * Add support for \"externally managed\" EFI signature lists\n * Add systemd-pcrlock plugin and hook up to UEFI updates\n * Add TCG disk encryption security attribute\n * Enable more plugins when compiling for Android\n\nThis release fixes the following bugs:\n\n * Add wrappers for input streams for future Rust implementations\n * Allow overriding some methods in FwupdClient for a future refactor\n * Allow plain string versions for some AMD GPUs\n * Allow suspend-to-ram with encrypted RAM\n * Always test Dell dock type when connected\n * Avoid possible out-of-bounds read in when parsing the DFU sector\n * Do not abort when udisks cannot resolve a device\n * Do not allow force installs over D-Bus\n * Do not fail to start when a pre-group comment has no keys set\n * Fall back to copying the file descriptor contents when not sealed\n * Fix dropped status updates during updates\n * Fix FW update for Lenovo TBT5 Smart Dock 7500\n * Fix fwupd-refresh.service polkit auth errors\n * Fix segfault parsing some logitech-hidpp bootloader records\n * Fix the seal self tests when building on a tmpfs\n * Fix update failure when the TP IC is in bootloader-only mode\n * Mark Coreboot VBOOT as obsoleting BootGuard verified\n * Move more per-class limits to the class instances to reduce RSS\n * Prepare modem-manager firmware after firehose detach\n * Reject out-of-range CCGX device mode before indexing versions\n * Require trusted metadata for device updates\n * Require trusted metadata when using OnlyTrusted\n * Skip modem-manager secboot status when unsupported\n * Use safe reads for synaptics-rmi device responses\n * Validate GUID-defined section offset against EFI section size"
+    },
+    {
+      "type": "upgrade",
+      "package": "fwupd-plugin-uefi-capsule-data",
+      "url": "https://packages.fedoraproject.org/pkgs/fwupd/fwupd-plugin-uefi-capsule-data/",
+      "source_package": "fwupd",
+      "from": "2.1.6-1.fc44",
+      "to": "2.1.7-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "medium",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-e86d435be5",
+      "description": "Localized data for the UEFI UX capsule",
+      "note": "This release adds the following features:\n\n * Add \"well known\" AppStream IDs for common BIOS settings\n * Add MTD lock security attribute\n * Add support for \"externally managed\" EFI signature lists\n * Add systemd-pcrlock plugin and hook up to UEFI updates\n * Add TCG disk encryption security attribute\n * Enable more plugins when compiling for Android\n\nThis release fixes the following bugs:\n\n * Add wrappers for input streams for future Rust implementations\n * Allow overriding some methods in FwupdClient for a future refactor\n * Allow plain string versions for some AMD GPUs\n * Allow suspend-to-ram with encrypted RAM\n * Always test Dell dock type when connected\n * Avoid possible out-of-bounds read in when parsing the DFU sector\n * Do not abort when udisks cannot resolve a device\n * Do not allow force installs over D-Bus\n * Do not fail to start when a pre-group comment has no keys set\n * Fall back to copying the file descriptor contents when not sealed\n * Fix dropped status updates during updates\n * Fix FW update for Lenovo TBT5 Smart Dock 7500\n * Fix fwupd-refresh.service polkit auth errors\n * Fix segfault parsing some logitech-hidpp bootloader records\n * Fix the seal self tests when building on a tmpfs\n * Fix update failure when the TP IC is in bootloader-only mode\n * Mark Coreboot VBOOT as obsoleting BootGuard verified\n * Move more per-class limits to the class instances to reduce RSS\n * Prepare modem-manager firmware after firehose detach\n * Reject out-of-range CCGX device mode before indexing versions\n * Require trusted metadata for device updates\n * Require trusted metadata when using OnlyTrusted\n * Skip modem-manager secboot status when unsupported\n * Use safe reads for synaptics-rmi device responses\n * Validate GUID-defined section offset against EFI section size"
+    }
+  ]
+}

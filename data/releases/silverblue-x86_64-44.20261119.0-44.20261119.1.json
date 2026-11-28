@@ -1,0 +1,26 @@
+{
+  "id": "silverblue-x86_64-44.20261119.0-44.20261119.1",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261119.0",
+  "new_version": "44.20261119.1",
+  "summary": "exFAT filesystem utilities bug fix update.",
+  "fetched_at": "2026-11-20T00:04:28.772565+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "exfatprogs",
+      "url": "https://packages.fedoraproject.org/pkgs/exfatprogs/",
+      "source_package": "exfatprogs",
+      "from": "1.4.3-1.fc44",
+      "to": "1.4.4-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-812111f0fb",
+      "description": "Userspace utilities for exFAT filesystems",
+      "note": "Update to 1.4.4."
+    }
+  ]
+}

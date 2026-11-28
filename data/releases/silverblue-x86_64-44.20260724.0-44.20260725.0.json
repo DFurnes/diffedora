@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20260724.0-44.20260725.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260724.0",
+  "new_version": "44.20260725.0",
+  "summary": "skopeo security fix (CVE-2026-27145), GTK3 Firefox menu and session restore bug fixes, and distribution GPG keys update.",
+  "fetched_at": "2026-07-25T03:58:22.001062+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "distribution-gpg-keys",
+      "url": "https://packages.fedoraproject.org/pkgs/distribution-gpg-keys/",
+      "source_package": "distribution-gpg-keys",
+      "from": "1.119-1.fc44",
+      "to": "1.120-1.fc44",
+      "security": false,
+      "update_type": "enhancement",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-067be40519",
+      "description": "GPG keys of various Linux distributions",
+      "note": "https://github.com/rpm-software-management/distribution-gpg-keys/releases/tag/distribution-gpg-keys-1.117-1"
+    },
+    {
+      "type": "upgrade",
+      "package": "gtk-update-icon-cache",
+      "url": "https://packages.fedoraproject.org/pkgs/gtk3/gtk-update-icon-cache/",
+      "source_package": "gtk3",
+      "from": "3.24.52-1.fc44",
+      "to": "3.24.52-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-00f086c260",
+      "description": "Icon theme caching utility",
+      "note": "- Added a fix for wrong mouse position on Firefox menus (https://bugzilla.mozilla.org/show_bug.cgi?id=1984812)\n- Added support for session restore (https://bugzilla.mozilla.org/show_bug.cgi?id=2044701)"
+    },
+    {
+      "type": "upgrade",
+      "package": "gtk3",
+      "url": "https://packages.fedoraproject.org/pkgs/gtk3/",
+      "source_package": "gtk3",
+      "from": "3.24.52-1.fc44",
+      "to": "3.24.52-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-00f086c260",
+      "description": "GTK+ graphical user interface library",
+      "note": "- Added a fix for wrong mouse position on Firefox menus (https://bugzilla.mozilla.org/show_bug.cgi?id=1984812)\n- Added support for session restore (https://bugzilla.mozilla.org/show_bug.cgi?id=2044701)"
+    },
+    {
+      "type": "upgrade",
+      "package": "skopeo",
+      "url": "https://packages.fedoraproject.org/pkgs/skopeo/",
+      "source_package": "skopeo",
+      "from": "1:1.22.2-1.fc44",
+      "to": "1:1.22.2-2.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "medium",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-9b2e56edf5",
+      "description": "Inspect container images and repositories on registries",
+      "note": "Security fix for CVE-2026-27145 (Go stdlib crypto/x509 DoS vulnerability). Rebuild with golang-1.26.5 which includes the fix."
+    }
+  ]
+}

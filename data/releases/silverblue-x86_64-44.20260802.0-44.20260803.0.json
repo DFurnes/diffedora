@@ -1,0 +1,26 @@
+{
+  "id": "silverblue-x86_64-44.20260802.0-44.20260803.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20260802.0",
+  "new_version": "44.20260803.0",
+  "summary": "GNOME Tour build fix for newer GTK4 Rust bindings.",
+  "fetched_at": "2026-08-03T02:01:28.558036+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "gnome-tour",
+      "url": "https://packages.fedoraproject.org/pkgs/gnome-tour/",
+      "source_package": "gnome-tour",
+      "from": "50.0-1.fc44",
+      "to": "50.0-2.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-e3243e1d36",
+      "description": "GNOME Tour and Greeter",
+      "note": "Fix build against newer gtk4-rs."
+    }
+  ]
+}

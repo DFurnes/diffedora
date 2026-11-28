@@ -1,0 +1,41 @@
+{
+  "id": "silverblue-x86_64-44.20261119.1-44.20261123.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261119.1",
+  "new_version": "44.20261123.0",
+  "summary": "Multilingualization library input maps and GStreamer AV1 decoder plugin bug fixes.",
+  "fetched_at": "2026-11-23T01:16:37.331199+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "gstreamer1-plugin-dav1d",
+      "url": "https://packages.fedoraproject.org/pkgs/gstreamer1-plugin-dav1d/",
+      "source_package": null,
+      "from": "0.15.0-1.fc44",
+      "to": "0.15.4-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": "GStreamer dav1d AV1 decoder Plugin",
+      "note": null
+    },
+    {
+      "type": "upgrade",
+      "package": "m17n-db",
+      "url": "https://packages.fedoraproject.org/pkgs/m17n-db/",
+      "source_package": "m17n-db",
+      "from": "1.8.17-1.fc44",
+      "to": "1.8.18-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-a2fb39427b",
+      "description": "Multilingualization datafiles for m17n-lib",
+      "note": "Update to 1.8.18\n- vi-base.mim, vi-telex.mim, vi-vni.mim:\nLots of improvements by nguyenphivn <vietphi.dang@gmail.com>\n- bn-jatiya.mim: Add new layout created by \"Omi Azad\" <omi@ekushey.org>.\nImplements the government-backed national standard BDS 1738:2018\nofficially standardised and published by the Bangladesh Computer Council (BCC)\nand the Bangladesh Standards and Testing Institution (BSTI).\n- bn-national-jatiya.mim: Mention that `bn-national-jatiya` is\nobsolete and replaced by `bn-jatiya` in the description"
+    }
+  ]
+}

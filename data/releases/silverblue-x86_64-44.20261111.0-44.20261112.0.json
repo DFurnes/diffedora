@@ -1,0 +1,71 @@
+{
+  "id": "silverblue-x86_64-44.20261111.0-44.20261112.0",
+  "variant": "silverblue",
+  "arch": "x86_64",
+  "old_version": "44.20261111.0",
+  "new_version": "44.20261112.0",
+  "summary": "Firefox 160.0, AV1 codec library, and PackageKit offline-update bug fixes.",
+  "fetched_at": "2026-11-12T09:02:09.474216+00:00",
+  "changes": [
+    {
+      "type": "upgrade",
+      "package": "PackageKit-glib",
+      "url": "https://packages.fedoraproject.org/pkgs/PackageKit/PackageKit-glib/",
+      "source_package": "PackageKit",
+      "from": "1.4.0-2.fc44",
+      "to": "1.4.0-3.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-708d43b08c",
+      "description": "GLib libraries for accessing PackageKit",
+      "note": "Backport fix for offline-updates and properly enable F45 system upgrades"
+    },
+    {
+      "type": "upgrade",
+      "package": "firefox",
+      "url": "https://packages.fedoraproject.org/pkgs/firefox/",
+      "source_package": "firefox",
+      "from": "159.0.1-1.fc44",
+      "to": "160.0-1.fc44",
+      "security": false,
+      "update_type": null,
+      "severity": null,
+      "cves": null,
+      "bodhi_url": null,
+      "description": "Mozilla Firefox Web browser",
+      "note": null
+    },
+    {
+      "type": "upgrade",
+      "package": "firefox-langpacks",
+      "url": "https://packages.fedoraproject.org/pkgs/firefox/firefox-langpacks/",
+      "source_package": "firefox",
+      "from": "159.0.1-1.fc44",
+      "to": "160.0-1.fc44",
+      "security": true,
+      "update_type": "security",
+      "severity": "urgent",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-3f4f1138c4",
+      "description": "Firefox langpacks",
+      "note": "- Updated to latest upstream (160.0)"
+    },
+    {
+      "type": "upgrade",
+      "package": "libaom",
+      "url": "https://packages.fedoraproject.org/pkgs/aom/libaom/",
+      "source_package": "aom",
+      "from": "3.15.2-1.fc44",
+      "to": "3.15.3-1.fc44",
+      "security": false,
+      "update_type": "bugfix",
+      "severity": "unspecified",
+      "cves": null,
+      "bodhi_url": "https://bodhi.fedoraproject.org/updates/FEDORA-2026-eb49244163",
+      "description": "Library files for aom",
+      "note": "Update to version 3.15.3.\n\nRelease notes: https://aomedia.googlesource.com/aom/+/refs/tags/v3.15.3"
+    }
+  ]
+}
